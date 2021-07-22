@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="_csrf" th:content="${_csrf != null} ? ${_csrf.token} : ''"/>
+	<meta name="_csrf_header" th:content="${_csrf != null}? ${_csrf.headerName} : 'X-CSRF-TOKEN'"/>
+    <title th:text="#{title}">Home</title>
+    <link rel="stylesheet" href="../../static/themes/wheat.css" th:href="${#themes.code('stylesheet')}" type="text/css">
+    <script type="text/javascript" src="../../static/js/plugins/jquery-3.3.1.min.js" th:src="@{/resources/js/plugins/jquery-3.3.1.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/client/common.js" th:src="@{/resources/js/client/common.js}"></script>
+    <link th:href="@{/resources/favicon.ico}" type="image/x-icon" rel="icon">
+</head>
+<body th:style="'direction:' + #{dir}" dir="ltr" th:dir="#{dir}" th:with="pattern=#{date.pattern}"
+      th:data-date-pattern="#{date.pattern}" th:data-language="${#locale.language}" th:data-context-path="@{/}">
+<div class="wrapper">
+   	<div class="nav" th:replace="html/fragments/navbar :: navbar('html/home','home', '')">
+		<ul>
+			<li><a class="active" href="home.html" th:href="@{/}" th:attrappend="class=${name eq 'home'}?'active'" th:text="#{page.home}">Home</a></li>
+			<li><a href="../jsp/hello.jsp" th:href="@{/jsp/hello}" th:attrappend="class=${name eq 'hello-jsp'}?'active'" th:text="#{page.hello.jsp}">Hello JSP</a></li>
+			<li><a href="hello.html" th:href="@{/html/hello}" th:attrappend="class=${name eq 'hello-html'}?'active'" th:text="#{page.hello.html}">Hello HTML</a></li>
+			<li><a href="../jsp/contacts.jsp" th:attrappend="class=${name eq 'contacts-jsp'}?'active'" th:href="@{/jsp/contacts}" th:text="#{page.contacts.jsp}">Contacts JSP</a></li>
+			<li><a href="../jsp/contact.jsp" th:attrappend="class=${name eq 'contact-jsp'}?'active'" th:href="@{/jsp/contact}" th:text="#{page.contact.jsp}">Add Contact (JSP)</a></li>
+			<li><a href="contacts.html" th:attrappend="class=${name eq 'contacts-html'}?'active'" th:href="@{/html/contacts}" th:text="#{page.contacts.html}">Contacts HTML</a></li>
+			<li><a href="contact.html" th:attrappend="class=${name eq 'contact-html'}?'active'" th:href="@{/html/contact}" th:text="#{page.contact.html}">Add Contact (HTML)</a></li>
+			<li class="dropdown">
+			    <a href="javascript:void(0)" class="dropbtn" th:text="#{page.language}">Language</a>
+				<div class="dropdown-content">
+					<a href="#" th:href="@{/} + ${url} + '?lang=iw_IL'"><img th:alt="#{lang.iw}"
+						src="../../static/images/flags/iw.png" th:src="@{/resources/images/flags/iw.png}">&nbsp;<span
+						th:text="#{lang.iw}">Hebrew</span></a> <a href="#" th:href="@{/} + ${url} + '?lang=us_EN'"><img
+						th:alt="#{lang.en}" src="../../static/images/flags/en.png" th:src="@{/resources/images/flags/en.png}">&nbsp;<span
+						th:text="#{lang.en}">English</span></a>
+				</div></li>
+			<li class="dropdown">
+			    <a href="javascript:void(0)" class="dropbtn" th:text="#{theme.change}">Theme</a>
+				<div class="dropdown-content">
+					<a href="#" th:href="@{/} + ${url} + '?theme=spring'"><img th:alt="#{theme.spring}"
+						src="../../static/images/spring.png" th:src="@{/resources/images/spring.png}">&nbsp;<span
+						th:text="#{theme.spring}">Spring</span></a> <a href="#" th:href="@{/} + ${url} + '?theme=wheat'"><img
+						th:alt="#{theme.wheat}" src="../../static/images/wheat.png" th:src="@{/resources/images/wheat.png}">&nbsp;<span
+						th:text="#{theme.wheat}">Wheat</span></a>
+				</div></li>
+			<li><a href="#" th:href="@{'/source/' + ${@fileNameService.getName(url)} + '.html'}" th:text="#{page.source}">Source</a></li>
+		</ul>
+	</div>
+    <div class="content">
+        <h2 th:utext="#{index.header}">Navigation</h2>
+        <div>
+            <p th:utext="'(running in profile&nbsp;' + '<i>' + #{spring.profiles.active} + '</i>)'" ></p>
+            <p style="max-width: 40%; display: block;" th:utext="#{index.intro}"></p>
+        </div>
+    </div>
+    <div class="footer" th:replace="html/fragments/footer">
+        <span th:text="#{footer.year}">© 2021</span>
+        <a href="#" th:text="#{footer.copyright}">T.N.Silverman - SilverSoft LTD</a>
+        <span th:text="#{footer.notice}">All Rights Reserved.</span>
+    </div>
+</div>
+</body>
+</html>

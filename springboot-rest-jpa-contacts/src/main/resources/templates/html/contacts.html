@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="_csrf" th:content="${_csrf != null} ? ${_csrf.token} : ''"/>
+	<meta name="_csrf_header" th:content="${_csrf != null}? ${_csrf.headerName} : 'X-CSRF-TOKEN'"/>
+	<title th:text="#{contacts.title}">Contact List</title>
+	<link rel="stylesheet" href="../../static/themes/wheat.css" th:href="${#themes.code('stylesheet')}" type="text/css">
+	<script type="text/javascript" src="../../static/js/plugins/jquery-3.3.1.min.js" th:src="@{/resources/js/plugins/jquery-3.3.1.min.js}"></script>
+	<script type="text/javascript" src="../../static/js/client/common.js" th:src="@{/resources/js/client/common.js}"></script>
+	<script type="text/javascript" src="../../static/js/client/contacts.js" th:src="@{/resources/js/client/contacts.js}"></script>
+	<link th:href="@{/resources/favicon.ico}" type="image/x-icon" rel="icon">
+</head>
+<body th:style="'direction:' + #{dir}" dir="ltr" th:dir="#{dir}"
+    th:data-date-pattern="#{date.pattern}"
+	th:data-language="${#locale.language}"
+	th:data-context-path="@{/}"
+	th:data-image-path="@{/resources/images/}"
+	th:data-theme="${#themes.code('theme')}"
+	th:data-confirm="#{confirm.delete('@','@')}"
+	th:data-edit-url="@{/html/contact}"
+	th:data-delete-url="@{/api/contacts}"
+	th:data-login-page="@{/login}"
+	th:data-current-user="${#httpServletRequest.remoteUser}">
+	<div class="wrapper">
+		<!-- START navbar -->
+		<div class="nav" th:replace="html/fragments/navbar :: navbar('html/contacts','contacts-html', '')">
+			<ul>
+				<li><a href="home.html" th:href="@{/}" th:attrappend="class=${name eq 'home'}?'active'" th:text="#{page.home}">Home</a></li>
+				<li><a href="../jsp/hello.jsp" th:href="@{/jsp/hello}" th:attrappend="class=${name eq 'hello-jsp'}?'active'" th:text="#{page.hello.jsp}">Hello JSP</a></li>
+				<li><a href="hello.html" th:href="@{/html/hello}" th:attrappend="class=${name eq 'hello-html'}?'active'" th:text="#{page.hello.html}">Hello HTML</a></li>
+				<li><a href="../jsp/contacts.jsp" th:attrappend="class=${name eq 'contacts-jsp'}?'active'" th:href="@{/jsp/contacts}" th:text="#{page.contacts.jsp}">Contacts JSP</a></li>
+				<li><a href="../jsp/contact.jsp" th:attrappend="class=${name eq 'contact-jsp'}?'active'" th:href="@{/jsp/contact}" th:text="#{page.contact.jsp}">Add Contact (JSP)</a></li>
+				<li><a class="active" href="contacts.html" th:attrappend="class=${name eq 'contacts-html'}?'active'" th:href="@{/html/contacts}" th:text="#{page.contacts.html}">Contacts HTML</a></li>
+				<li><a href="contact.html" th:attrappend="class=${name eq 'contact-html'}?'active'" th:href="@{/html/contact}" th:text="#{page.contact.html}">Add Contact (HTML)</a></li>
+				<li class="dropdown">
+				    <a href="javascript:void(0)" class="dropbtn" th:text="#{page.language}">Language</a>
+					<div class="dropdown-content">
+						<a href="#" th:href="@{/} + ${url} + '?lang=iw_IL'"><img th:alt="#{lang.iw}"
+							src="../../static/images/flags/iw.png" th:src="@{/resources/images/flags/iw.png}">&nbsp;<span
+							th:text="#{lang.iw}">Hebrew</span></a> <a href="#" th:href="@{/} + ${url} + '?lang=us_EN'"><img
+							th:alt="#{lang.en}" src="../../static/images/flags/en.png" th:src="@{/resources/images/flags/en.png}">&nbsp;<span
+							th:text="#{lang.en}">English</span></a>
+					</div></li>
+				<li class="dropdown">
+				    <a href="javascript:void(0)" class="dropbtn" th:text="#{theme.change}">Theme</a>
+					<div class="dropdown-content">
+						<a href="#" th:href="@{/} + ${url} + '?theme=spring'"><img th:alt="#{theme.spring}"
+							src="../../static/images/spring.png" th:src="@{/resources/images/spring.png}">&nbsp;<span
+							th:text="#{theme.spring}">Spring</span></a> <a href="#" th:href="@{/} + ${url} + '?theme=wheat'"><img
+							th:alt="#{theme.wheat}" src="../../static/images/wheat.png" th:src="@{/resources/images/wheat.png}">&nbsp;<span
+							th:text="#{theme.wheat}">Wheat</span></a>
+					</div></li>
+				<li><a href="#" th:href="@{'/source/' + ${@fileNameService.getName(url)} + '.html'}" th:text="#{page.source}">Source</a></li>
+			</ul>
+		</div>
+		<!-- END navbar -->
+		<!-- START content -->
+		<div class="content">
+			<h2 th:text="#{contacts.title} + '&nbsp;(Thymeleaf)'">Contact List</h2>
+			<div id="loader">&nbsp;</div>
+			<p style="max-width: 40%; display: block;" th:utext="#{contacts.filter}">Use the filter to...</p>
+			<!-- START filter -->
+			<form id="filterForm" action="#" th:action="@{/api/contacts/search/byParams}" method="get">
+				<table class="filter" th:summary="#{contacts.filter}">
+					<!-- <caption th:text="#{contacts.filter}">Filter</caption> -->
+					<thead>
+						<tr>
+							<th><label th:text="#{contact.ssn}">SSN</label></th>
+							<th><label th:text="#{contact.fname}">First Name</label></th>
+							<th><label th:text="#{contact.lname}">Last Name</label></th>
+							<th><label th:text="#{contact.birthDate}">Birth Date</label></th>
+							<th><label th:text="#{contact.children}">Children?</label></th>
+							<th><label th:text="#{contact.status}">Status</label></th>
+							<th><label th:text="#{contact.btn.reset}">Reset</label></th>
+							<th><label th:text="#{contact.btn.search}">Search</label></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="text" id="ssn" placeholder="123-456-7890" th:placeholder="#{contact.ssn.placeholder}" /></td>
+							<td><input type="text" id="firstName" pattern=".{1,25}" th:oninvalid="'this.setCustomValidity(\''+ #{invalid.name} +'\')'" oninput="setCustomValidity('')" /></td>
+							<td><input type="text" id="lastName" pattern=".{1,25}" th:oninvalid="'this.setCustomValidity(\''+ #{invalid.name} +'\')'" oninput="setCustomValidity('')" /></td>
+							<td><input type="text" id="birthDate" placeholder="1990-12-30" th:placeholder="#{contact.birthDate.placeholder}" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" th:oninvalid="'this.setCustomValidity(\''+ #{invalid.birthDate} +'\')'" oninput="setCustomValidity('')" /></td>
+							<td><input type="number" id="children" min="0" /></td>
+							<td>
+							    <fieldset id="statuses">
+									<table id="radios">
+										<tr><td><input type="radio" id="married" value="true" name="married"/><label for="married" th:text="#{contact.married}">married</label></td></tr>
+										<tr><td><input type="radio" id="single" value="false" name="married"/><label for="single" th:text="#{contact.single}">single</label></td></tr>
+										<tr><td><input type="radio" id="all" value="" name="married" checked="checked"/><label for="all" th:text="#{contact.all}">all</label></td></tr>
+									</table>
+								</fieldset>
+							</td>
+							<td>
+								<button type="button" id="reset" class="reset" th:value="#{contact.btn.reset}">
+									<img src="../../static/images/reset.png" th:src="@{/resources/images/reset.png}">
+								</button>
+							</td>
+							<td>
+								<button type="submit" name="Search" th:value="#{contact.btn.search}">
+									<img src="../../static/images/search.png" th:src="@{/resources/images/search.png}">
+								</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<input type="hidden" id="_ssn" th:value="${param.ssn}" />
+			</form>
+			<!-- END filter -->
+			<!-- START records table -->
+			<div class="table">
+				<!-- START records header -->
+				<div class="th">
+					<!-- <div>
+						<span class="sort_asc" data-sort-property="id" data-sort-direction="ASC" onclick="toggleSort(this)"></span>
+						<input class="th" value="ID" th:value="#{contact.id}" readonly="readonly" />
+					</div> -->
+					<div>
+						<span class="sort_both" data-sort-property="ssn" data-sort-direction=""
+							onclick="toggleSort(this)"></span> <input class="th" value="SSN" th:value="#{contact.ssn}" readonly="readonly" />
+					</div>
+					<div>
+						<span class="sort_both" data-sort-property="firstName" data-sort-direction="" onclick="toggleSort(this)"></span>
+						<input class="th" value="First Name" th:value="#{contact.fname}" readonly="readonly" />
+					</div>
+					<div>
+						<span class="sort_both" data-sort-property="lastName" data-sort-direction="" onclick="toggleSort(this)"></span>
+						<input class="th" value="Last Name" th:value="#{contact.lname}" readonly="readonly" />
+					</div>
+					<div>
+						<span class="sort_both" data-sort-property="birthDate" data-sort-direction="" onclick="toggleSort(this)"></span>
+						<input class="th" value="Birth Date" th:value="#{contact.birthDate}" readonly="readonly" />
+					</div>
+					<div>
+						<span class="sort_both" data-sort-property="married" data-sort-direction="" onclick="toggleSort(this)"></span>
+						<input class="th fixed-width" value="Married" th:value="#{contact.married}" readonly="readonly" />
+					</div>
+					<div>
+						<span class="sort_both" data-sort-property="children" data-sort-direction="" th:data="${sortUrl}" onclick="toggleSort(this)"></span>
+						<input class="th" value="Children" th:value="#{contact.children}" readonly="readonly" />
+					</div>
+					<div>
+						<input class="th fixed-width" value="Edit" th:value="#{contact.edit}" readonly="readonly" />
+					</div>
+					<div>
+						<input class="th fixed-width" value="Delete" th:value="#{contact.delete}" readonly="readonly" />
+					</div>
+					<div>
+						<button data-mouse-over-icon="../../static/images/themes/wheat/add_hover.png"
+						        data-mouse-out-icon="../../static/images/themes/wheat/add.png"
+						        th:data-mouse-over-icon="${#themes.code('add.hover.icon')}"
+						        th:data-mouse-out-icon="${#themes.code('add.icon')}"
+						        class="td fixed-width control"
+						        title="add contact"
+						        name="Add"
+						        onclick="document.location.href='contact.html'"
+						        onmouseover="swapBtnImage(this,this.getAttribute('data-mouse-over-icon'));"
+						        onmouseout="swapBtnImage(this,this.getAttribute('data-mouse-out-icon'));"
+						        th:onclick="'document.location.href=\'' + @{/html/contact} + '\''">
+							<img align="left" src="../../static/images/themes/wheat/add.png" th:src="${#themes.code('add.icon')}" />
+							<span class="control" th:text="#{contact.add} + '&nbsp;'">Add</span>
+						</button>
+					</div>
+				</div>
+				<div class="th error" style="display: none;">
+					<span th:text="#{pag.no.content}"></span>
+				</div>
+				<!-- END records header -->
+				<!-- START records data -->
+				<div id="data"></div>
+				<!-- END records data -->
+				<div class="pagination">
+					<table id="paginationTable" class="paginationTable" th:data-pag-all="#{pag.all}"
+						th:data-pag-record-num="#{pag.record.num}" th:data-pag-first="#{pag.first}" th:data-pag-last="#{pag.last}"
+						th:data-pag-prev="#{pag.prev}" th:data-pag-next="#{pag.next}" th:data-pag-sort="'id,ASC'">
+					</table>
+				</div>
+			</div>
+			<!-- END records table -->
+			<div class="spacer"></div>
+			<!-- START pagination -->
+			<div class="table">
+				<div class="tr">
+					<button data-mouse-over-icon="../../static/images/themes/wheat/excel_hover.png"
+					        data-mouse-out-icon="../../static/images/themes/wheat/excel.png"
+					        th:data-mouse-over-icon="${#themes.code('excel.hover.icon')}"
+						    th:data-mouse-out-icon="${#themes.code('excel.icon')}"
+						    class="td control wide"
+					        title="Export Excel"
+					        th:title="#{export.excel}"
+					        name="Excel"
+					        th:onclick="'document.location.href=\'' + @{/excel.htm} + '\''"
+					        onclick="document.location.href='#'"
+					        onmouseover="swapBtnImage(this,this.getAttribute('data-mouse-over-icon'));"
+					        onmouseout="swapBtnImage(this,this.getAttribute('data-mouse-out-icon'));">
+						<img align="left" src="../../static/images/themes/wheat/excel.png" th:src="${#themes.code('excel.icon')}" />
+						<span class="control" th:text="#{export.excel} + '&nbsp;'">Export Excel</span>
+					</button>
+					<button data-mouse-over-icon="../../static/images/themes/wheat/pdf_hover.png"
+					        data-mouse-out-icon="../../static/images/themes/wheat/pdf.png"
+					        th:data-mouse-over-icon="${#themes.code('pdf.hover.icon')}"
+						    th:data-mouse-out-icon="${#themes.code('pdf.icon')}"
+						    class="td control wide"
+					        title="Export Excel"
+					        th:title="#{export.pdf}"
+					        name="Excel"
+					        th:onclick="'document.location.href=\'' + @{/pdf.htm} + '\''"
+					        onclick="document.location.href='#'"
+					        onmouseover="swapBtnImage(this,this.getAttribute('data-mouse-over-icon'));"
+					        onmouseout="swapBtnImage(this,this.getAttribute('data-mouse-out-icon'));">
+						<img align="left" src="../../static/images/themes/wheat/pdf.png" th:src="${#themes.code('pdf.icon')}" />
+						<span class="control" th:text="#{export.pdf} + '&nbsp;'">Export PDF</span>
+					</button>
+				</div>
+			</div>
+			<!-- END pagination -->
+		</div>
+		<!-- END content -->
+		<!-- START footer -->
+		<div class="footer" th:replace="html/fragments/footer">
+			<span th:text="#{footer.year}">© 2021</span>
+			<a href="#" th:text="#{footer.copyright}">T.N.Silverman - SilverSoft LTD</a>
+			<span th:text="#{footer.notice}">All Rights Reserved.</span>
+		</div>
+		<!-- END footer -->
+	</div>
+</body>
+</html>

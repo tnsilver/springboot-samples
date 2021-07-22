@@ -1,0 +1,43 @@
+*.class
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+# Package Files #
+*.jar
+!*/.mvn/**/*.jar
+*.war
+*.ear
+# Target directory
+*/target
+# Data directory
+*/data
+# UML directory
+*/UML
+# JSON directory
+*/src/main/resources/json
+# Eclipse Files
+*target*
+*.class
+# eclipse specific git ignore
+*.pydevproject
+*.project
+*/.metadata
+*/bin/**
+*/tmp/**
+*/tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+*/local.properties
+*/.classpath
+*/.settings/
+*/.loadpath
+# IDEA Ignore
+*.iml
+*/.idea/**
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+*/.apt_generated/
+# Manifest #
+*/manifest.yml
+/.metadata/

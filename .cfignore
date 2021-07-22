@@ -1,0 +1,21 @@
+# ignore the fllowing directories when pushing to CF
+# Eclipse setting directory
+.settings/
+.project
+.classpath
+# Docs directory
+docs/
+# Data directory
+data/
+# UML directory
+UML/
+# test directory
+src/test
+# Files in root
+LICENSE
+agatartdesign.com.txt
+.classpath
+.factorypath
+.gitignore
+.project
+README.md
