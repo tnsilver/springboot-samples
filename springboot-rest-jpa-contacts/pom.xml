@@ -72,10 +72,10 @@
 		<jib.maven.plugin.version>3.1.2</jib.maven.plugin.version>
 		<start-class>com.tnsilver.contacts.Application</start-class>
 		<!-- DATASOURCE -->
-		<spring.datasource.url>jdbc:h2:file:/tmp/h2/contacts;USER=sa;PASSWORD=password</spring.datasource.url>
+		<spring.datasource.url>jdbc:h2:mem:CONTACTS;DB_CLOSE_DELAY=-1</spring.datasource.url>
 		<spring.datasource.hikari.driver-class-name>org.h2.Driver</spring.datasource.hikari.driver-class-name>
 		<spring.datasource.hikari.username>sa</spring.datasource.hikari.username>
-		<spring.datasource.hikari.password>password</spring.datasource.hikari.password>
+		<spring.datasource.hikari.password></spring.datasource.hikari.password>
 		<spring.jpa.properties.hibernate.dialect>org.hibernate.dialect.H2Dialect</spring.jpa.properties.hibernate.dialect>
 		<spring.flyway.locations>classpath:db/migration/h2</spring.flyway.locations>
 		<spring.jpa.show-sql>false</spring.jpa.show-sql>

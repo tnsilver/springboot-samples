@@ -63,15 +63,7 @@ profile (runs for 5 minutes and exits)
 to use the application
 
 
-* You can login to the embedded H2 database console at [http://localhost:8080/h2-console](http://localhost:8080/h2-console "http://localhost:8080/h2-console") using the database connections string `jdbc:h2:file:<path_to_project_container_dir>/springboot-samples/springboot-rest-jpa-contacts/target/h2/contacts`
-with credentials of the standard h2 username `sa` and password `password`.
-
-
-* If you're having trouble connecting to the h2-console look at the processed
-`jpa.properties` file under the `target` folder and find the value for the
-`spring.datasource.url` property. Copy and paste the connection string into the
-h2-console `JDBC URL`
-input field.
+* You can login to the embedded H2 database console at [http://localhost:8080/h2-console](http://localhost:8080/h2-console "http://localhost:8080/h2-console") using the database connections string `jdbc:h2:mem:CONTACTS;DB_CLOSE_DELAY=-1` with credentials of the standard h2 username `sa` and empty password.
 
 
 * see [Testing and running the applications from a shell window](../README.md#testing-and-running-the-applications-from-a-shell-window) for details
