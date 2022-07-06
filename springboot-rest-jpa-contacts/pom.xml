@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.tnsilver.contacts</groupId>
 	<artifactId>jpa-contacts</artifactId>
@@ -34,7 +32,6 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<!--version>2.5.3</version-->
 		<version>2.7.1</version>
 		<relativePath />
 	</parent>
@@ -44,7 +41,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>18</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.compiler.version>3.10.1</maven.compiler.version>
 		<org.apache.poi.version>5.0.0</org.apache.poi.version>
 		<itextpdf.version>5.5.13.2</itextpdf.version>
@@ -79,7 +76,6 @@
 		<spring.datasource.hikari.password></spring.datasource.hikari.password>
 		<spring.jpa.properties.hibernate.dialect>org.hibernate.dialect.H2Dialect</spring.jpa.properties.hibernate.dialect>
 		<h2.version>1.4.200</h2.version>
-		<flyway.core.version>7.7.3</flyway.core.version>
 		<spring.flyway.locations>classpath:db/migration/h2</spring.flyway.locations>
 		<spring.jpa.show-sql>false</spring.jpa.show-sql>
 		<!-- TEST -->
@@ -132,7 +128,6 @@
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
-			<version>${flyway.core.version}</version>
 		</dependency>
 
 		<dependency>
@@ -271,7 +266,7 @@
 
 	<build>
 
-	    <finalName>jpa-contacts</finalName>
+		<finalName>jpa-contacts</finalName>
 
 		<resources>
 			<resource>
@@ -412,9 +407,7 @@
 						<exclude>**/*IT</exclude>
 						<exclude>**/Base*</exclude>
 					</excludes>
-					<argLine>@{argLine} --add-opens
-						java.base/java.time=ALL-UNNAMED
-						-Duser.timezone=UTC</argLine>
+					<argLine>@{argLine} --add-opens java.base/java.time=ALL-UNNAMED -Duser.timezone=UTC</argLine>
 				</configuration>
 			</plugin>
 
@@ -578,15 +571,23 @@
 
 		<profile>
 			<id>prod</id>
+			<!-- mysql server -->
 			<properties>
 				<spring.profiles.active>prod</spring.profiles.active>
 				<spring.flyway.locations>classpath:db/migration/mysql</spring.flyway.locations>
 				<spring.datasource.url>jdbc:mysql://localhost:3306/contacts?useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;reconnect=true&amp;useSSL=false&amp;allowPublicKeyRetrieval=true</spring.datasource.url>
 				<spring.datasource.hikari.driver-class-name>com.mysql.cj.jdbc.Driver</spring.datasource.hikari.driver-class-name>
-		        <spring.jpa.properties.hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</spring.jpa.properties.hibernate.dialect>
-		        <spring.flyway.locations>classpath:db/migration/mysql</spring.flyway.locations>
+				<spring.jpa.properties.hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</spring.jpa.properties.hibernate.dialect>
+				<spring.flyway.locations>classpath:db/migration/mysql</spring.flyway.locations>
 				<spring.jpa.show-sql>false</spring.jpa.show-sql>
 			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.flywaydb</groupId>
+					<artifactId>flyway-mysql</artifactId>
+				</dependency>
+			</dependencies>
+
 		</profile>
 
 		<profile>
