@@ -1,6 +1,6 @@
 ## Spring Boot Web Apps with Redis, MongoDB and JPA
 
-1.  **Docker** ready **JPA** with MySql or embedded H2: [springboot-rest-jpa-contacts](springboot-rest-jpa-contacts "JPA Web Application")
+1.  **Docker** ready **JPA** with MySql or embedded H2: [springboot-rest-jpa-contacts](springboot-rest-jpa-contacts "JPA Web Application") **SpringBoot 2.7.1 using JDK 18**
 
 2.  **MongoDB** live or `de.flapdoodle` embedded: [springboot-rest-mongo-contacts](springboot-rest-mongo-contacts "MongoDB Web Application")
 
