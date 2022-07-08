@@ -1,6 +1,6 @@
 /*
  * File: SecurityConfig.java
- * Creation Date: Jul 8, 2021
+ * Creation Date: Jul 20, 2021
  *
  * Copyright (c) 2021 T.N.Silverman - all rights reserved
  *
@@ -28,38 +28,40 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
-    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
-    @Value("${spring.security.user.name}")
-    String user;
-    @Value("${spring.security.user.password}")
-    String password;
-    @Value("#{'${spring.profiles.active}'.split(',')}")
-    private List<String> profiles;
+	private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+	@Value("${spring.security.user.name}")
+	String username;
+	@Value("${spring.security.user.password}")
+	String password;
+	@Value("#{'${spring.profiles.active}'.split(',')}")
+	private List<String> profiles;
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/resources/**", "/themes/**", "/error/**", "/html/error");
-    }
+	@Bean
+	protected WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web.ignoring().antMatchers("/h2-console/**", "/resources/**", "/themes/**", "/error/**",
+				"/html/error");
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        boolean test = profiles.contains("test");
-        boolean dev = profiles.contains("dev");
-        // @formatter:off
+	@Bean
+	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		boolean test = profiles.contains("test");
+		boolean dev = profiles.contains("dev");
+		// @formatter:off
         if (test || dev) {
             String profile = dev ? "dev" : (test ? "test" : profiles.toString());
             logger.debug("Disabling csrf for profile: {}", profile);
@@ -99,29 +101,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()
-            /*.and()
-                .sessionManagement()
-                .sessionFixation()
-                .newSession()*/
              .and()
                 .requestCache()
                 .requestCache(new HttpSessionRequestCache());
         // @formatter:off
+        return http.build();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    protected PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // @formatter:off
-        auth.inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder())
-                    .withUser(user)
-                    .password(passwordEncoder().encode(password))
-                    .roles("USER", "ADMIN");
-        // @formatter:on
-    }
+	@Bean
+	protected InMemoryUserDetailsManager userDetailsService() {
+		return new InMemoryUserDetailsManager(
+				User.builder().password(passwordEncoder().encode(password)).username(username).roles("USER","ADMIN").build());
+	}
+
 }
