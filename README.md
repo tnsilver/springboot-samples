@@ -1,12 +1,12 @@
 ## Spring Boot Web Apps with Redis, MongoDB and JPA
 
-1.  **Docker** ready **JPA** with MySql or embedded H2: [springboot-rest-jpa-contacts](springboot-rest-jpa-contacts "JPA Web Application") **SpringBoot 2.7.1 using JDK 18**
+1.  **Docker ready project** JPA with MySql or embedded H2: [springboot-rest-jpa-contacts](springboot-rest-jpa-contacts "JPA Web Application") **SpringBoot 2.7.1 using JDK 18**
 
-2.  **MongoDB** live or `de.flapdoodle` embedded: [springboot-rest-mongo-contacts](springboot-rest-mongo-contacts "MongoDB Web Application")
+2.  **MongoDB** live or `de.flapdoodle` embedded: [springboot-rest-mongo-contacts](springboot-rest-mongo-contacts "MongoDB Web Application") **SpringBoot 2.7.1 using JDK 18**
 
-3.  **Scala** JPA with MySql or embedded H2: [springboot-rest-scala-jpa-contacts](springboot-rest-scala-jpa-contacts "Scala JPA Web Application")
+3.  **Docker ready project** Redis as an RDBMS with Redis server 6.2 or `it.ozimov` embedded: [springboot-rest-redis-contacts](springboot-rest-redis-contacts "Redis Web Application") **SpringBoot 2.7.1 using JDK 18**
 
-4.  **Docker** ready **Redis** as an RDBMS with Redis server 6.2 or `it.ozimov` embedded: [springboot-rest-redis-contacts](springboot-rest-redis-contacts "Redis Web Application")
+4. **NO LONGER MAINTAINED** Scala JPA with MySql or embedded H2: [springboot-rest-scala-jpa-contacts](springboot-rest-scala-jpa-contacts "Scala JPA Web Application") **SpringBoot 2.5.3 using JDK 16**
 
 5.  Plans... Replace the UI with responsive bootstrap, separate the layers into microservices, run them in a service
 registry and manage it all through Kubernetes. Then have it ready to deploy on Cloud Foundry and Amazon.
@@ -80,16 +80,6 @@ or using a production instance of MongoDB. This project demonstrates using **Mon
 Spring Boot RESTfull API web application.
 
 
-
-- The **Scala**/**JPA** project is
-[springboot-rest-scala-jpa-contacts](springboot-rest-scala-jpa-contacts "Scala JPA Web Application").
-Depending on the active profile, this application can run with an embedded instance of H2 database, or using a
-production instance of MySQL. This project demonstrates... well, nothing really other than using a dead programming
-language (I guess). Other than using **Scala** in this project, it's nearly identical to the Java based **JPA**
-project in the first bullet.
-
-
-
 - **Now Dockerized** with an extensive guide on 'how to' - the **Redis** based project is
 [springboot-rest-redis-contacts](springboot-rest-redis-contacts "Redis Web Application"). Depending on the active
 profile, this application can run with an embedded Redis instance or a production grade single stand-alone instance of
@@ -100,11 +90,18 @@ Boot. Besides... it's not what redis is for. But... If you insist, it's feasible
 and annoyances dictated by such a choice.
 
 
+- **NO LONGER MAINTAINED** The **Scala**/**JPA** project is
+[springboot-rest-scala-jpa-contacts](springboot-rest-scala-jpa-contacts "Scala JPA Web Application").
+Depending on the active profile, this application can run with an embedded instance of H2 database, or using a
+production instance of MySQL. This project demonstrates... well, nothing really other than using a dead programming
+language (I guess). Other than using **Scala** in this project, it's nearly identical to the Java based **JPA**
+project in the first bullet.
+
 
 ## Executive Summary - Running the Application:
 
 
-*  make sure you have [JDK 16](https://jdk.java.net/16/ "JDK 16.0.1") installed!
+*  make sure you have [JDK 18](https://jdk.java.net/18/ "JDK 18.0.1.1") installed!
 
 *  if you don't have [Apache Maven](https://maven.apache.org/ "Apache Maven") installed, you can use the wrapper.
 
