@@ -1,15 +1,14 @@
 CREATE TABLE audit (
-  id identity NOT NULL AUTO_INCREMENT,
+  id IDENTITY NOT NULL PRIMARY KEY,
   action varchar(50) DEFAULT NULL,
   created_on timestamp DEFAULT NULL,
   created_by varchar(255) NOT NULL,
-  entity_id bigint(20) DEFAULT NULL,
+  entity_id bigint DEFAULT NULL,
   entity_type varchar(255) DEFAULT NULL,
-  entity varchar(1024) NOT NULL,
-  PRIMARY KEY (id)
+  entity varchar(1024) NOT NULL
 );
 CREATE TABLE contact (
-  id identity  AUTO_INCREMENT NOT NULL,
+  id IDENTITY NOT NULL PRIMARY KEY,
   contact_ssn varchar(50) DEFAULT NULL,
   first_name varchar(50) DEFAULT NULL,
   last_name varchar(50) DEFAULT NULL,
@@ -20,6 +19,5 @@ CREATE TABLE contact (
   modified_by varchar(255) NOT NULL,
   created_on timestamp NOT NULL,
   modified_on timestamp	 DEFAULT NULL,
-  version bigint DEFAULT NULL,
-  PRIMARY KEY (id)
+  version bigint DEFAULT NULL
 );

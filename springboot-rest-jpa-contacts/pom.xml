@@ -75,7 +75,6 @@
 		<spring.datasource.hikari.username>sa</spring.datasource.hikari.username>
 		<spring.datasource.hikari.password></spring.datasource.hikari.password>
 		<spring.jpa.properties.hibernate.dialect>org.hibernate.dialect.H2Dialect</spring.jpa.properties.hibernate.dialect>
-		<h2.version>1.4.200</h2.version>
 		<spring.flyway.locations>classpath:db/migration/h2</spring.flyway.locations>
 		<spring.jpa.show-sql>false</spring.jpa.show-sql>
 		<!-- TEST -->
@@ -139,7 +138,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<version>${h2.version}</version>
+			<!--version>${h2.version}</version-->
 		</dependency>
 
 		<dependency>
