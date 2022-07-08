@@ -31,7 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy;
-import org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy;
+import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -78,7 +78,7 @@ public class JpaConfig {
      */
     @Bean(name = "entityManagerFactory")
     @DependsOn("flyway")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+    protected LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         Assert.notNull(dataSource, "dataSource is null");
         return createEntityManagerFactoryBean(dataSource);
     }
@@ -90,7 +90,7 @@ public class JpaConfig {
      * @return the jpa transaction manager
      */
     @Bean(name = "transactionManager")
-    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+    protected JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
 
@@ -100,7 +100,7 @@ public class JpaConfig {
      * @return the persistence exception translator
      */
     @Bean(name = "persistenceExceptionTranslator")
-    public PersistenceExceptionTranslator persistenceExceptionTranslator() {
+    protected PersistenceExceptionTranslator persistenceExceptionTranslator() {
         return new HibernateExceptionTranslator();
     }
 
@@ -122,7 +122,7 @@ public class JpaConfig {
         properties.put("hibernate.connection.UseUnicode", "true");
         properties.put("hibernate.connection.CharSet", "UTF-8");
         properties.put("hibernate.dialect.storage_engine", "innodb");
-        properties.put("hibernate.physical_naming_strategy", SpringPhysicalNamingStrategy.class.getName());
+        properties.put("hibernate.physical_naming_strategy", CamelCaseToUnderscoresNamingStrategy.class.getName());
         properties.put("hibernate.implicit_naming_strategy", SpringImplicitNamingStrategy.class.getName());
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource);
