@@ -37,7 +37,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.annotation.Version;
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.redis.core.index.Indexed;
@@ -140,7 +140,7 @@ public class Contact implements BaseHash {
     }
 
 
-    @PersistenceConstructor
+    @PersistenceCreator
     public Contact(Long id, SocialSecurityNumber ssn, String firstName, String lastName, LocalDate birthDate, Boolean married, Integer children) {
         this(ssn, firstName, lastName, birthDate, married, children);
         this.id = id;
