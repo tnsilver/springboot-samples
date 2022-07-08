@@ -407,6 +407,7 @@
 						<exclude>**/*IT</exclude>
 						<exclude>**/Base*</exclude>
 					</excludes>
+					<!-- do not let this line break -->
 					<argLine>@{argLine} --add-opens java.base/java.time=ALL-UNNAMED -Duser.timezone=UTC</argLine>
 				</configuration>
 			</plugin>
