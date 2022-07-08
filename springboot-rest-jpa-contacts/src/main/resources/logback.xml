@@ -1,27 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"  ?>
 <!DOCTYPE xml>
 <configuration scan="true" scanPeriod="3 seconds">
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{80}.%method ->
-			     %msg%n</pattern>
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>ALL</level>
-        </filter>
-    </appender>
-    <root level="DEBUG">
-        <appender-ref ref="STDOUT"/>
-    </root>
-    <logger name="com.tnsilver.contacts" level="DEBUG"/>
-    <logger name="om.zaxxer.hikari.pool" level="INFO"/>
-    <logger name="org.apache.http" level="INFO"/>
-    <logger name="com.zaxxer.hikari.pool" level="INFO"/>
-    <logger name="org.springframework.boot.autoconfigure.logging" level="INFO"/>
-    <logger name="org.springframework" level="INFO"/>
-    <logger name="_org.springframework.web.servlet.HandlerMapping.Mappings" level="INFO"/>
-    <logger name="org.apache.tomcat" level="WARN"/>
-    <logger name="org.thymeleaf" level="WARN"/>
-    <logger name="org.hibernate" level="WARN"/>
+				%msg%n</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ALL</level>
+		</filter>
+	</appender>
+
+	<appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="STDOUT" />
+	</appender>
+
+	<root level="DEBUG">
+		<appender-ref ref="ASYNC" />
+	</root>
+
+	<logger name="com.tnsilver.contacts" level="DEBUG" />
+	<logger name="om.zaxxer.hikari.pool" level="INFO" />
+	<logger name="org.apache.http" level="INFO" />
+	<logger name="com.zaxxer.hikari.pool" level="INFO" />
+	<logger name="org.springframework.boot.autoconfigure.logging" level="INFO" />
+	<logger name="org.springframework" level="INFO" />
+	<logger name="_org.springframework.web.servlet.HandlerMapping.Mappings" level="INFO" />
+	<logger name="org.apache.tomcat" level="WARN" />
+	<logger name="org.thymeleaf" level="WARN" />
+	<logger name="org.hibernate" level="WARN" />
 
 </configuration>
