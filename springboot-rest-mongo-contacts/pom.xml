@@ -41,7 +41,7 @@
 		<spring.data.mongodb.database>contacts</spring.data.mongodb.database>
 		<spring.data.mongodb.username>user</spring.data.mongodb.username>
 		<spring.data.mongodb.password>password</spring.data.mongodb.password>
-		<application.it.test.timeout>10</application.it.test.timeout>
+		<application.it.test.timeout>2</application.it.test.timeout>
 		<application.it.test.timeunit>MINUTES</application.it.test.timeunit>
 	</properties>
 
@@ -453,7 +453,7 @@
 				<spring.data.mongodb.host>localhost</spring.data.mongodb.host>
 				<spring.data.mongodb.port>28018</spring.data.mongodb.port>
 				<spring.autoconfigure.exclude></spring.autoconfigure.exclude>
-				<application.it.test.timeout>10</application.it.test.timeout>
+				<application.it.test.timeout>2</application.it.test.timeout>
 				<application.it.test.timeunit>MINUTES</application.it.test.timeunit>
 			</properties>
 		</profile>
@@ -467,7 +467,7 @@
 				<spring.data.mongodb.host>localhost</spring.data.mongodb.host>
 				<spring.data.mongodb.port>28018</spring.data.mongodb.port>
 				<spring.autoconfigure.exclude></spring.autoconfigure.exclude>
-				<application.it.test.timeout>5</application.it.test.timeout>
+				<application.it.test.timeout>2</application.it.test.timeout>
 				<application.it.test.timeunit>MINUTES</application.it.test.timeunit>
 				<spring.mongodb.embedded.version></spring.mongodb.embedded.version>
 			</properties>

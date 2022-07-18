@@ -82,7 +82,7 @@
 		<jib.maven.plugin.version>3.1.2</jib.maven.plugin.version>
 		<start-class>com.tnsilver.contacts.Application</start-class>
 		<!-- TEST -->
-		<application.it.test.timeout>10</application.it.test.timeout>
+		<application.it.test.timeout>2</application.it.test.timeout>
 		<application.it.test.timeunit>MINUTES</application.it.test.timeunit>
 	</properties>
 
@@ -144,7 +144,7 @@
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 		</dependency>
 
-		<dependency>
+        <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
@@ -638,7 +638,7 @@
 				<spring.redis.port>6379</spring.redis.port>
 				<spring.redis.host>localhost</spring.redis.host>
 				<spring.redis.url>redis://${spring.redis.host}:${spring.redis.port}</spring.redis.url>
-				<application.it.test.timeout>10</application.it.test.timeout>
+				<application.it.test.timeout>2</application.it.test.timeout>
 				<application.it.test.timeunit>MINUTES</application.it.test.timeunit>
 			</properties>
 		</profile>
@@ -654,7 +654,7 @@
 				<spring.redis.port>6370</spring.redis.port>
 				<spring.redis.host>localhost</spring.redis.host>
 				<spring.redis.url>redis://${spring.redis.host}:${spring.redis.port}</spring.redis.url>
-				<application.it.test.timeout>10</application.it.test.timeout>
+				<application.it.test.timeout>2</application.it.test.timeout>
 				<application.it.test.timeunit>MINUTES</application.it.test.timeunit>
 			</properties>
 		</profile>
@@ -666,7 +666,7 @@
 				<spring.profiles.active>test</spring.profiles.active>
 				<spring.redis.port>6370</spring.redis.port>
 				<spring.redis.url>redis://${spring.redis.host}:${spring.redis.port}</spring.redis.url>
-				<application.it.test.timeout>5</application.it.test.timeout>
+				<application.it.test.timeout>2</application.it.test.timeout>
 				<application.it.test.timeunit>MINUTES</application.it.test.timeunit>
 			</properties>
 		</profile>

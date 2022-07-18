@@ -78,7 +78,7 @@
 		<spring.flyway.locations>classpath:db/migration/h2</spring.flyway.locations>
 		<spring.jpa.show-sql>false</spring.jpa.show-sql>
 		<!-- TEST -->
-		<application.it.test.timeout>10</application.it.test.timeout>
+		<application.it.test.timeout>2</application.it.test.timeout>
 		<application.it.test.timeunit>MINUTES</application.it.test.timeunit>
 	</properties>
 
@@ -599,7 +599,7 @@
 			<properties>
 				<spring.profiles.active>dev</spring.profiles.active>
 				<spring.jpa.show-sql>false</spring.jpa.show-sql>
-				<application.it.test.timeout>10</application.it.test.timeout>
+				<application.it.test.timeout>2</application.it.test.timeout>
 				<application.it.test.timeunit>MINUTES</application.it.test.timeunit>
 			</properties>
 		</profile>
@@ -609,7 +609,7 @@
 			<id>test</id>
 			<properties>
 				<spring.profiles.active>test</spring.profiles.active>
-				<application.it.test.timeout>5</application.it.test.timeout>
+				<application.it.test.timeout>2</application.it.test.timeout>
 				<application.it.test.timeunit>MINUTES</application.it.test.timeunit>
 			</properties>
 		</profile>
