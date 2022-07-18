@@ -26,7 +26,7 @@
             <li class="dropdown">
                 <a href="javascript:void(0)" class="dropbtn"><spring:message code='page.language' text="Language"/></a>
                 <div class="dropdown-content">
-                    <a href='<c:out value="${url}"/>?lang=iw_IL'><img src='<c:url value="/resources/images/flags/iw.png"/>'>&nbsp;<span><spring:message code='lang.iw' text="Hebrew"/></span></a>
+                    <a href='<c:out value="${url}"/>?lang=he_IL'><img src='<c:url value="/resources/images/flags/iw.png"/>'>&nbsp;<span><spring:message code='lang.iw' text="Hebrew"/></span></a>
                     <a href='<c:out value="${url}"/>?lang=en_US'><img src='<c:url value="/resources/images/flags/en.png"/>'>&nbsp;<span><spring:message code='lang.en' text="English"/></span></a>
                 </div>
             </li>

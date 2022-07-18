@@ -467,7 +467,7 @@ to review the application.
 ## Running and testing the applications from IDE
 
 You can also run the Java applications from inside your IDE.
-In this section I detail the how-to for Eclipse IDE and for JetBrains IntelliJ IDEA.
+This section details the how-to for Eclipse IDE and for JetBrains IntelliJ IDEA.
 
 **Note** Scala IDE plugin for Eclipse is no longer supported. It will not run with Java 16 (it's most recent supported version is Java 11, and more commonly Java 1.8). I could not run the Scala application from Eclipse. For every time I've
 installed the Scala IDE from Eclipse Market place or through the update site, it totally screwed up my `jee-2021-06-R` Eclipse and it started to yield a load of unstoppable error messages.
@@ -478,7 +478,7 @@ I had to work magic to get it running in IntelliJ IDEA, and by some tedious conf
 ### Eclipse IDE setup
 
 These applications were developed with [Eclipse IDE 2021-06-R for JavaEE and Web Developers](https://www.eclipse.org/downloads/packages/ "Eclipse IDE 2021-06 R").
-The IDE runs with [JDK 16.0.1](https://jdk.java.net/16/ "JDK 16.0.1") JRE.  There's a few
+The IDE runs with [JDK 18.0.1.1](https://jdk.java.net/18/ "JDK 18.0.1.1") JRE.  There's a few
 configurations to take in mind before importing any of the projects into eclipse.
 
 Configure lombok instrumentation. [Project Lombok](https://projectlombok.org/ "Project Lombok") is a
