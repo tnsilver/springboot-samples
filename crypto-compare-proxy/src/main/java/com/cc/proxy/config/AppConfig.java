@@ -42,7 +42,7 @@ public class AppConfig implements WebMvcConfigurer {
 	}
 
 	/**
-	 * defaines a rest template bean.
+	 * defines a rest template bean.
 	 * @return the default spring boot rest template object.
 	 */
 	@Bean
