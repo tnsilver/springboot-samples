@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -17,13 +16,13 @@ import lombok.ToString;
  * container for JSON results from api endpoint
  * {@linkplain https://min-api.cryptocompare.com/data/all/coinlist}
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "Response", "Message", "id", "symbol", "coinName", "algorithm", "t oUSD" })
+//@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({ "Response", "Message", "id", "symbol", "coinName", "algorithm", "toUSD" })
 @JsonIgnoreProperties(ignoreUnknown = true)
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
-public class CryptoCoin implements DetailedResponse {
+public class CryptoCoin {
 
     // @formatter:off
 	@JsonProperty("Response") private String response;

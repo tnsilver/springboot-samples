@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.context.request.WebRequest;
 
-import com.cc.proxy.model.CachettlRequest;
+import com.cc.proxy.model.CacheTTLRequest;
 import com.cc.proxy.model.CryptoCoin;
 import com.cc.proxy.model.ProxyResponse;
 import com.cc.proxy.service.InMemoryCache;
@@ -132,7 +132,7 @@ public class CryptoCompareProxyController {
 	@PreAuthorize("@headerAuthorizationService.authorize(#request)")
 	@RequestMapping(value = "/cachettl", produces = { APPLICATION_JSON_VALUE }, consumes = {
 			APPLICATION_JSON_VALUE }, method = POST)
-	public ResponseEntity<ProxyResponse<Map<String, Long>>> modifyCacheTtl(@RequestBody CachettlRequest payload,
+	public ResponseEntity<ProxyResponse<Map<String, Long>>> modifyCacheTtl(@RequestBody CacheTTLRequest payload,
 			@Autowired WebRequest request) {
 		HttpStatus status = HttpStatus.CREATED;
 		String response = "", message = "";

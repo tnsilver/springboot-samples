@@ -1,3 +1,8 @@
+    /**
+     * This file is unused, unless index.html removes the bottom script code
+     * amd includes a link to this file.
+     */
+
     var loadingMsg = $('#details-message').attr('data-loading-msg');
     var errorMsg = $('#details-message').attr('data-error-msg');
     var successMsg = $('#details-message').attr('data-success-msg');

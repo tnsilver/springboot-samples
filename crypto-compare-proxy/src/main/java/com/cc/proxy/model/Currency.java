@@ -16,7 +16,7 @@ import lombok.Data;
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class Currency implements DetailedResponse {
+public class Currency {
 
 	// @formatter:off
 	@JsonProperty("Response") private String response;

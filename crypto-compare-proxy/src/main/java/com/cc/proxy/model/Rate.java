@@ -19,7 +19,7 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class Rate implements DetailedResponse {
+public class Rate {
 
 	// @formatter:off
 	@JsonProperty("Response") private String response;

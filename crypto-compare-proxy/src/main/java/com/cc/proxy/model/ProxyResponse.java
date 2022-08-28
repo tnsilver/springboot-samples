@@ -8,12 +8,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@JsonPropertyOrder({ "Response", "Message", "Data" })
 @JsonIgnoreProperties(ignoreUnknown = true)
+@JsonPropertyOrder({ "Response", "Message", "Data" })
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProxyResponse<T> implements DetailedResponse {
+public class ProxyResponse<T> {
 
 	// @formatter:off
 	@JsonProperty("response") private String response;
