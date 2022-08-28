@@ -1,0 +1,13 @@
+{
+  "response": "200 OK",
+  "message": "1 coin matching symbol 'BUSD' found",
+  "data": [
+    {
+      "id": 932135,
+      "symbol": "BUSD",
+      "coinName": "BUSD",
+      "algorithm": "N/A",
+      "toUSD": 0.9999
+    }
+  ]
+}

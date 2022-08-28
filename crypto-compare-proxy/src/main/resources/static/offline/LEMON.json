@@ -1,0 +1,13 @@
+{
+  "response": "200 OK",
+  "message": "1 coin matching symbol 'LEMON' found",
+  "data": [
+    {
+      "id": 21641,
+      "symbol": "LEMON",
+      "coinName": "LemonCoin",
+      "algorithm": "Argon2",
+      "toUSD": 0.001713
+    }
+  ]
+}

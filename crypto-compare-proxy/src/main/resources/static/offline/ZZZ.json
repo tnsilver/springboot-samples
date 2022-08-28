@@ -1,0 +1,13 @@
+{
+  "response": "200 OK",
+  "message": "1 coin matching symbol 'ZZZ' found",
+  "data": [
+    {
+      "id": 936210,
+      "symbol": "ZZZ",
+      "coinName": "zzz.finance",
+      "algorithm": "N/A",
+      "toUSD": 102.17
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "response": "200 OK",
+  "message": "1 coin matching symbol 'USDT' found",
+  "data": [
+    {
+      "id": 171986,
+      "symbol": "USDT",
+      "coinName": "Tether",
+      "algorithm": "N/A",
+      "toUSD": 0.9998
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "response": "200 OK",
+  "message": "1 coin matching symbol 'BTC' found",
+  "data": [
+    {
+      "id": 1182,
+      "symbol": "BTC",
+      "coinName": "Bitcoin",
+      "algorithm": "SHA-256",
+      "toUSD": 21235.91
+    }
+  ]
+}

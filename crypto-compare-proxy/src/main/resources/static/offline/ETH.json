@@ -1,0 +1,13 @@
+{
+  "response": "200 OK",
+  "message": "1 coin matching symbol 'ETH' found",
+  "data": [
+    {
+      "id": 7605,
+      "symbol": "ETH",
+      "coinName": "Ethereum",
+      "algorithm": "Ethash",
+      "toUSD": 1619.28
+    }
+  ]
+}

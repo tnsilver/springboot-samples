@@ -1,0 +1,13 @@
+{
+  "response": "200 OK",
+  "message": "1 coin matching symbol '1ECO' found",
+  "data": [
+    {
+      "id": 946160,
+      "symbol": "1ECO",
+      "coinName": "1eco",
+      "algorithm": "N/A",
+      "toUSD": 2.455
+    }
+  ]
+}

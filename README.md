@@ -6,9 +6,11 @@
 
 3.  **Docker ready project** Redis as an RDBMS with Redis server 6.2 or `it.ozimov` embedded: [springboot-rest-redis-contacts](springboot-rest-redis-contacts "Redis Web Application") **SpringBoot 2.7.1 using JDK 18**
 
-4. **NO LONGER MAINTAINED** Scala JPA with MySql or embedded H2: [springboot-rest-scala-jpa-contacts](springboot-rest-scala-jpa-contacts "Scala JPA Web Application") **SpringBoot 2.5.3 using JDK 16**
+4. [crypto-compare-proxy](crypto-compare-proxy) is a job interview project, demonstrating REST api implemented with Spring Boot, where an application retrieves crypto currency data from the public API of [https://min-api.cryptocompare.com/documentation](Crypto Compare Com), caches it, and serves it to clients, implemented with **Thymeleaf** template technologies, employing stabdard bootstrap/css3/html5/JQuery/datatables client development technologies.
 
-5.  Plans... Replace the UI with responsive bootstrap, separate the layers into microservices, run them in a service
+5. **NO LONGER MAINTAINED** Scala JPA with MySql or embedded H2: [springboot-rest-scala-jpa-contacts](springboot-rest-scala-jpa-contacts "Scala JPA Web Application") **SpringBoot 2.5.3 using JDK 16**
+
+6.  Plans... Replace the UI with responsive bootstrap, separate the layers into microservices, run them in a service
 registry and manage it all through Kubernetes. Then have it ready to deploy on Cloud Foundry and Amazon.
 
 
@@ -43,7 +45,6 @@ registry and manage it all through Kubernetes. Then have it ready to deploy on C
 * [Additional Info](#additional-info)
 * [Credits](#credits)
 * [License](#license)
-
 
 
 ![Contacts Application](images/contacts.jpg?raw=true "Contacts Application")
@@ -88,6 +89,9 @@ myriad of issues that come with this territory with Spring Boot. This is really 
 on production. It will work and work nicely and fast, but development involves a lot of overhead - even with Spring
 Boot. Besides... it's not what redis is for. But... If you insist, it's feasible and I've solved many of the issues
 and annoyances dictated by such a choice.
+
+
+- **New** [crypto-compare-proxy](crypto-compare-proxy) is a job interview project, demonstrating REST api implemented with Spring Boot, where an application retrieves crypto currency data from the public API of [https://min-api.cryptocompare.com/documentation](Crypto Compare Com), caches it, and serves it to clients, implemented with **Thymeleaf** template technologies, employing stabdard bootstrap/css3/html5/JQuery/datatables client development technologies.
 
 
 - **NO LONGER MAINTAINED** The **Scala**/**JPA** project is

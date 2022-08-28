@@ -1,0 +1,13 @@
+{
+  "response": "200 OK",
+  "message": "1 coin matching symbol 'USDC' found",
+  "data": [
+    {
+      "id": 925809,
+      "symbol": "USDC",
+      "coinName": "USD Coin",
+      "algorithm": "N/A",
+      "toUSD": 0.9998
+    }
+  ]
+}

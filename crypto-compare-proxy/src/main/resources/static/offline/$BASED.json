@@ -1,0 +1,13 @@
+{
+  "response": "200 OK",
+  "message": "1 coin matching symbol '$BASED' found",
+  "data": [
+    {
+      "id": 936356,
+      "symbol": "$BASED",
+      "coinName": "Based Money",
+      "algorithm": "N/A",
+      "toUSD": 3.351
+    }
+  ]
+}

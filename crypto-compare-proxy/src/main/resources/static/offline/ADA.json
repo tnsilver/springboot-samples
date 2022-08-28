@@ -1,0 +1,13 @@
+{
+  "response": "200 OK",
+  "message": "1 coin matching symbol 'ADA' found",
+  "data": [
+    {
+      "id": 321992,
+      "symbol": "ADA",
+      "coinName": "Cardano",
+      "algorithm": "Ouroboros",
+      "toUSD": 0.4613
+    }
+  ]
+}

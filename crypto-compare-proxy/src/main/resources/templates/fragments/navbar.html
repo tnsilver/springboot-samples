@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<body>
+			<nav th:fragment="navbar (active)" th:assert="${!#strings.isEmpty(active)}">
+				<ul class="nav nav-pills pull-right">
+					<li role="presentation" th:class="${active} eq 'index' ? 'active'"><a th:href="@{/}" href="#" th:utext="#{nav.menu.home}">Home</a></li>
+					<li role="presentation" th:class="${active} eq 'about' ? 'active'"><a href="#" th:href="@{/about}" th:utext="#{nav.menu.about}">About</a></li>
+					<li role="presentation" th:class="${active} eq 'contact' ? 'active'"><a href="#" th:href="@{/contact}" th:utext="#{nav.menu.contact}">Contact</a></li>
+				</ul>
+			</nav>
+			<h3 th:utext="#{nav.menu.brand}" class="text-muted">Crypto Currency Proxy</h3>
+</body>
+</html>

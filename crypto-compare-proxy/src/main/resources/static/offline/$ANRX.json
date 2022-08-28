@@ -1,0 +1,13 @@
+{
+  "response": "200 OK",
+  "message": "1 coin matching symbol '$ANRX' found",
+  "data": [
+    {
+      "id": 938161,
+      "symbol": "$ANRX",
+      "coinName": "AnRKey X",
+      "algorithm": "N/A",
+      "toUSD": 0.1485
+    }
+  ]
+}

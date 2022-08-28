@@ -1,0 +1,13 @@
+{
+  "response": "200 OK",
+  "message": "1 coin matching symbol 'BNB' found",
+  "data": [
+    {
+      "id": 204788,
+      "symbol": "BNB",
+      "coinName": "Binance Coin",
+      "algorithm": "BEP-2",
+      "toUSD": 299.61
+    }
+  ]
+}

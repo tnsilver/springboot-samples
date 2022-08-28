@@ -1,0 +1,13 @@
+{
+  "response": "200 OK",
+  "message": "1 coin matching symbol '42' found",
+  "data": [
+    {
+      "id": 4321,
+      "symbol": "42",
+      "coinName": "42 Coin",
+      "algorithm": "Scrypt",
+      "toUSD": 790000
+    }
+  ]
+}
