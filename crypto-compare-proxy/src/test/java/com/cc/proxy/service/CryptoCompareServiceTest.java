@@ -17,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.cc.proxy.model.CryptoCoin;
 import com.cc.proxy.model.Rate;
-import com.cc.proxy.service.CryptoCompareService;
 
 @SpringBootTest
 class CryptoCompareServiceTest {

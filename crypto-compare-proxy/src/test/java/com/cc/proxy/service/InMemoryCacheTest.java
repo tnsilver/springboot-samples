@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.cc.proxy.model.CryptoCoin;
-import com.cc.proxy.service.InMemoryCache;
 
 /**
  * The test case InMemoryCacheTest test the functionality of the
