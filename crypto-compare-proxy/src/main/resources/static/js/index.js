@@ -27,20 +27,25 @@
     	$.ajax({
     		type: "GET",
     		url: url,
-    		beforeSend: function(jqXHR, settings) {
+    		beforeSend: function() {
                $('#details-message').text(loadingMsg);
     		   if (!$('#details-panel').hasClass('panel-warning'))
     				$('#details-panel').addClass('panel-warning');
     		},
     		statusCode: {
-    			200: function(data, status, jqXHR) {
-    			    console.debug("getDetails(url) -> message: ", data.message,", id:", data.data[0].id, ", coinName:", data.data[0].coinName,", symbol: ", data.data[0].symbol, ", algorithm: ", data.data[0].algorithm, ", toUSD:", data.data[0].toUSD);
+    			200: function(data, status) {
+    			    console.debug("getDetails(url) (200) OK -> status:", status, ",message: ", data.message,",id:", data.data[0].id, ",coinName:", data.data[0].coinName,",symbol: ", data.data[0].symbol, ",algorithm: ", data.data[0].algorithm, ", toUSD:", data.data[0].toUSD);
     			    renderDetails(data, false);
     			}
     		},
     		error: function( jqXHR, status, error ) {
     			var symbol = (url.substring(url.lastIndexOf("/") + 1)).replace(".json","");
-    			console.debug("getDetails(url) -> symbol:", symbol ,", status:", status);
+    			if (!jqXHR.status || jqXHR.status == 0)
+    				console.error("getDetails(url) -> no response from ", url,", Server does not appear to be running!");
+    			else if (!jqXHR.status || jqXHR.status == 500)
+    				console.error("getDetails(url) (500) error -> No data found for '" + symbol + "'");
+    			else
+    				console.error("getDetails(url) (error) -> symbol:", symbol ,",status:", jqXHR.status, ",statusText: ", jqXHR.statusText,",error:", error);
     			renderDetails({"symbol": symbol}, true);
     		}
     	});
@@ -70,8 +75,8 @@
 				$('#details-panel').addClass('panel-danger');
     	} else {
             $('#details-message').text(successMsg.replace("{0}", data.data[0].symbol));
-			if (!$('#details-panel').hasClass('panel-success'))
-				$('#details-panel').addClass('panel-success');
+			if (!$('#details-panel').hasClass('panel-primary'))
+				$('#details-panel').addClass('panel-primary');
     	}
     }
 
@@ -83,8 +88,8 @@
     	$("#ccUSDSpan").empty();
     	if ($('#details-panel').hasClass('panel-warning'))
             $('#details-panel').removeClass('panel-warning');
-    	if ($('#details-panel').hasClass('panel-success'))
-            $('#details-panel').removeClass('panel-success');
+    	if ($('#details-panel').hasClass('panel-primary'))
+            $('#details-panel').removeClass('panel-primary');
     	if ($('#details-panel').hasClass('panel-danger'))
             $('#details-panel').removeClass('panel-danger');
         if (!$('#details-panel').hasClass('panel-default'))
