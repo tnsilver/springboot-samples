@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonPropertyOrder({ "Response", "Message", "Data" })
+@JsonPropertyOrder({ "response", "message", "data" })
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
