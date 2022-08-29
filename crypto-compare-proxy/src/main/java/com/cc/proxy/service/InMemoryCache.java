@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import com.cc.proxy.model.CryptoCoin;
@@ -292,6 +293,14 @@ public class InMemoryCache<K, V> {
 						entrySet.add(entry(key, value.value));
 				}
 			}
+			StackWalker walker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
+			Pair<String, String> pair = walker.walk(frames -> frames
+				      .map(frame -> Pair.of(frame.getDeclaringClass().getSimpleName(), frame.getMethodName()))
+				      .skip(1)
+				      .findAny()
+				      .orElse(null));
+			if (null != pair)
+				log.info("{}.{}() accessed all cached data.", pair.getFirst(), pair.getSecond());
 			return entrySet;
 		} finally {
 			readLock.unlock();
