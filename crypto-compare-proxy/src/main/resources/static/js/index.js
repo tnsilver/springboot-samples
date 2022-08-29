@@ -106,7 +106,7 @@
 
         var masterUrl = $('body').attr('data-master-url');
     	var table = $('#datatable').DataTable({
-    		ajax: { url: masterUrl, async: true },
+    		ajax: { url: masterUrl, async: true, cache: true },
     		columns: [ { "data": "coinName", "searchable": false}, { "data": "symbol" }, { "data": "algorithm" } ],
     		order: [ [1, "asc"], [2, "asc"] ],
     		//columns: [ { "data": "symbol" }, { "data": "algorithm" } ],
