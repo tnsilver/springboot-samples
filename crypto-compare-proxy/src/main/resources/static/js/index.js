@@ -144,9 +144,11 @@
        $('#refresh-btn').click(function (e){
     	   e.preventDefault();
     	   clearDetails();
-    	   table.clear();
-    	   table.ajax.reload(null, true);
+    	   table.search("").draw();
+    	   table.page.len(-1).draw();
     	   table.order([ [1, "asc"], [2, "asc"] ]);
     	   //table.order([ [0, "asc"], [1, "asc"] ]);
+    	   table.clear();
+    	   table.ajax.reload();
        });
     });
