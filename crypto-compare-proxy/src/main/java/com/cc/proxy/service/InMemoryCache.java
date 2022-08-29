@@ -39,22 +39,25 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * The class InMemoryCache is a cache implementation. It is an LRU based map
- * with entries living a maximum of TTL milliseconds before a cleaner thread
- * evacuates them.
+ * with entries living a maximum of {@code ttl} milliseconds before a cleaner
+ * thread evacuates them.
  *
  * @apiNote property {@code cache.ttl.ms} in {@code cache.properties} is the
  *          default time to live in milliseconds.
  * @apiNote when method {@link #get(Object)} is called and property
  *          {@code cache.refresh.on.null} in {@code cache.properties} is set to
  *          true, this cache will automatically retrieve the entry from live
- *          data, cache it and return it, in case it had been evacuated from the
+ *          data, cache it, and return it in case it had been evacuated from the
  *          cache.
  * @apiNote if property {@code cache.auto.refresh} in {@code cache.properties}
  *          is set to true, this cache will automatically replace each evacuated
  *          entry with fresh data.
  *
- * @param <K> the type of cached entry key
- * @param <V> the type of cached entry
+ * @param <K> the type of cached entry key (in this application just a
+ *            {@code String} representing a crypto-currency symbol.
+ * @param <V> the type of cached entry (in this application an instance of
+ *            {@code CachedEntry<V>}, where {@code V} is an instance of a
+ *            {@link CryptoCoin}.
  */
 @Service
 @Scope(SCOPE_SINGLETON) // this is the default, and it's stated here for clarity only.
@@ -74,22 +77,25 @@ public class InMemoryCache<K, V> {
 	// @formatter:on
 
 	private final ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-	private final ReadLock readLock = readWriteLock.readLock();
-	private final WriteLock writeLock = readWriteLock.writeLock();
-	private volatile AtomicBoolean runEvacThread = new AtomicBoolean(true);
-	private final ExecutorService threadPool;
-	private AtomicLong staleCounter = new AtomicLong(), freshCounter = new AtomicLong(), ttl = new AtomicLong();
-	private LRUMap<K, CachedEntry<V>> cache;
+	private final ReadLock readLock = readWriteLock.readLock(); // to lock on read operations
+	private final WriteLock writeLock = readWriteLock.writeLock(); // to lock on write operations
+	private volatile AtomicBoolean runEvacThread = new AtomicBoolean(true); // stop flag
+	private final ExecutorService threadPool; // thread pool
+	private AtomicLong staleCounter = new AtomicLong(), freshCounter = new AtomicLong(), ttl = new AtomicLong(); // counters
+	private LRUMap<K, CachedEntry<V>> cache; // the cache is an LRU map.
 
 	public InMemoryCache() {
 		threadPool = Executors.newCachedThreadPool(runable -> {
 			Thread thread = Executors.defaultThreadFactory().newThread(runable);
-			thread.setDaemon(true);
+			thread.setDaemon(true); // threads are daemons, so the thread pool can be shutdown elegantly.
 			return thread;
 		});
 	}
 
-	@PostConstruct
+	/**
+	 * Initialize the cache and submit a cache cleaning daemon thread.
+	 */
+	@PostConstruct // called by spring after construction and DI.
 	void init() {
 		setTtl(defaultTtl);
 		Map<K, V> data = (Map<K, V>) service.getCoinlistData();
@@ -97,10 +103,27 @@ public class InMemoryCache<K, V> {
 		data.entrySet().forEach(e -> put(e.getKey(), e.getValue()));
 		log.info("initialized cache with {} entries", data.size());
 		if (ttl.get() > 0)
-			threadPool.submit(createThreadPoolTask());
+			threadPool.submit(() -> {
+				while (runEvacThread.get()) {
+					try {
+						log.debug("cache evacuation thread [{}] awaiting for {} ms...", Thread.currentThread().getName(), ttl.get());
+						Thread.sleep(ttl.get());
+						if (!runEvacThread.get())
+							log.info("cache evacuation thread [{}] stopped!", Thread.currentThread().getName());
+						else
+							cleanup();
+					} catch (InterruptedException ex) {
+						log.info("cache evacuation thread [{}] will terminate now!", Thread.currentThread().getName());
+					}
+				}
+			});
 	}
 
-	@PreDestroy
+	/**
+	 * This methods shuts down the thread pool in an elegant fashion, by first
+	 * signaling the spawned daemon threads to shutdown.
+	 */
+	@PreDestroy // called by spring on application context shutdown.
 	void preDestroy() {
 		log.info("thread pool will shutdown in maximum {} ms...", ttl.get());
 		this.runEvacThread.set(false);
@@ -163,17 +186,40 @@ public class InMemoryCache<K, V> {
 		return null == cachedEntry ? null : cachedEntry.value;
 	}
 
+	/**
+	 * A method to create a cache entry, which is an object of type
+	 * {@code CachedEntry<V>} containing a {@code CryptoCoin} data.
+	 *
+	 * @param key the crypto-currency symbol
+	 * @apiNote this method retrieves both the basic crypto-currency basic details
+	 *          and the USD currency rxcahnge rate. In other words, it access two
+	 *          different external REST API endpoints and combines the data
+	 *          retrieved.
+	 */
 	private void createEntry(K key) {
 		writeLock.lock();
 		try {
 			log.info("retrieving USD rate for new crypto currency {}", key);
-			Map<K, V> data = (Map<K, V>) service.getCoinlist(key.toString());
+			Map<K, V> data = (Map<K, V>) service.getCoinlistWithPriceMulti(key.toString());
 			put(key, data.get(key));
 		} finally {
 			writeLock.unlock();
 		}
 	}
 
+	/**
+	 * A method to retrieve the USD exchange rate for a given crypto-currency
+	 * identified by the {@code key}.
+	 *
+	 * @param key         the crypto-currency symbol
+	 * @param cachedEntry a {@code CachedEntry<V>} object retrieved from the cache,
+	 *                    containing a {@code CryptoCoin}, that may or may not
+	 *                    contain a reference to a USD currency exchange rate.
+	 * @apiNote this method will only update a {@code CachedEntry<V>} object
+	 *          retrieved from the cache if the underlying {@code CryptoCoin} does
+	 *          not already contain a USD exchange rate in its {@code toUSD}
+	 *          reference.
+	 */
 	private void updateEntry(K key, CachedEntry<V> cachedEntry) {
 		CryptoCoin coin = ((CryptoCoin) cachedEntry.value);
 		if (null == coin.getToUSD()) {
@@ -196,13 +242,14 @@ public class InMemoryCache<K, V> {
 	}
 
 	/*
-	 * private void debugLastAccessed(K key, CachedEntry<V> result) { if (null !=
-	 * result && log.isDebugEnabled()) { LocalDateTime now =
-	 * Instant.ofEpochMilli(result.lastAccessed).atZone(ZoneId.of(timezone)).
-	 * toLocalDateTime(); String lastAccessed =
-	 * DateTimeFormatter.ofPattern(dateTimeFormat).format(now);
-	 * log.debug("crypto currency {} last accessed {}", key, lastAccessed); } }
-	 */
+	private void debugLastAccessed(K key, CachedEntry<V> result) {
+		if (null != result && log.isDebugEnabled()) {
+			LocalDateTime now = Instant.ofEpochMilli(result.lastAccessed).atZone(ZoneId.of(timezone)).toLocalDateTime();
+			String lastAccessed = DateTimeFormatter.ofPattern(dateTimeFormat).format(now);
+			log.debug("crypto currency {} last accessed {}", key, lastAccessed);
+		}
+	}
+	*/
 
 	public int size() {
 		readLock.lock();
@@ -251,6 +298,10 @@ public class InMemoryCache<K, V> {
 		}
 	}
 
+	/**
+	 * removes from the cache all stale keys and refreshes the cache with fresh data
+	 * from external REST API endpoints.
+	 */
 	private void cleanup() {
 		if (!runEvacThread.get()) {
 			log.debug("cache evacuation cancelled with cache containing {} entries", size());
@@ -258,15 +309,12 @@ public class InMemoryCache<K, V> {
 		}
 		log.info("\nSTART CLEANUP\n");
 		List<K> staleDataKeys = getStaleDataKeys();
-		log.debug("identified {} stale entries older than {} ms, will ignore {} fresh entries (total {} entries).",
-				staleDataKeys.size(), ttl.get(), freshCounter.get(), size());
+		log.debug("identified {} stale entries older than {} ms, will ignore {} fresh entries (total {} entries).", staleDataKeys.size(), ttl.get(), freshCounter.get(), size());
 		evacuateStaleData(staleDataKeys);
-		log.info(" evacuated {} stale entries older than {} ms, ignored {} fresh entries (total {} entries).",
-				staleDataKeys.size(), ttl.get(), freshCounter.get(), size());
+		log.info(" evacuated {} stale entries older than {} ms, ignored {} fresh entries (total {} entries).", staleDataKeys.size(), ttl.get(), freshCounter.get(), size());
 		if (autoRefresh) {
 			autoRefresh(staleDataKeys);
-			log.info(" refreshed {} stale entries older than {} ms, ignored {} fresh entries (total {} entries).",
-					staleCounter.get(), ttl.get(), freshCounter.get(), size());
+			log.info(" refreshed {} stale entries older than {} ms, ignored {} fresh entries (total {} entries).", staleCounter.get(), ttl.get(), freshCounter.get(), size());
 		}
 		log.info("\nEND CLEANUP\n");
 	}
@@ -348,24 +396,15 @@ public class InMemoryCache<K, V> {
 		}
 	}
 
-	private Runnable createThreadPoolTask() {
-		return () -> {
-			while (runEvacThread.get()) {
-				try {
-					log.debug("cache evacuation thread [{}] awaiting for {} ms...", Thread.currentThread().getName(),
-							ttl.get());
-					Thread.sleep(ttl.get());
-					if (!runEvacThread.get())
-						log.info("cache evacuation thread [{}] stopped!", Thread.currentThread().getName());
-					else
-						cleanup();
-				} catch (InterruptedException ex) {
-					log.info("cache evacuation thread [{}] will terminate now!", Thread.currentThread().getName());
-				}
-			}
-		};
-	}
-
+	/**
+	 * The class CachedEntry is a wrapper object for any {@code T} type object to be
+	 * cached. This wrapper simply holds a timestamp for the last access of the
+	 * wrapped instance of {@code T}.
+	 *
+	 *
+	 * @param <T> the type of object to be cached. In this application cached
+	 *            objects are instances of {@link CryptoCoin}.
+	 */
 	private class CachedEntry<T> {
 
 		private long lastAccessed = System.currentTimeMillis();
