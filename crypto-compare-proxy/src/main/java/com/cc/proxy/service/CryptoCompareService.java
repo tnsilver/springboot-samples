@@ -43,7 +43,7 @@ public class CryptoCompareService {
 	@Value("${pricemulti_endpoint:unknown}") private String priceMultiUrl;
 	// @formatter:on
 
-	public Map<String, CryptoCoin> getCoinlist(String fsym) throws IllegalArgumentException {
+	public Map<String, CryptoCoin> getCoinlistWithPriceMulti(String fsym) throws IllegalArgumentException {
 		validateCoinlistArgs(fsym);
 		String url = coinsListUrl + "?fsym=" + fsym;
 		log.info("accessing REST API endpoint {}", url);
@@ -89,8 +89,7 @@ public class CryptoCompareService {
 					if (data.containsKey(symbol)) {
 						data.get(symbol).setToUSD(toUSD);
 					} else {
-						String fsym = data.keySet().stream().filter(k -> k.toUpperCase().equals(symbol.toUpperCase()))
-								.findAny().orElse(symbol);
+						String fsym = data.keySet().stream().filter(k -> k.toUpperCase().equals(symbol.toUpperCase())).findAny().orElse(symbol);
 						log.warn("looking up suspected missing crypto coin symbol '{}'...", fsym);
 						if (data.containsKey(fsym)) {
 							data.get(fsym).setToUSD(toUSD);

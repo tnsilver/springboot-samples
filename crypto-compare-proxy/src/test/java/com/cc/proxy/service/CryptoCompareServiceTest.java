@@ -40,7 +40,7 @@ class CryptoCompareServiceTest {
 	@DisplayName("test get single coinlist data map")
 	@CsvSource({ "BTC", "GEO", "42" })
 	void testGetSingleCoinlistDataMap(String fsym) throws Exception {
-		Map<String, CryptoCoin> coinsmap = service.getCoinlist(fsym);
+		Map<String, CryptoCoin> coinsmap = service.getCoinlistWithPriceMulti(fsym);
 		assertNotNull(coinsmap);
 		assertEquals(1, coinsmap.size());
 		logger.debug("found {} coins", coinsmap.size());
@@ -64,7 +64,7 @@ class CryptoCompareServiceTest {
 	@DisplayName("test coinlist data map initialized")
 	@CsvSource({ "BTC", "GEO", "42", "CASH", "ADA", "AERO", "ALF" })
 	void testCoinlistDataMapInitialized(String fsym) {
-		Map<String, CryptoCoin> data = service.getCoinlist(fsym);
+		Map<String, CryptoCoin> data = service.getCoinlistWithPriceMulti(fsym);
 		assertNotNull(data);
 		CryptoCoin cryptoCoin = data.get(fsym);
 		assertNotNull(cryptoCoin.getToUSD());
