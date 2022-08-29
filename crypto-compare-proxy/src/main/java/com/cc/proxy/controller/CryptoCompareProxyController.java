@@ -1,5 +1,9 @@
 package com.cc.proxy.controller;
 
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -30,7 +34,6 @@ import com.cc.proxy.model.ProxyResponse;
 import com.cc.proxy.service.InMemoryCache;
 
 import lombok.extern.slf4j.Slf4j;
-
 /**
  * The class CryptoCompareProxyController is a REST controller mapped to the
  * root context path {@code "/"}. It handles this application REST API.
@@ -47,23 +50,23 @@ public class CryptoCompareProxyController {
 
 	// @formatter:off
 	@RequestMapping(value = "/coins", produces = { APPLICATION_JSON_VALUE }, method = GET)
-	public ResponseEntity<ProxyResponse<String[]>> getCoinsSymbols(@RequestParam(required = false) String algorithm, @RequestParam(required = false) String symbol) {
+	public ResponseEntity<ProxyResponse<String[]>> getCryptoCoinSymbols(@RequestParam(required = false) String algorithm, @RequestParam(required = false) String symbol) {
 		ProxyResponse<String[]> result = new ProxyResponse<>();
 		HttpStatus status = null;
 		String response = "", message = "";
 		String[] data = null;
 		try {
-			data = findByParams(symbol, algorithm).stream().toArray(String[]::new);
+			data = filterCryptoCoinSymbols(symbol, algorithm).stream().toArray(String[]::new);
 			String criteria = null == algorithm || algorithm.isBlank() ? null == symbol || symbol.isBlank() ? "all coins" : "symbol" : "algorithm";
 			String param = null == algorithm || algorithm.isBlank() ? null == symbol || symbol.isBlank() ? "all coins" : symbol : algorithm;
 			int length = null != data ? data.length : 0;
 			message = String.format("%d coins matching %s '%s'", length, criteria, param);
-			status = length == 0 ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+			status = length == 0 ? NOT_FOUND : OK;
 			response = status.value() + " " + status.getReasonPhrase();
 		} catch (Exception ex) {
 			log.error("{}", ex.getMessage(), ex);
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			response = HttpStatus.INTERNAL_SERVER_ERROR.value() + " " + HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase();
+			status = INTERNAL_SERVER_ERROR;
+			response = INTERNAL_SERVER_ERROR.value() + " " + INTERNAL_SERVER_ERROR.getReasonPhrase();
 			message = ex.getMessage();
 		}
 		result.setResponse(response);
@@ -75,7 +78,7 @@ public class CryptoCompareProxyController {
 
 	// @formatter:off
 	@RequestMapping(value = "/coins/data", produces = { APPLICATION_JSON_VALUE }, method = GET)
-	public ResponseEntity<ProxyResponse<CryptoCoin[]>> getCoinsData() {
+	public ResponseEntity<ProxyResponse<CryptoCoin[]>> getCryptoCoinsData() {
 		ProxyResponse<CryptoCoin[]> result = new ProxyResponse<>();
 		CryptoCoin[] data = null;
 		HttpStatus status = null;
@@ -84,12 +87,12 @@ public class CryptoCompareProxyController {
 			data = cache.entrySet().stream().map(e -> e.getValue()).toArray(CryptoCoin[]::new);
 			int length = null != data ? data.length : 0;
 			message = String.format("%d coins found", length);
-			status = length == 0 ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+			status = length == 0 ? NOT_FOUND : OK;
 			response = status.value() + " " + status.getReasonPhrase();
 		} catch (Exception ex) {
 			log.error("{}", ex.getMessage(), ex);
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			response = HttpStatus.INTERNAL_SERVER_ERROR.value() + " " + HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase();
+			status = INTERNAL_SERVER_ERROR;
+			response = INTERNAL_SERVER_ERROR.value() + " " + INTERNAL_SERVER_ERROR.getReasonPhrase();
 			message = ex.getMessage();
 		}
 		result.setResponse(response);
@@ -101,7 +104,7 @@ public class CryptoCompareProxyController {
 
 	// @formatter:off
 	@RequestMapping(value = "/coins/{symbol}", produces = { APPLICATION_JSON_VALUE }, method = GET)
-	public ResponseEntity<ProxyResponse<CryptoCoin[]>> getCoin(@PathVariable(name = "symbol") String symbol) {
+	public ResponseEntity<ProxyResponse<CryptoCoin[]>> getCryptoCoinData(@PathVariable(name = "symbol") String symbol) {
 		HttpStatus status = null;
 		String response = "", message = "";
 		ProxyResponse<CryptoCoin[]> result = new ProxyResponse<>();
@@ -111,15 +114,15 @@ public class CryptoCompareProxyController {
 			data = (null != coin ? new CryptoCoin[] {coin} : new CryptoCoin[] {});
 			int length = (null != data ? data.length : 0);
 			message = String.format("%d coin matching symbol '%s' found", length, symbol);
-			status = length == 0 ? HttpStatus.NOT_FOUND : HttpStatus.OK;
+			status = length == 0 ? NOT_FOUND : OK;
 			response = status.value() + " " + status.getReasonPhrase();
 		} catch (Exception ex) {
 			if (ex instanceof RestClientException)
 				log.warn("No data found for currency symbol '{}'", symbol);
 			else
 				log.error("{}",ex.getMessage(), ex);
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			response = HttpStatus.INTERNAL_SERVER_ERROR.value() + " " + HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase();
+			status = INTERNAL_SERVER_ERROR;
+			response = INTERNAL_SERVER_ERROR.value() + " " + INTERNAL_SERVER_ERROR.getReasonPhrase();
 			message = ex.getMessage();
 		}
 		result.setResponse(response);
@@ -130,11 +133,9 @@ public class CryptoCompareProxyController {
 	// @formatter:on
 
 	@PreAuthorize("@headerAuthorizationService.authorize(#request)")
-	@RequestMapping(value = "/cachettl", produces = { APPLICATION_JSON_VALUE }, consumes = {
-			APPLICATION_JSON_VALUE }, method = POST)
-	public ResponseEntity<ProxyResponse<Map<String, Long>>> modifyCacheTtl(@RequestBody CacheTTLRequest payload,
-			@Autowired WebRequest request) {
-		HttpStatus status = HttpStatus.CREATED;
+	@RequestMapping(value = "/cachettl", produces = { APPLICATION_JSON_VALUE }, consumes = { APPLICATION_JSON_VALUE }, method = POST)
+	public ResponseEntity<ProxyResponse<Map<String, Long>>> modifyCacheTtl(@RequestBody CacheTTLRequest payload, @Autowired WebRequest request) {
+		HttpStatus status = CREATED;
 		String response = "", message = "";
 		ProxyResponse<Map<String, Long>> result = new ProxyResponse<>();
 		Map<String, Long> data = new LinkedHashMap<>();
@@ -144,13 +145,12 @@ public class CryptoCompareProxyController {
 			cache.setTtl(newValue);
 			data.put("oldValue", oldValue);
 			data.put("newValue", newValue);
-			response = HttpStatus.CREATED.value() + " " + HttpStatus.CREATED.getReasonPhrase();
+			response = CREATED.value() + " " + CREATED.getReasonPhrase();
 			message = String.format("cache ttl %d ms", newValue);
 		} catch (Exception ex) {
 			log.error("{}", ex.getMessage(), ex);
-			status = HttpStatus.INTERNAL_SERVER_ERROR;
-			response = HttpStatus.INTERNAL_SERVER_ERROR.value() + " "
-					+ HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase();
+			status = INTERNAL_SERVER_ERROR;
+			response = INTERNAL_SERVER_ERROR.value() + " " + INTERNAL_SERVER_ERROR.getReasonPhrase();
 			message = ex.getMessage();
 		}
 		result.setResponse(response);
@@ -160,7 +160,7 @@ public class CryptoCompareProxyController {
 	}
 
 	// @formatter:off
-	private Set<String> findByParams(String symbol, String algorithm) throws Exception {
+	private Set<String> filterCryptoCoinSymbols(String symbol, String algorithm) throws Exception {
 		if (null != algorithm && !algorithm.isBlank()) {
 			return cache.entrySet().stream()
 					.filter(e -> null != e.getValue().getAlgorithm())
