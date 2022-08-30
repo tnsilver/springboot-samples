@@ -147,7 +147,6 @@
 			clearDetails();
 			if (!node.hasClass('selected'))
 				node.addClass('selected');
-			//var data = $(table.row(cell.index().row).data())[0];
 			var data = $(row.data())[0];
 			var url = getUrl(data);
 			getDetails(url);
