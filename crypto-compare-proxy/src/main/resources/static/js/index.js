@@ -27,10 +27,15 @@
     	$.ajax({
     		type: "GET",
     		url: url,
-    		beforeSend: function() {
+    		async: true,
+    		cache: true,
+    		beforeSend: function(jqXHR) {
                $('#details-message').text(loadingMsg);
     		   if (!$('#details-panel').hasClass('panel-warning'))
     				$('#details-panel').addClass('panel-warning');
+    		   console.debug("_csrf:", $('meta[name="_csrf"]').attr('content'));
+               if ($('meta[name="_csrf"]').attr('content'))
+					jqXHR.setRequestHeader($('meta[name="_csrf_header"]').attr('content'), $('meta[name="_csrf"]').attr('content'));
     		},
     		statusCode: {
     			200: function(data, status) {
@@ -106,7 +111,16 @@
 
         var masterUrl = $('body').attr('data-master-url');
     	var table = $('#datatable').DataTable({
-    		ajax: { url: masterUrl, async: true, cache: true },
+    		ajax: {
+				url: masterUrl,
+    			async: true,
+    			cache: true,
+	    		beforeSend: function(jqXHR) {
+	    		   console.debug("_csrf:", $('meta[name="_csrf"]').attr('content'));
+	               if ($('meta[name="_csrf"]').attr('content'))
+						jqXHR.setRequestHeader($('meta[name="_csrf_header"]').attr('content'), $('meta[name="_csrf"]').attr('content'));
+	    		}
+    		},
     		columns: [ { "data": "coinName", "searchable": false}, { "data": "symbol" }, { "data": "algorithm" } ],
     		order: [ [1, "asc"], [2, "asc"] ],
     		//columns: [ { "data": "symbol" }, { "data": "algorithm" } ],
@@ -119,7 +133,8 @@
     		autoWidth: false,
     		deferRender: true,
     		keys: { keys: [ 13 /* ENTER */, 38 /* UP */, 40 /* DOWN */ ] },
-    		select: true
+    		select: true,
+    		responsive: true
     	});
 
 		// Handle event when cell looses focus

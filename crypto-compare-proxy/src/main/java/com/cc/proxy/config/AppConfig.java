@@ -43,6 +43,7 @@ public class AppConfig implements WebMvcConfigurer {
 
 	/**
 	 * defines a rest template bean.
+	 *
 	 * @return the default spring boot rest template object.
 	 */
 	@Bean
@@ -51,7 +52,9 @@ public class AppConfig implements WebMvcConfigurer {
 	}
 
 	/**
-	 * Security configurations basically disables all spring security automatic mechanisms.
+	 * Security configurations basically disables all spring security automatic
+	 * mechanisms. This is done so that 'curl' commands can be issued to test the
+	 * application's REST API endpoints.
 	 *
 	 * @param http the HttpSecurity builder.
 	 * @return HttpSecurity configurations
@@ -61,14 +64,25 @@ public class AppConfig implements WebMvcConfigurer {
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		// @formatter:off
 		http.httpBasic().disable() //no Http basic login
-		    .csrf().disable()	   //no CSRF token
+		    .cors().disable()      //no CORS
+		    .csrf().disable()	   //no CSRF _csrf meta content
 		    .formLogin().disable() //no Form Login
 		    .logout().disable()    //no logout
 		    .sessionManagement()
 		    	.sessionCreationPolicy(SessionCreationPolicy.STATELESS) //no session
 		    .and()
 		    	.authorizeHttpRequests()
-		    		.antMatchers("/resources/**", "/themes/**", "/error/**").permitAll();
+		    		.antMatchers("/resources/**", "/themes/**", "/error/**").permitAll()
+		    /**
+		     * allow firefox web developer to display responsive layouts
+		     * by disabling header X-Frame-Options and configuring header
+		     * Content-Security-Policy to allow for localhost
+		     */
+		    /*
+			.and().headers().frameOptions().disable()
+			.and().headers().contentSecurityPolicy("http://localhost*")
+			*/
+			;
 		// @formatter:on
 		return http.build();
 	}
