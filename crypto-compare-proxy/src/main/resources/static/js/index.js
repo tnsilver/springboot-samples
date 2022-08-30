@@ -33,7 +33,6 @@
                $('#details-message').text(loadingMsg);
     		   if (!$('#details-panel').hasClass('panel-warning'))
     				$('#details-panel').addClass('panel-warning');
-    		   console.debug("_csrf:", $('meta[name="_csrf"]').attr('content'));
                if ($('meta[name="_csrf"]').attr('content'))
 					jqXHR.setRequestHeader($('meta[name="_csrf_header"]').attr('content'), $('meta[name="_csrf"]').attr('content'));
     		},
@@ -116,7 +115,6 @@
     			async: true,
     			cache: true,
 	    		beforeSend: function(jqXHR) {
-	    		   console.debug("_csrf:", $('meta[name="_csrf"]').attr('content'));
 	               if ($('meta[name="_csrf"]').attr('content'))
 						jqXHR.setRequestHeader($('meta[name="_csrf_header"]').attr('content'), $('meta[name="_csrf"]').attr('content'));
 	    		}
