@@ -10,16 +10,16 @@
 
     /**
      * extract the currency symbol from the datatable
-     * row and build an ajax url to retrieve details.
+     * row data and build an ajax url to retrieve details.
      */
-    function getDetailsUrl(row) {
+    function getUrl(data) {
     	var url = $('body').attr('data-details-url');
-    	var symbol = row.data().symbol;
+    	var symbol = data.symbol;
     	if (url.indexOf('$DUMMY') > -1)
     		url = url.replace('$DUMMY', symbol);
     	else
     		url += symbol;
-    	console.debug("getDetailsUrl(row) -> url:", url);
+    	console.debug("getUrl(row) -> url:", url);
     	return url;
     }
 
@@ -111,32 +111,34 @@
     		order: [ [1, "asc"], [2, "asc"] ],
     		//columns: [ { "data": "symbol" }, { "data": "algorithm" } ],
     		//order: [ [0, "asc"], [1, "asc"] ],
+    		processing: true,
     		lengthMenu: [ [-1,4000,2000,1000,500,250,50], ["All",4000,2000,1000,500,250,50] ],
     		paging: true,
     		scrollY: "300px",
     		scrollCollapse: true,
     		autoWidth: false,
     		deferRender: true,
+    		keys: { keys: [ 13 /* ENTER */, 38 /* UP */, 40 /* DOWN */ ] },
     		select: true
     	});
 
-       /**
-        * make sure only onerow can be selected, extract
-        * the symbol from the selected row and ajax to
-        * the API url to retrieve the currency details.
-        */
-       table.on( 'click', 'tbody tr', function () {
-    	    clearDetails();
-    	    if ($(this).hasClass('selected')) {
-                table.$('tr.selected').removeClass('selected');
-            } else {
-            	table.$('tr.selected').removeClass('selected');
-                $(this).addClass('selected');
-                var row = $('#datatable').DataTable().row(this);
-                var url = getDetailsUrl(row);
-    			getDetails(url);
-            }
-       });
+		// Handle event when cell looses focus
+		table.on('key-blur.dt', function(e, datatable, cell){
+			$(table.row(cell.index().row).node()).removeClass('selected');
+		});
+
+		// Handle event when cell gains focus
+		table.on('key-focus.dt', function(e, datatable, cell){
+			var row = table.row(cell.index().row);
+			var node = $(row.node());
+			clearDetails();
+			if (!node.hasClass('selected'))
+				node.addClass('selected');
+			//var data = $(table.row(cell.index().row).data())[0];
+			var data = $(row.data())[0];
+			var url = getUrl(data);
+			getDetails(url);
+		});
 
        /**
         * attach on-click handler to the 'refresh' button.
