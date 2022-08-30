@@ -89,6 +89,11 @@ table.dataTable.display tbody tr:hover>table.dataTable.order-column.hover tbody 
 	background-color: rgba(0, 0, 0, 0.08);
 }
 
+/** no outline on datatable td focus **/
+td.focus {
+    outline: none !important;
+}
+
 /* no borders on panels please... */
 .panel {
   border: none !important;
