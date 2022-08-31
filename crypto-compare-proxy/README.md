@@ -1,6 +1,27 @@
 New Employee Evaluation
 =======================
 
+## Executive: running the app
+
+* `cd crypto-compare-proxy`
+
+* `mvn clean package spring-boot:run -DskipTests=true`
+
+* Navigate to (http://localhost:8080)
+
+## Executive: Deploying on Tomcat 8
+
+* `cd crypto-compare-proxy`
+
+* `mvn clean package -DskipTests`
+
+* `cp target/crypto-compare-proxy.war $CATALINA_HOME/webapps`
+
+* `. $CATALINA_HOME/bin/catalina.sh start`
+
+*  Navigate to (http://localhost:8080/crypto-compare-proxy)
+
+
 ## To install on eclipse IDE
 
 * make sure you have [lombok 1.18.24](https://projectlombok.org/download) in eclipse installation directory (along side with `eclipse.ini` file).
