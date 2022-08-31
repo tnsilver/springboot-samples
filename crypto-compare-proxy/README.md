@@ -1,7 +1,7 @@
 New Employee Evaluation
 =======================
 
-## Executive: running the app
+## Executive: running the app (embedded Tomcat)
 
 * `cd crypto-compare-proxy`
 
@@ -9,7 +9,7 @@ New Employee Evaluation
 
 * Navigate to (http://localhost:8080)
 
-## Executive: Deploying on Tomcat 9
+## Executive: Deploying on external Tomcat 9
 
 * `cd crypto-compare-proxy`
 
