@@ -9,7 +9,7 @@ New Employee Evaluation
 
 * Navigate to (http://localhost:8080)
 
-## Executive: Deploying on Tomcat 8
+## Executive: Deploying on Tomcat 9
 
 * `cd crypto-compare-proxy`
 
