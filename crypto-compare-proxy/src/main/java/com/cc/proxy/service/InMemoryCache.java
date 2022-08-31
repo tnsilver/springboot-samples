@@ -320,7 +320,7 @@ public class InMemoryCache<K, V> {
 		List<K> staleDataKeys = getStaleDataKeys();
 		log.debug("identified {} stale entries older than {} ms, will ignore {} fresh entries (total {} entries).", staleDataKeys.size(), ttl.get(), freshCounter.get(), size());
 		evacuateStaleData(staleDataKeys);
-		log.info(" evacuated {} stale entries older than {} ms, ignored {} fresh entries (total {} entries).", staleDataKeys.size(), ttl.get(), freshCounter.get(), size());
+		log.debug(" evacuated {} stale entries older than {} ms, ignored {} fresh entries (total {} entries).", staleDataKeys.size(), ttl.get(), freshCounter.get(), size());
 		if (autoRefresh) {
 			autoRefresh(staleDataKeys);
 			log.info(" refreshed {} stale entries older than {} ms, ignored {} fresh entries (total {} entries).", staleCounter.get(), ttl.get(), freshCounter.get(), size());
