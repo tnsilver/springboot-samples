@@ -8,6 +8,8 @@
 *.ear
 # Target directory
 */target
+# Server directory
+*/Servers
 # Data directory
 */data
 # UML directory
