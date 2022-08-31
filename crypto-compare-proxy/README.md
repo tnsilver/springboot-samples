@@ -26,7 +26,7 @@ New Employee Evaluation
 
 * make sure you have [lombok 1.18.24](https://projectlombok.org/download) in eclipse installation directory (along side with `eclipse.ini` file).
 
-* add the entry `-javaagent:/opt/java/eclipse-jee-2022-06-R/lombok.jar` at the end of the `eclipse.ini` file.
+* add the entry `-javaagent:/<path-to-eclipse-ide>/eclipse-jee-2022-06-R/lombok.jar` at the end of the `eclipse.ini` file.
 
 * use the `File -> import -> Maven -> existing maven projects` menu and navigate to the root of this directory.
 
