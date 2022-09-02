@@ -8,9 +8,11 @@
 
 4. [crypto-compare-proxy](crypto-compare-proxy) is a job interview project, demonstrating REST api implemented with Spring Boot, where an application retrieves crypto currency data from the public API of [https://min-api.cryptocompare.com/documentation](Crypto Compare Com), caches it, and serves it to clients, implemented with **Thymeleaf** template technologies, employing stabdard bootstrap/css3/html5/JQuery/datatables client development technologies.
 
-5. **NO LONGER MAINTAINED** Scala JPA with MySql or embedded H2: [springboot-rest-scala-jpa-contacts](springboot-rest-scala-jpa-contacts "Scala JPA Web Application") **SpringBoot 2.5.3 using JDK 16**
+5. [template-web-project](template-web-project) is a Spring Boot template web project.
 
-6.  Plans... Replace the UI with responsive bootstrap, separate the layers into microservices, run them in a service
+6. **NO LONGER MAINTAINED** Scala JPA with MySql or embedded H2: [springboot-rest-scala-jpa-contacts](springboot-rest-scala-jpa-contacts "Scala JPA Web Application") **SpringBoot 2.5.3 using JDK 16**
+
+7.  Plans... Replace the UI with responsive bootstrap, separate the layers into microservices, run them in a service
 registry and manage it all through Kubernetes. Then have it ready to deploy on Cloud Foundry and Amazon.
 
 
