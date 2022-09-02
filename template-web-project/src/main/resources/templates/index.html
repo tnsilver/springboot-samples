@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="_csrf" th:content="${_csrf != null} ? ${_csrf.token} : ''" />
+	<meta name="_csrf_header" th:content="${_csrf != null}? ${_csrf.headerName} : 'X-CSRF-TOKEN'" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title th:utext="#{index.page.title}">Home</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../static/css/custom.css" th:href="@{/resources/css/custom.css}" />
+	<link rel="icon" href="../static/favicon.ico" th:href="@{/resources/favicon.ico}" type="image/x-icon" />
+	<!-- DataTables styles -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.4.0/css/select.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/keytable/2.7.0/css/keyTable.dataTables.min.css">
+
+</head>
+<body th:dir="#{dir}" th:lang="en" dir="ltr" lang="en" th:data-master-url="@{/coins/data}" data-master-url="../static/offline/coinsdata.json" th:data-details-url="@{/coins/}" data-details-url="../static/offline/$DUMMY.json">
+	<div class="container">
+		<div class="header clearfix">
+			<nav th:replace="fragments/navbar :: navbar('index')">
+				<ul class="nav nav-pills pull-right">
+					<li role="presentation" class="active"><a href="index.html">Home</a></li>
+					<li role="presentation"><a href="about.html">About</a></li>
+					<li role="presentation"><a href="contact.html">Contact</a></li>
+				</ul>
+			</nav>
+			<h3 th:utext="#{nav.menu.brand}" class="text-muted">Crypto Currency Proxy</h3>
+		</div>
+
+		<div class="jumbotron">
+			<h1 th:utext="#{index.page.heading}">Welcome</h1>
+			<p  th:utext="#{index.page.lead}" class="lead">Use the search box to filter crypto-currencies of interest. You can smart search for symbols or algorithms. Search is case-insensitive. Wrap the search in double quotes and/or spaces (e.g. &quot;&nbsp;BTC&nbsp;&quot;) for an exact match. You can also a select crypto-currency row, to view the full details in the panel on the right. Use the 'Refresh' button to retrieve a fresh list of crypto-currencies.</p>
+			<p><a id="refresh-btn" th:utext="#{index.page.heading.btn}" class="btn btn-lg btn-success" href="#" role="button">Refresh</a></p>
+		</div>
+
+        <footer id="footer" class="footer">
+        	<p th:utext="'&copy;' + '&nbsp;' + ${#dates.year(#dates.createNow())} + '&nbsp;' + #{footer.copy}">&copy; 2022 Crypto-Proxy, Inc.</p>
+        </footer>
+	</div>
+
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+	<!-- DataTables -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/keytable/2.7.0/js/dataTables.keyTable.min.js"></script>
+    <!-- custom index page js library (can be replace by copying the contents to a script tag bellow) -->
+    <script src="../static/js/index.js" th:src="@{/resources/js/index.js}"></script>
+
+</body>
+</html>
