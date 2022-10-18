@@ -146,6 +146,7 @@
 			messages.map_.set('images.editor.delete','<c:url value='/resources/images/controls/delete.png'/>');
 			messages.map_.set('bad.request.error.msg','<spring:message code='bad.request.error.msg' text='Bad request error (status {0}). Something is wrong!'/>');
 			messages.map_.set('not.found.error.msg','<spring:message code='not.found.error.msg' text='The resource was not found (status {0}). Deleted already?'/>');
+			messages.map_.set('unauthorized.error.msg','<spring:message code='unauthorized.error.msg' text='(status {0}): You have to login to perform this operation!'/>');
 
 			messages.getMessage = function(key, args) {
 	      		let msg = messages.map_.get(key);

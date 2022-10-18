@@ -224,6 +224,7 @@
 			messages.map_.set('images.editor.delete','<!--/*/[[@{/resources/images/controls/delete.png}]]/*/--><!--/*-->../static/images/controls/delete.png<!--*/-->');
 			messages.map_.set('bad.request.error.msg','<!--/*/[[#{bad.request.error.msg}]]/*/--><!--/*-->Bad request error (status {0}). Something is wrong!<!--*/-->');
 			messages.map_.set('not.found.error.msg','<!--/*/[[#{not.found.error.msg}]]/*/--><!--/*-->The resource was not found (status {0}). Deleted already?<!--*/-->');
+			messages.map_.set('unauthorized.error.msg','<!--/*/[[#{unauthorized.error.msg}]]/*/--><!--/*-->(status {0}): You have to login to perform this operation!<!--*/-->');
 
 			messages.getMessage = function(key, args) {
 		      		let msg = messages.map_.get(key);

@@ -22,15 +22,17 @@
 	 *            to display the error in the editing modal.
 	 */
 	function handleServerError(xhr, error) {
-		console.error("contacts-bootstrap.js handleBadRequest() xhr: ", xhr);
-		if (xhr.status === 404) {
+		console.debug("contacts-bootstrap.js handleServerError()", xhr.status + " " + xhr.statusText);
+		if (xhr.status === 401) {
+			error({responseJSON: {errors: {0: [messages.getMessage('unauthorized.error.msg',[xhr.status])]}}});
+        } else if (xhr.status === 404) {
 			error({responseJSON: {errors: {0: [messages.getMessage('not.found.error.msg',[xhr.status])]}}});
 		} else if (xhr.status === 400) {
 			error({responseJSON: {errors: {0: [messages.getMessage('bad.request.error.msg',[xhr.status])]}}});
-		} else {
-			const status = xhr.responseJSON ? xhr.responseJSON.status : xhr.status;
-			const message = xhr.responseJSON ? xhr.responseJSON.error : xhr.statusText;
-			error({responseJSON: {errors: {0: [status + ' ' + message]}}});
+		} else if (xhr.status === 200 || xhr.status === 405) {
+			error({responseJSON: {errors: {0: [messages.getMessage('unauthorized.error.msg',[xhr.status])]}}});
+        } else {
+			error({responseJSON: {errors: {0: [xhr.status + ' ' + xhr.statusText]}}});
 		}
 	}
 
@@ -80,27 +82,28 @@
 	}
 
 	function modifyContact(alteditor, rowdata, success, error, action) {
-		//console.debug("contacts-bootstrap.js modifyContact('" + action + "') rowdata:", rowdata);
 		if (action === 'edit' || action == 'add') {
+			let url = (action === 'edit') ? $('body').attr('data-contacts-url') + '/' + rowdata.id : $('body').attr('data-contacts-url');
+			let method = (action === 'edit') ? 'PUT' : 'POST';
+			console.debug("contacts-bootstrap.js modifyContact('" + action + "') url:", url, "method:", method);
 			$.ajax({
-				url:  $('body').attr('data-contacts-url') + '/' + rowdata.id,
-				type: action === 'edit' ? 'PUT' : 'POST',
+				url:  url,
+				type: method,
 				contentType: "application/json",
 				dataType: "json",
 				data: pack( rowdata ),
 				success: function (data, status, xhr) {
 					if (status == 'success') {
+						console.debug("contacts-bootstrap.js $ajax(success -> success) xhr: ", xhr);
 						success( data );
 						alteditor.s.dt.search(data.firstName + ' ' + data.lastName).draw()
 					} else {
+						console.debug("contacts-bootstrap.js $ajax(success -> " + status + ") xhr: ", xhr);
 						success( {} );
 					}
 				},
 				error: function (xhr, err, thrown) {
-					if (xhr.status === 400)
-						handleValidationErrors(alteditor, xhr.responseJSON.errors[0], error);
-					else
-						handleServerError(xhr, error);
+					handleServerError(xhr, error);
 				}
 			});
 		} else if (action == 'delete') {
@@ -141,7 +144,7 @@
 			deferRender: true,
 			select: { style: 'single' },
 			ajax: {
-				url: $('body').attr('data-contacts-url'),
+				url: $('body').attr('data-contacts-url') + '?size=2000',
 				cache: true,
 				dataSrc: function(data) { return data._embedded.contacts; }
 			},

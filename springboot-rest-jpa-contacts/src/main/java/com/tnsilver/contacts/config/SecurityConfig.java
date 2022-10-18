@@ -23,11 +23,14 @@ package com.tnsilver.contacts.config;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -37,6 +40,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 @EnableWebSecurity
@@ -53,7 +57,8 @@ public class SecurityConfig {
 
 	@Bean
 	protected WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().antMatchers("/h2-console/**", "/resources/**", "/themes/**", "/error**", "/html/error**");
+		return (web) -> web.ignoring().antMatchers("/h2-console/**", "/resources/**", "/themes/**", "/error**",
+				"/html/error**");
 	}
 
 	@Bean
@@ -79,21 +84,38 @@ public class SecurityConfig {
                 .antMatchers( "/resources/favicon.ico").permitAll()
                 .antMatchers("/html/hello/**", "/jsp/hello/**").permitAll()
                 .antMatchers("/html/contact/**", "/jsp/contact/**").hasAnyRole("USER")
-                .antMatchers(HttpMethod.DELETE, "/api/contacts/*").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.PATCH, "/api/contacts/*").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.PUT, "/api/contacts/*").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/api/contacts", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/contacts", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/contacts", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/contacts", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/login*").permitAll()
             .and()
-                .formLogin()
+                .formLogin() // standard login form that sends 204-NO_CONTENT when login is OK and 401-UNAUTHORIZED when login fails
+                	.successHandler((req, res, auth) -> {
+                		if (isAjax(req))
+                			res.setStatus(HttpStatus.NO_CONTENT.value());
+                		else
+                			res.sendRedirect("/html/contacts-bootstrap");
+                	})
+                	.failureHandler((req, res, ex) -> {
+                		if (isAjax(req))
+                			res.setStatus(HttpStatus.NO_CONTENT.value());
+                		else
+                			res.sendError(HttpStatus.FORBIDDEN.value());
+                	})
                 .loginPage("/login-bootstrap").permitAll()
                 .loginProcessingUrl("/signin")
-                .defaultSuccessUrl("/html/contacts-bootstrap")
-                .failureUrl("/login-bootstrap?error=true")
             .and()
-                .exceptionHandling()
-                    .accessDeniedPage("/html/login-bootstrap")
+                .exceptionHandling() // 401-UNAUTHORIZED when anonymous user tries to access protected URLs
+                	.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
             .and()
-                .logout()
+                .logout() // standard logout that sends 204-NO_CONTENT when logout is OK
+	                .logoutSuccessHandler((req, res, auth) -> {
+	                	if (isAjax(req))
+	                		res.setStatus(HttpStatus.NO_CONTENT.value());
+	                	else
+	                		res.sendRedirect("/html/contacts-bootstrap");
+	                 })
                 .logoutSuccessUrl("/html/contacts-bootstrap")
                 .logoutUrl("/logout")
                 .clearAuthentication(true)
@@ -115,7 +137,14 @@ public class SecurityConfig {
 	@Bean
 	protected InMemoryUserDetailsManager userDetailsService() {
 		return new InMemoryUserDetailsManager(
-				User.builder().password(passwordEncoder().encode(password)).username(username).roles("USER","ADMIN").build());
+				User.builder().password(passwordEncoder()
+						.encode(password))
+					.username(username)
+					.roles("USER","ADMIN")
+					.build());
 	}
 
+	private boolean isAjax(HttpServletRequest request) {
+		return "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
+	}
 }
