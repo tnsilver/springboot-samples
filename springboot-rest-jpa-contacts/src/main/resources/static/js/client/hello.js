@@ -64,7 +64,7 @@ $(document).ready(function() {
 
 	$("#helloForm").submit(function(event) {
 		event.preventDefault();
-		console.debug("#helloForm submit: event:", event);
+		// console.debug("#helloForm submit: event:", event);
 		greet();
 	});
 

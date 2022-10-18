@@ -21,16 +21,21 @@
  */
 package com.tnsilver.contacts.config;
 
+/*import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+*/
+import static org.apache.http.HttpStatus.SC_FORBIDDEN;
+import static org.apache.http.HttpStatus.SC_NO_CONTENT;
+import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -40,35 +45,36 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+
+import lombok.extern.slf4j.Slf4j;
+
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
+@Slf4j
 public class SecurityConfig {
 
-	private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
-	@Value("${spring.security.user.name}")
-	String username;
-	@Value("${spring.security.user.password}")
-	String password;
-	@Value("#{'${spring.profiles.active}'.split(',')}")
-	private List<String> profiles;
+	// @formatter:off
+	@Value("${spring.security.user.name}") String username;
+	@Value("${spring.security.user.password}") String password;
+	@Value("#{'${spring.profiles.active}'.split(',')}") private List<String> profiles;
+	// @formatter:on
 
 	@Bean
 	protected WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().antMatchers("/h2-console/**", "/resources/**", "/themes/**", "/error**",
-				"/html/error**");
+		final String[] IGNORED_PATTERNS = {"/resources/favicon.ico","/h2-console/**", "/resources/**", "/themes/**", "/error**", "/html/error**"};
+		return (web) -> web.ignoring().antMatchers(IGNORED_PATTERNS);
 	}
 
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		boolean test = profiles.contains("test");
-		boolean dev = profiles.contains("dev");
+		final String DEFAULT_URL = "/html/contacts-bootstrap", LOGIN_URL = "/login-bootstrap";
+		boolean test = profiles.contains("test"), dev = profiles.contains("dev");
 		// @formatter:off
         if (test || dev) {
             String profile = dev ? "dev" : (test ? "test" : profiles.toString());
-            logger.debug("Disabling csrf for profile: {}", profile);
+            log.debug("disabling csrf for profile: {}", profile);
             http
                 .csrf().disable()
                     .authorizeRequests()
@@ -81,41 +87,24 @@ public class SecurityConfig {
         }
         http.cors().disable()
             .authorizeRequests()
-                .antMatchers( "/resources/favicon.ico").permitAll()
-                .antMatchers("/html/hello/**", "/jsp/hello/**").permitAll()
                 .antMatchers("/html/contact/**", "/jsp/contact/**").hasAnyRole("USER")
-                .antMatchers(HttpMethod.PATCH, "/api/contacts", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/contacts", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.PUT, "/api/contacts", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/api/contacts", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/login*").permitAll()
             .and()
-                .formLogin() // standard login form that sends 204-NO_CONTENT when login is OK and 401-UNAUTHORIZED when login fails
-                	.successHandler((req, res, auth) -> {
-                		if (isAjax(req))
-                			res.setStatus(HttpStatus.NO_CONTENT.value());
-                		else
-                			res.sendRedirect("/html/contacts-bootstrap");
-                	})
-                	.failureHandler((req, res, ex) -> {
-                		if (isAjax(req))
-                			res.setStatus(HttpStatus.NO_CONTENT.value());
-                		else
-                			res.sendError(HttpStatus.FORBIDDEN.value());
-                	})
+                .formLogin() // for ajax sends 204-NO_CONTENT when login is OK and 401-UNAUTHORIZED when login fails, else redirect to success url
+                	.successHandler((req, res, auth) -> { if (isAjax(req)) res.setStatus(SC_NO_CONTENT); else res.sendRedirect(DEFAULT_URL); })
+                	.failureHandler((req, res, ex) -> { if (isAjax(req)) res.setStatus(SC_NO_CONTENT); else res.sendError(SC_FORBIDDEN); })
                 .loginPage("/login-bootstrap").permitAll()
                 .loginProcessingUrl("/signin")
             .and()
-                .exceptionHandling() // 401-UNAUTHORIZED when anonymous user tries to access protected URLs
-                	.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .exceptionHandling() // for ajax 401-UNAUTHORIZED when anonymous user attempts to access protected URLs, else redirect to login
+                	.authenticationEntryPoint((req, res, ex) -> { if (isAjax(req)) res.setStatus(SC_UNAUTHORIZED); else res.sendRedirect(LOGIN_URL); })
             .and()
                 .logout() // standard logout that sends 204-NO_CONTENT when logout is OK
-	                .logoutSuccessHandler((req, res, auth) -> {
-	                	if (isAjax(req))
-	                		res.setStatus(HttpStatus.NO_CONTENT.value());
-	                	else
-	                		res.sendRedirect("/html/contacts-bootstrap");
-	                 })
+	                .logoutSuccessHandler((req, res, auth) -> { if (isAjax(req)) res.setStatus(SC_NO_CONTENT); else res.sendRedirect(DEFAULT_URL); })
                 .logoutSuccessUrl("/html/contacts-bootstrap")
                 .logoutUrl("/logout")
                 .clearAuthentication(true)
