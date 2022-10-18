@@ -1,0 +1,9 @@
+<!--/*--><!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"><!--*/-->
+<th:block th:fragment="footer"><span th:utext="'&lt;!-- the following block was replaced by /frgaments/footer --&gt;'" th:remove="tag"></span>
+    <div class="footer">
+        <span th:utext="#{footer.year}">© 2021</span>
+        <a href="#" th:utext="#{footer.copyright}">T.N.Silverman - SilverSoft LTD</a>
+        <span th:utext="#{footer.notice}">All Rights Reserved.</span>
+    </div>
+</th:block>

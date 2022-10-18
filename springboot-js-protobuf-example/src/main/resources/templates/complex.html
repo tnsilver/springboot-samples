@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Cache-Control" content="max-age=3600">
+	<meta name="_csrf" th:content="${_csrf != null} ? ${_csrf.token} : ''" />
+	<meta name="_csrf_header" th:content="${_csrf != null}? ${_csrf.headerName} : 'X-CSRF-TOKEN'" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title th:utext="#{complex.page.title}">Intermediate</title>
+	<link rel="icon" href="../static/favicon.ico" th:href="@{/resources/favicon.ico}" type="image/x-icon" />
+	<!-- bootstrap css -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.css">
+	<!-- DataTables styles -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.4.0/css/select.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+    <!-- Editor Styles -->
+    <link rel="stylesheet" type="text/css" href="../static/js/DataTable-AltEditor/css/editor.dataTables.css" th:href="@{/resources/js/DataTable-AltEditor/css/editor.dataTables.css}">
+	<!-- custom css -->
+	<link rel="stylesheet" href="../static/css/custom.css" th:href="@{/resources/css/custom.css}" />
+	<link rel="stylesheet" href="../static/css/media.css" th:href="@{/resources/css/media.css}" />
+
+</head>
+<body th:dir="#{dir}" th:lang="en" dir="ltr" lang="en" th:data-courses-url="@{/courses}" th:data-students-url="@{/students}" th:data-phones-url="@{/phones}" th:data-reset-url="@{/reset}" data-courses-url="#" data-students-url="#" data-phones-url="#" data-reset-url="#">
+	<div class="container">
+		<div class="header clearfix">
+			<nav th:replace="fragments/navbar :: navbar('complex')">
+				<ul class="nav nav-pills pull-right">
+					<li role="presentation"><a href="simple.html">Simple</a></li>
+					<li role="presentation"><a href="medium.html">Medium</a></li>
+					<li role="presentation" class="active"><a href="complex.html">Complex</a></li>
+					<li role="presentation" class="menu size"><a href="#"><span id="sizespan"></span></a></li>
+				</ul>
+				<h3 th:utext="#{nav.menu.brand}" class="text-muted">Protobuf Examples</h3>
+				<script type="text/javascript">
+					var sizespan = document.getElementById("sizespan");
+			        var updateSizeSpan = function () { sizespan.innerHTML = window.innerWidth + "px / " + window.innerHeight + "px"; };
+			        if (window.addEventListener) {
+			            window.addEventListener("resize", updateSizeSpan, false);
+			            window.addEventListener("DOMContentLoaded", updateSizeSpan, false);
+			            window.addEventListener("load", updateSizeSpan, false);
+			        } else if (window.attachEvent) { window.attachEvent("onload", updateSizeSpan); }
+			  	</script>
+			</nav>
+		</div>
+
+        <div class="row">
+	       	<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<div class="jumbotron">
+					<h1 th:utext="#{complex.page.heading}">intermediate Example</h1>
+					<p th:utext="#{complex.page.lead}" class="lead">This example demonstrates 3 nested data tables. The <i>Courses</i> data table is initialized by an <i>ajax</i> request, resulting in a response body containing a <i>google protobuf</i> message. Select any row in the <i>Courses</i> data table, to expose a nested <i>Students</i> sub table. This table is constructed from data originating in the parent data table. You can then click the <i class="dt-control"></i> control (at the right of each <i>student</i> row), to expose a nested <i>Phones</i> data table. Deselecting a row in the parent <i>Courses</i> data table, or selecting another row, will close and destroy the shown nested data tables.</p>
+					<p><a id="reset-btn" th:utext="#{complex.page.heading.btn}" class="btn btn-lg btn-success" href="#" role="button">Reset data</a></p>
+				</div>
+			</div>
+        </div>
+
+		<div class="row">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<h4 th:utext="#{complex.page.mastertable.header}">Courses</h4>
+				<!-- <h4>Main</h4> -->
+				<table id="coursesTable" class="display compact responsive" style="width: 100%">
+					<thead>
+						<tr>
+						    <th th:utext="#{mastertable.th.course.id}">ID</th>
+						    <th th:utext="#{mastertable.th.course.name}">Course Name</th>
+							<th th:utext="#{mastertable.th.course.students}">Students</th>
+							<th></th>
+							<!-- <th></th> -->
+						</tr>
+					</thead>
+	                   <tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+        <footer id="footer" class="footer">
+        	<p th:utext="'&copy;' + '&nbsp;' + ${#dates.year(#dates.createNow())} + '&nbsp;' + #{footer.copy}">&copy; 2022 Crypto-Proxy, Inc.</p>
+        </footer>
+
+	</div>
+	<!-- jQuery first, then Bootstrap JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.js"></script>
+	<!-- DataTables -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.4.0/js/dataTables.select.js"></script>
+    <!-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/datetime/1.1.2/js/dataTables.dateTime.js"></script> -->
+	<!-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/keytable/2.7.0/js/dataTables.keyTable.js"></script> -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.js"></script>
+    <!-- Alt Editor -->
+    <script type="text/javascript" src="../static/js/DataTable-AltEditor/dataTables.altEditor.free.js" th:src="@{/resources/js/DataTable-AltEditor/dataTables.altEditor.free.js}"></script>
+    <!-- closure library -->
+    <script src="../static/js/google-closure-library/closure/goog/base.js" th:src="@{/resources/js/google-closure-library/closure/goog/base.js}"></script>
+    <!-- protobuf dependency libraries -->
+    <script src="../static/js/protobuf-javascript/binary/arith.js" th:src="@{/resources/js/protobuf-javascript/binary/arith.js}"></script>
+    <script src="../static/js/protobuf-javascript/binary/constants.js" th:src="@{/resources/js/protobuf-javascript/binary/constants.js}"></script>
+    <script src="../static/js/protobuf-javascript/binary/utils.js" th:src="@{/resources/js/protobuf-javascript/binary/utils.js}"></script>
+    <script src="../static/js/protobuf-javascript/binary/decoder.js" th:src="@{/resources/js/protobuf-javascript/binary/decoder.js}"></script>
+    <script src="../static/js/protobuf-javascript/binary/encoder.js" th:src="@{/resources/js/protobuf-javascript/binary/encoder.js}"></script>
+    <script src="../static/js/protobuf-javascript/map.js" th:src="@{/resources/js/protobuf-javascript/map.js}"></script>
+    <script src="../static/js/protobuf-javascript/binary/reader.js" th:src="@{/resources/js/protobuf-javascript/binary/reader.js}"></script>
+    <script src="../static/js/protobuf-javascript/message.js" th:src="@{/resources/js/protobuf-javascript/message.js}"></script>
+    <script src="../static/js/protobuf-javascript/binary/writer.js" th:src="@{/resources/js/protobuf-javascript/binary/writer.js}"></script>
+    <!-- Protobuf library -->
+    <script src="../static/js/google-protobuf/google-protobuf.js" th:src="@{/resources/js/google-protobuf/google-protobuf.js}"></script>
+    <!-- generated proto javascript libraries -->
+    <script src="../static/js/training/any.js" th:src="@{/resources/js/training/any.js}"></script>
+    <script src="../static/js/training/training_lib.js" th:src="@{/resources/js/training/training_lib.js}"></script>
+    <!-- binary transport -->
+    <script src="../static/js/jquery.binarytransport.js" th:src="@{/resources/js/jquery.binarytransport.js}"></script>
+
+    <script type="text/javascript">
+		(function (window, undefined) {
+			const messages = {};
+			messages.map_ = new Map();
+			messages.map_.set('message.name.hover','<!--/*/[[#{message.name.hover}]]/*/--><!--/*-->expecting {0} to {1} characters<!--*/-->');
+			messages.map_.set('message.email.hover','<!--/*/[[#{message.email.hover}]]/*/--><!--/*-->expecting email address, {0} to {1} characters<!--*/-->');
+			messages.map_.set('message.phone.hover','<!--/*/[[#{message.phone.hover}]]/*/--><!--/*-->expecting phone number (+)123456789012, {0} to {1} digits<!--*/-->');
+			messages.map_.set('detailstable.th.student.id','<!--/*/[[#{detailstable.th.student.id}]]/*/--><!--/*-->Student ID<!--*/-->');
+			messages.map_.set('detailstable.th.student.fname','<!--/*/[[#{detailstable.th.student.fname}]]/*/--><!--/*-->First Name<!--*/-->');
+			messages.map_.set('detailstable.th.student.lname','<!--/*/[[#{detailstable.th.student.lname}]]/*/--><!--/*-->Last Name<!--*/-->');
+			messages.map_.set('detailstable.th.student.email','<!--/*/[[#{detailstable.th.student.email}]]/*/--><!--/*-->EMail<!--*/-->');
+			messages.map_.set('detailstable.th.student.phonenums','<!--/*/[[#{detailstable.th.student.phonenums}]]/*/--><!--/*-->Phones #<!--*/-->');
+			messages.map_.set('subtable.th.student.phone.id','<!--/*/[[#{subtable.th.student.phone.id}]]/*/--><!--/*-->Phone ID<!--*/-->');
+			messages.map_.set('subtable.th.student.phone.type','<!--/*/[[#{subtable.th.student.phone.type}]]/*/--><!--/*-->Phone Type<!--*/-->');
+			messages.map_.set('subtable.th.student.phone.number','<!--/*/[[#{subtable.th.student.phone.number}]]/*/--><!--/*-->Phone Number<!--*/-->');
+			messages.map_.set('message.has.errors','<!--/*/[[#{message.has.errors}]]/*/--><!--/*-->The value for &quot;{0}&quot; was rejected by the server!<!--*/-->');
+			messages.map_.set('message.coursename.length','<!--/*/[[#{message.coursename.length}]]/*/--><!--/*-->Course name must contain {0} to {1} characters!<!--*/-->');
+			messages.map_.set('message.validation.error','<!--/*/[[#{message.validation.error}]]/*/--><!--/*-->The server accepted this request but rejected the value!<!--*/-->');
+			messages.map_.set('message.unknown.error','<!--/*/[[#{message.unknown.error}]]/*/--><!--/*-->Ooops! Something went wrong...<!--*/-->');
+			messages.map_.set('message.deleted.error','<!--/*/[[#{message.deleted.error}]]/*/--><!--/*-->This row was deleted already!<!--*/-->');
+			messages.map_.set('editor.btn.create','<!--/*/[[#{editor.btn.create}]]/*/--><!--/*-->New<!--*/-->');
+			messages.map_.set('editor.btn.edit','<!--/*/[[#{editor.btn.edit}]]/*/--><!--/*-->Edit<!--*/-->');
+			messages.map_.set('editor.btn.delete','<!--/*/[[#{editor.btn.delete}]]/*/--><!--/*-->Delete<!--*/-->');
+			messages.map_.set('images.editor.create','<!--/*/[[@{/resources/images/controls/add.png}]]/*/--><!--/*-->../static/images/controls/add.png<!--*/-->');
+			messages.map_.set('images.editor.edit','<!--/*/[[@{/resources/images/controls/edit.png}]]/*/--><!--/*-->../static/images/controls/edit.png<!--*/-->');
+			messages.map_.set('images.editor.delete','<!--/*/[[@{/resources/images/controls/delete.png}]]/*/--><!--/*-->../static/images/controls/delete.png<!--*/-->');
+
+			messages.getMessage = function(key, args) {
+	       		let msg = messages.map_.get(key);
+	       		if (msg && args)
+	       			args.forEach((arg,index) => msg=msg.replace('{' + index + '}',arg));
+	        	return msg ? msg : '?' + key + '?';
+			}
+
+			window.messages = messages;
+    	})(window);
+    </script>
+
+    <!-- complex example script -->
+    <script src="../static/js/complex.js" th:src="@{/resources/js/complex.js}"></script>
+
+</body>
+</html>

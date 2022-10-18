@@ -1,0 +1,352 @@
+[
+	{
+		"_class": "com.tnsilver.contacts.model.Sequence",
+		"id": "contact",
+		"seq": 34
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Sequence",
+		"id": "audit",
+		"seq": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 1,
+		"ssn": "678-21-4301",
+		"firstName": "Homer",
+		"lastName": "Simpson",
+		"birthDate": "1978-06-20",
+		"married": true,
+		"children": 3
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 2,
+		"ssn": "678-21-4302",
+		"firstName": "Marge",
+		"lastName": "Simpson",
+		"birthDate": "1979-06-20",
+		"married": true,
+		"children": 3
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 3,
+		"ssn": "678-21-4303",
+		"firstName": "Lisa",
+		"lastName": "Simpson",
+		"birthDate": "1993-01-13",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 4,
+		"ssn": "678-21-4304",
+		"firstName": "Bart",
+		"lastName": "Simpson",
+		"birthDate": "1995-09-18",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 5,
+		"ssn": "678-21-4305",
+		"firstName": "Maggie",
+		"lastName": "Simpson",
+		"birthDate": "2003-03-05",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 6,
+		"ssn": "678-21-4306",
+		"firstName": "Donald",
+		"lastName": "Duck",
+		"birthDate": "1946-01-01",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 7,
+		"ssn": "678-21-4307",
+		"firstName": "Bugs",
+		"lastName": "Bunny",
+		"birthDate": "1940-12-31",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 8,
+		"ssn": "678-21-4308",
+		"firstName": "Elmer",
+		"lastName": "Fudd",
+		"birthDate": "1937-01-02",
+		"married": true,
+		"children": 2
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 9,
+		"ssn": "678-21-4309",
+		"firstName": "Dafy",
+		"lastName": "Duck",
+		"birthDate": "1920-01-02",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 10,
+		"ssn": "678-21-4310",
+		"firstName": "Porky",
+		"lastName": "Pig",
+		"birthDate": "1935-01-02",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 11,
+		"ssn": "678-21-4311",
+		"firstName": "Tweety",
+		"lastName": "Canary",
+		"birthDate": "1940-01-02",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 12,
+		"ssn": "678-21-4312",
+		"firstName": "Sylvester",
+		"lastName": "Cat",
+		"birthDate": "1940-01-02",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 13,
+		"ssn": "678-21-4313",
+		"firstName": "Road",
+		"lastName": "Runner",
+		"birthDate": "1949-01-01",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 14,
+		"ssn": "678-21-4314",
+		"firstName": "Wile",
+		"lastName": "E. Coyote",
+		"birthDate": "1949-01-01",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 15,
+		"ssn": "678-21-4315",
+		"firstName": "Tasmanian",
+		"lastName": "Devil",
+		"birthDate": "1954-12-01",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 16,
+		"ssn": "678-21-4316",
+		"firstName": "Yosemite",
+		"lastName": "Sam",
+		"birthDate": "1954-11-06",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 17,
+		"ssn": "678-21-4317",
+		"firstName": "Pepe",
+		"lastName": "La Pew",
+		"birthDate": "1954-12-01",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 18,
+		"ssn": "678-21-4318",
+		"firstName": "Marvin",
+		"lastName": "The Martian",
+		"birthDate": "1954-12-02",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 19,
+		"ssn": "678-21-4319",
+		"firstName": "Foghorn",
+		"lastName": "Leghorn",
+		"birthDate": "1954-12-04",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 20,
+		"ssn": "678-21-4320",
+		"firstName": "Speedy",
+		"lastName": "Gonzales",
+		"birthDate": "1955-12-05",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 21,
+		"ssn": "678-21-4321",
+		"firstName": "Bosko",
+		"lastName": "The Clown",
+		"birthDate": "1955-12-06",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 22,
+		"ssn": "678-21-4322",
+		"firstName": "Bosko",
+		"lastName": "The Clown",
+		"birthDate": "1955-12-06",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 23,
+		"ssn": "678-21-4323",
+		"firstName": "Popeye",
+		"lastName": "The Sailor",
+		"birthDate": "1936-07-23",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 24,
+		"ssn": "678-21-4324",
+		"firstName": "Olive",
+		"lastName": "Oyl",
+		"birthDate": "1936-05-30",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 25,
+		"ssn": "678-21-4325",
+		"firstName": "Castor",
+		"lastName": "Oyl",
+		"birthDate": "1936-03-23",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 26,
+		"ssn": "678-21-4326",
+		"firstName": "Bluto",
+		"lastName": "Bad Guy",
+		"birthDate": "1936-04-21",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 27,
+		"ssn": "678-21-4327",
+		"firstName": "Alice",
+		"lastName": "The Goon",
+		"birthDate": "1936-05-21",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 28,
+		"ssn": "678-21-4328",
+		"firstName": "Eugene",
+		"lastName": "The Jeep",
+		"birthDate": "1936-06-22",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 29,
+		"ssn": "678-21-4329",
+		"firstName": "George",
+		"lastName": "E. Geezil",
+		"birthDate": "1936-07-13",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 30,
+		"ssn": "678-21-4330",
+		"firstName": "Harold",
+		"lastName": "Hamgravy",
+		"birthDate": "1936-03-23",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 31,
+		"ssn": "678-21-4331",
+		"firstName": "Poopdeck",
+		"lastName": "Pappy",
+		"birthDate": "1936-07-23",
+		"married": false,
+		"children": 0
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 32,
+		"ssn": "678-21-4332",
+		"firstName": "Sea",
+		"lastName": "Hag",
+		"birthDate": "1936-03-14",
+		"married": true,
+		"children": 3
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 33,
+		"ssn": "678-21-4333",
+		"firstName": "Swee",
+		"lastName": "Pea",
+		"birthDate": "1936-11-12",
+		"married": true,
+		"children": 3
+	},
+	{
+		"_class": "com.tnsilver.contacts.model.Contact",
+		"id": 34,
+		"ssn": "678-21-4334",
+		"firstName": "J. Wellington",
+		"lastName": "Wimpy",
+		"birthDate": "1936-11-11",
+		"married": true,
+		"children": 2
+	}
+]

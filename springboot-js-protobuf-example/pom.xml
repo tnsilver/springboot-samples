@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.2</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.tnsilver</groupId>
+	<artifactId>springboot-js-protobuf-example</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>springboot-js-protobuf-example</name>
+	<description>SpringBoot JavaScript Protobuf Example Project</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>19</java.version>
+		<protoc.version>3.12.4</protoc.version>
+		<!--protoc.version>3.21.7</protoc.version-->
+		<webjars-locator.version>0.45</webjars-locator.version>
+		<bootstrap.version>5.2.0</bootstrap.version>
+		<protobuf.version>4.0.0-rc-2</protobuf.version>
+		<protobuf-java-format.version>1.4</protobuf-java-format.version>
+		<pgv.version>0.6.13</pgv.version>
+		<commons-text.version>1.10.0</commons-text.version>
+		<maven.surefire.plugin.version>3.0.0-M7</maven.surefire.plugin.version>
+		<maven.failsafe.plugin.version>3.0.0-M7</maven.failsafe.plugin.version>
+		<maven.site.plugin.version>4.0.0-M3</maven.site.plugin.version>
+		<protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
+		<os-maven-plugin.version>1.7.0</os-maven-plugin.version>
+	</properties>
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>${protobuf.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>build.buf.protoc-gen-validate</groupId>
+			<artifactId>pgv-java-stub</artifactId>
+			<version>${pgv.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java-util</artifactId>
+			<version>${protobuf.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-text</artifactId>
+			<version>${commons-text.version}</version>
+		</dependency>
+		<!--
+		<dependency>
+			<groupId>com.googlecode.protobuf-java-format</groupId>
+			<artifactId>protobuf-java-format</artifactId>
+			<version>${protobuf-java-format.version}</version>
+		</dependency>
+		-->
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
+
+		<!-- commons collections4 LRUMap rquired for caching -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.4</version>
+		</dependency>
+
+		<!-- webjars -->
+		<!--
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${bootstrap.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator</artifactId>
+            <version>${webjars-locator.version}</version>
+        </dependency>
+        -->
+		<!-- Tomcat server provided -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!-- https://mvnrepository.com/artifact/kr.motd.maven/os-maven-plugin -->
+		<extensions>
+			<extension>
+				<groupId>kr.motd.maven</groupId>
+				<artifactId>os-maven-plugin</artifactId>
+				<version>${os-maven-plugin.version}</version>
+			</extension>
+		</extensions>
+
+		<finalName>${project.artifactId}</finalName>
+
+		<pluginManagement>
+			<plugins>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven.surefire.plugin.version}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>${maven.failsafe.plugin.version}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-report-plugin</artifactId>
+					<version>${maven.surefire.plugin.version}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.xolstice.maven.plugins</groupId>
+					<artifactId>protobuf-maven-plugin</artifactId>
+					<version>${protobuf-maven-plugin.version}</version>
+				</plugin>
+
+			</plugins>
+		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+						<configuration>
+							<failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
+							<excludes>
+								<exclude>**/Test</exclude>
+								<exclude>**/Application*</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+					<forkCount>4</forkCount>
+					<reuseForks>true</reuseForks>
+					<argLine>--add-opens java.base/java.time=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED -Duser.timezone=UTC</argLine>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<configuration>
+					<showSuccess>true</showSuccess>
+				</configuration>
+				<executions>
+					<execution>
+						<id>generate-reports</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report-only</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>generate-it-reports</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>failsafe-report-only</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>${maven.site.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>generate-test-reports-styles</id>
+						<phase>test</phase>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<configuration>
+							<generateReports>false</generateReports>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.xolstice.maven.plugins</groupId>
+				<artifactId>protobuf-maven-plugin</artifactId>
+				<configuration>
+					<protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
+					<!--protocExecutable>/usr/bin/protoc</protocExecutable-->
+					<protoSourceRoot>${basedir}/src/main/resources/proto</protoSourceRoot>
+					<checkStaleness>true</checkStaleness>
+					<outputDirectory>${project.build.sourceDirectory}</outputDirectory>
+					<clearOutputDirectory>false</clearOutputDirectory>
+					<pluginParameter>lang=java</pluginParameter>
+					<pluginId>java-pgv</pluginId>
+					<pluginArtifact>build.buf.protoc-gen-validate:protoc-gen-validate:${pgv.version}:exe:${os.detected.classifier}</pluginArtifact>
+				</configuration>
+				<executions>
+					<execution>
+						<id>protoc-java-pgv</id>
+						<goals>
+							<goal>compile-custom</goal>
+						</goals>
+					</execution>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

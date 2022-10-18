@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Cache-Control" content="max-age=3600">
+	<meta name="_csrf" th:content="${_csrf != null} ? ${_csrf.token} : ''" />
+	<meta name="_csrf_header" th:content="${_csrf != null}? ${_csrf.headerName} : 'X-CSRF-TOKEN'" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title th:utext="#{simple.page.title}">Simple</title>
+	<link rel="icon" href="../static/favicon.ico" th:href="@{/resources/favicon.ico}" type="image/x-icon" />
+	<!-- custom css -->
+	<link rel="stylesheet" href="../static/css/custom.css" th:href="@{/resources/css/custom.css}" />
+	<!-- bootstrap css -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<!-- DataTables styles -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.4.0/css/select.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
+</head>
+<body th:dir="#{dir}" th:lang="en" dir="ltr" lang="en"  th:data-courses-url="@{/courses}" data-courses-url="#">
+	<div class="container">
+		<div class="header clearfix">
+			<nav th:replace="fragments/navbar :: navbar('simple')">
+				<ul class="nav nav-pills pull-right">
+					<li role="presentation" class="active"><a href="simple.html">Simple</a></li>
+					<li role="presentation"><a href="medium.html">Medium</a></li>
+					<li role="presentation"><a href="complex.html">Complex</a></li>
+					<li role="presentation" class="menu size"><a href="#"><span id="sizespan"></span></a></li>
+				</ul>
+				<h3 th:utext="#{nav.menu.brand}" class="text-muted">Protobuf Examples</h3>
+				<script type="text/javascript">
+					var sizespan = document.getElementById("sizespan");
+			        var updateSizeSpan = function () { sizespan.innerHTML = window.innerWidth + "px / " + window.innerHeight + "px"; };
+			        if (window.addEventListener) {
+			            window.addEventListener("resize", updateSizeSpan, false);
+			            window.addEventListener("DOMContentLoaded", updateSizeSpan, false);
+			            window.addEventListener("load", updateSizeSpan, false);
+			        }
+			        else if (window.attachEvent) { window.attachEvent("onload", updateSizeSpan); }
+			  	</script>
+			</nav>
+		</div>
+
+		<div class="row">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<div class="jumbotron">
+					<h1 th:utext="#{simple.page.heading}">Simple Example</h1>
+					<p th:utext="#{simple.page.lead}" class="lead">This example demonstrates a single data table with augmented rows representing sub-data sets. The <i>Courses</i> data table is initialized by a <i>vanilla JavaScript</i> <i>XMLHttpRequest</i>, resulting in a response body containing a <b>binary</b> <i>google protobuf</i> message. Select any row in the <i>Courses</i> data table by clicking the <i class="dt-control"></i> control, to expose the augmented <i>Students</i> and <i>Phones</i> row details. The augmented rows are constructed from data originating in the parent data table.</p>
+					<p><a id="refresh-btn" th:utext="#{simple.page.heading.btn}" href="#" class="btn btn-lg btn-success" role="button">Reload</a></p>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<h4 th:utext="#{simple.page.datatable.header}">Courses</h4>
+				<table id="datatable" class="display compact responsive" style="width: 100%">
+					<thead>
+						<tr>
+						    <th></th>
+						    <th th:utext="#{datatable.th.course.id}">ID</th>
+						    <th th:utext="#{datatable.th.course.name}">Course Name</th>
+							<th th:utext="#{datatable.th.course.students}">Students</th>
+						</tr>
+					</thead>
+                    <tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+        <footer id="footer" class="footer">
+        	<p th:utext="'&copy;' + '&nbsp;' + ${#dates.year(#dates.createNow())} + '&nbsp;' + #{footer.copy}">&copy; 2022 Crypto-Proxy, Inc.</p>
+        </footer>
+
+	</div>
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+	<!-- DataTables -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/keytable/2.7.0/js/dataTables.keyTable.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+    <!-- closure library -->
+    <script src="../static/js/google-closure-library/closure/goog/base.js" th:src="@{/resources/js/google-closure-library/closure/goog/base.js}"></script>
+    <!-- protobuf library -->
+    <script src="../static/js/google-protobuf/google-protobuf.js" th:src="@{/resources/js/google-protobuf/google-protobuf.js}"></script>
+    <!-- custom protos -->
+    <script src="../static/js/training/training_lib.js" th:src="@{/resources/js/training/training_lib.js}"></script>
+    <!-- simple example script -->
+    <script src="../static/js/simple.js" th:src="@{/resources/js/simple.js}"></script>
+
+</body>
+</html>

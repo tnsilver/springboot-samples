@@ -1,0 +1,11 @@
+ 
+version: '3.9'
+
+services:
+  app:
+    build: .
+    image: @project.artifactId@
+    container_name: @project.artifactId@
+    ports:    
+      - @server.port@:@server.port@
+      

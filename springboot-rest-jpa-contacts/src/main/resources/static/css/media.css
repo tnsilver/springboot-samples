@@ -1,0 +1,437 @@
+/* ----------- Non-Retina Screens ----------- */
+@media screen
+  and (min-device-width: 1200px)
+  and (max-device-width: 1600px)
+  and (-webkit-min-device-pixel-ratio: 1) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 10px;
+        max-width: 800px;
+    }
+}
+
+/* ----------- Retina Screens ----------- */
+@media screen
+  and (min-device-width: 1200px)
+  and (max-device-width: 1600px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (min-resolution: 192dpi) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 10px;
+        max-width: 800px;
+   }
+}
+
+/* ----------- Galaxy S3 ----------- */
+
+/* Portrait and Landscape */
+@media screen
+  and (device-width: 360px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 2) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 5px;
+        max-width: 340px;
+    }
+}
+
+/* Portrait */
+@media screen
+  and (device-width: 320px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 0;
+        max-width: 320px;
+    }
+}
+
+/* Landscape */
+@media screen
+  and (device-width: 320px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 0;
+        max-width: 300px;
+    }
+}
+
+/* ----------- Galaxy S4, S5 and Note 3 ----------- */
+
+/* Portrait and Landscape */
+@media screen
+  and (device-width: 320px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 3) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 0;
+        max-width: 300px;
+    }
+}
+
+/* Portrait */
+@media screen
+  and (device-width: 320px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 3)
+  and (orientation: portrait) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 0px;
+        max-width: 300px;
+    }
+}
+
+/* Landscape */
+@media screen
+  and (device-width: 320px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 3)
+  and (orientation: landscape) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 0px;
+        max-width: 300px;
+    }
+}
+
+/* ----------- Galaxy S7 ----------- */
+
+/* Portrait and Landscape */
+@media screen
+  and (device-width: 360px)
+  and (device-height: 559px) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 5px;
+        max-width: 340px;
+    }
+}
+
+/* ----------- Galaxy S6 ----------- */
+
+/* Portrait and Landscape */
+@media screen
+  and (device-width: 360px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 4) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 5px;
+        max-width: 340px;
+   }
+}
+
+/* Portrait */
+@media screen
+  and (device-width: 360px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 4)
+  and (orientation: portrait) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 5px;
+        max-width: 340px;
+    }
+}
+
+/* Landscape */
+@media screen
+  and (device-width: 360px)
+  and (device-height: 640px)
+  and (-webkit-device-pixel-ratio: 4)
+  and (orientation: landscape) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 5px;
+        max-width: 340px;
+    }
+}
+
+/* ----------- Galaxy S7 and S8 ----------- */
+/*
+ * My Samsung Galaxy S7 sees this
+ */
+@media only screen
+	and (min-device-width : 360px)
+	and (max-device-width : 640px){
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 0px;
+        max-width: 360px;
+        background-color: beige !important;
+    }
+
+}
+
+/* ----------- iPhone 4 and 4S ----------- */
+
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 0;
+        max-width: 300px;
+   }
+}
+
+/* Portrait */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 0;
+        max-width: 300px;
+   }
+
+}
+
+/* Landscape */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 0;
+        max-width: 300px;
+   }
+}
+
+/* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
+
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 5px;
+        max-width: 300px;
+   }
+}
+
+/* Portrait */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 5px;
+        max-width: 300px;
+   }
+
+}
+
+/* Landscape */
+@media only screen
+  and (min-device-width: 320px)
+  and (max-device-width: 568px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 5px;
+        max-width: 300px;
+   }
+}
+
+/* ----------- iPhone 6, 6S, 7 and 8 ----------- */
+
+/* Portrait and Landscape */
+
+/*
+ * My iPhone 8 sees this
+ */
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 5px;
+        max-width: 375px;
+        background-color: beige !important;
+   }
+}
+
+/* Portrait */
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: portrait) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 10px;
+        max-width: 360px;
+   }
+
+}
+
+/* Landscape */
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 10px;
+        max-width: 360px;
+   }
+}
+
+/* ----------- iPhone 6+, 7+ and 8+ ----------- */
+
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 414px)
+  and (max-device-width: 736px)
+  and (-webkit-min-device-pixel-ratio: 3) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 10px;
+        max-width: 380px;
+   }
+}
+
+/* Portrait */
+@media only screen
+  and (min-device-width: 414px)
+  and (max-device-width: 736px)
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 10px;
+        max-width: 380px;
+   }
+}
+
+/* Landscape */
+@media only screen
+  and (min-device-width: 414px)
+  and (max-device-width: 736px)
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 10px;
+        max-width: 380px;
+   }
+}
+
+/* ----------- iPhone X ----------- */
+
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 812px)
+  and (-webkit-min-device-pixel-ratio: 3) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 10px;
+        max-width: 360px;
+   }
+}
+
+/* Portrait */
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 812px)
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: portrait) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 10px;
+        max-width: 360px;
+   }
+}
+
+/* Landscape */
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 812px)
+  and (-webkit-min-device-pixel-ratio: 3)
+  and (orientation: landscape) {
+
+  .modal .modal-dialog .modal-content {
+        position:relative;
+        width:auto;
+        margin: 10px;
+        max-width: 360px;
+   }
+}

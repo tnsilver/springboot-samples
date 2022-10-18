@@ -1,0 +1,79 @@
+/* Main marketing message and sign up button */
+.jumbotron {
+	text-align: center;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+.jumbotron .btn {
+	padding: 14px 24px;
+	font-size: 21px;
+}
+
+.jumbotron h1, .jumbotron .h1 {
+	font-size: 40px !important;
+}
+
+.nav-pills>li.size {
+	background-color: #e6f2ff !important;
+	border-radius: 12px;
+}
+
+.nav>li.size>a:hover, .nav>li.size>a:focus {
+	background-color: #e6f2ff !important;
+	border-radius: 12px;
+}
+
+i.dt-control::before {
+	height: 1em;
+	width: 1em;
+	margin-top: -9px;
+	display: inline-block;
+	color: white;
+	border: .15em solid white;
+	border-radius: 1em;
+	box-shadow: 0 0 .2em #444;
+	box-sizing: content-box;
+	text-align: center;
+	text-indent: 0 !important;
+	font-family: "Courier New", Courier, monospace;
+	line-height: 1em;
+	content: "+";
+	background-color: #31b131;
+}
+
+table.dataTable td.dt-control-nochild::before {
+	height: 1em;
+	width: 1em;
+	margin-top: -9px;
+	display: inline-block;
+	color: white;
+	border: .15em solid white;
+	border-radius: 1em;
+	box-shadow: 0 0 .2em #444;
+	box-sizing: content-box;
+	text-align: center !important;
+	text-indent: 0 !important;
+	font-family: "Courier New", Courier, monospace;
+	line-height: 1em;
+	content: "!";
+	background-color: #9a9996;
+}
+
+table.dataTable td.dt-control-nochild {
+	text-align: center;
+	cursor: pointer;
+}
+
+table.dataTable.compact thead th, table.dataTable.compact thead td {
+	padding: 4px 5px !important;
+}
+
+label.errorLabel {
+	color: #a94442;
+}
+
+table.dataTable td a.control-btn, table.dataTable th a.control-btn {
+	padding: 2px 6px !important;
+	line-height: 1;
+	border-radius: 3px;
+}

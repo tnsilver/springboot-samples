@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="_csrf" th:content="${_csrf != null} ? ${_csrf.token} : ''" />
+	<meta name="_csrf_header" th:content="${_csrf != null}? ${_csrf.headerName} : 'X-CSRF-TOKEN'" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title th:utext="#{about.page.title}">About</title>
+	<link rel="stylesheet" href="../static/css/custom.css" th:href="@{/resources/css/custom.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="icon" href="../static/favicon.ico" th:href="@{/resources/favicon.ico}" type="image/x-icon" />
+</head>
+<body th:dir="#{dir}" th:lang="en" dir="ltr" lang="en">
+	<div class="container">
+		<div class="header clearfix">
+			<nav th:replace="fragments/navbar :: navbar('about')">
+				<ul class="nav nav-pills pull-right">
+					<li role="presentation"><a href="index.html">Home</a></li>
+					<li role="presentation" class="active"><a href="about.html">About</a></li>
+					<li role="presentation"><a href="contact.html">Contact</a></li>
+				</ul>
+			</nav>
+			<h3 th:utext="#{nav.menu.brand}" class="text-muted">Crypto Currency Proxy</h3>
+		</div>
+
+		<div class="jumbotron">
+			<h1>&nbsp;</h1>
+			<p class="lead">&nbsp;</p>
+		</div>
+
+        <footer id="footer" class="footer">
+        	<p th:utext="'&copy;' + '&nbsp;' + ${#dates.year(#dates.createNow())} + '&nbsp;' + #{footer.copy}">&copy; 2022 Crypto-Proxy, Inc.</p>
+        </footer>
+
+	</div>
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+body {
+	background-color: #f9ebd2;
+}
+
+/* .navbar-inverse {
+	background-color: #449d44;
+	border-color: #398439;
+} */
+
+/* .navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+	color: #ffff;
+	background-color: #82c982;
+} */
+
+.container .jumbotron, .container-fluid .jumbotron {
+	background: #e2b783;
+	border: 2px solid #8f5902;
+}
+
+.footer {
+	color: #5C3322;
+	background: #e2b783;
+	border: 2px solid #8f5902;
+	padding: 10px 10px 2px 10px;
+	margin: 20px 0px 20px 0px;
+	border-radius: 6px;
+}
+
+.footer p, .footer a, .footer a:hover, .footer a:link, .footer a:visited, .footer a:active {
+	color: #ee5706;
+	text-decoration: none;
+	outline: 0;
+}
+
+.dataTables_wrapper select, .dataTables_wrapper input {
+	background: #fcf5e8 !important;
+}
+
+p#greeting {
+   color: #8f5902;
+   font-size: 25px;
+}
+
+span.error {
+	color: #ff4d4d;
+}
+
+.nav > li > a.error {
+	background-color: #ff1a1a;
+}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      th:with="action=${param.action == null ? 'add' : param.action[0]},self=${param.self == null ? null : param.self[0]}">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="_csrf" th:content="${_csrf != null} ? ${_csrf.token} : ''"/>
+	<meta name="_csrf_header" th:content="${_csrf != null}? ${_csrf.headerName} : 'X-CSRF-TOKEN'"/>
+	<th:block th:switch="${action}">
+	  <title th:case="'edit'" th:text="#{page.contact.title.edit}"></title>
+	  <title th:case="'delete'" th:text="#{page.contact.title.delete}"></title>
+	  <title th:case="*" th:text="#{page.contact.title.add}"></title>
+	</th:block>
+	<link rel="stylesheet" href="../../static/themes/wheat.css" th:href="${#themes.code('stylesheet')}" type="text/css">
+	<script type="text/javascript" src="../../static/js/plugins/jquery-3.3.1.min.js" th:src="@{/resources/js/plugins/jquery-3.3.1.min.js}"></script>
+	<script type="text/javascript" src="../../static/js/client/common.js" th:src="@{/resources/js/client/common.js}"></script>
+	<script type="text/javascript" src="../../static/js/client/contact.js" th:src="@{/resources/js/client/contact.js}"></script>
+	<link th:href="@{/resources/favicon.ico}" type="image/x-icon" rel="icon">
+</head>
+<body th:style="'direction:' + #{dir}"
+      dir="ltr" th:dir="#{dir}"
+      th:data-date-pattern="#{date.pattern}"
+	  th:data-language="${#locale.language}"
+	  th:data-context-path="@{/}"
+	  th:data-next-page="@{/html/contacts}">
+	<div id="wrapper">
+		<div class="nav" th:replace="html/fragments/navbar :: navbar('html/contact','contact-html', ${action})"></div>
+		<div class="content">
+		    <h2 th:text="#{page.contact.html}"></h2>
+			<th:block th:switch="${action}">
+			  <h3 th:case="'edit'" th:text="#{page.contact.title.edit}"></h3>
+			  <h3 th:case="'delete'" th:text="#{page.contact.title.delete}"></h3>
+			  <h3 th:case="*" th:text="#{page.contact.title.add}"></h3>
+			</th:block>
+			<form id="contactForm"
+			      action="#" th:action="@{/api/contacts/}"
+			      autocomplete="on"
+			      method="post"
+			      th:data-self="${self}"
+			      th:data-action="${action}">
+				<div id="loader">&nbsp;</div>
+				<table class="vertical">
+					<!-- <tr>
+						<td><label th:text="#{contact.id}">ID</label></td>
+						<td><input id="id" type="text" readonly="readonly" /></td>
+					</tr> -->
+					<!-- <tr style="display: none;">
+						<td></td>
+						<td class="error"><span id="idError" class="error">ID Error</span></td>
+					</tr> -->
+					<tr>
+						<td><label th:text="#{contact.ssn}">SSN</label></td>
+						<td>
+						    <input id="ssn"
+								   type="text"
+								   autocomplete="on" placeholder="123-456-7890"
+							       th:placeholder="#{contact.ssn.placeholder}"
+							       th:attr="disabled=(${action} eq 'delete')"
+							       required="required" pattern="[0-9]{3}-[0-9]{2}-[0-9]{4}"
+							       th:oninvalid="'this.setCustomValidity(\''+ #{invalid.ssn} +'\')'"
+							       oninput="setCustomValidity(''); clearError(this)"/>
+					   </td>
+					</tr>
+					<tr style="display: none;">
+						<td></td>
+						<td class="error"><span id="ssnError" class="error">SSN Error</span></td>
+					</tr>
+					<tr>
+						<td><label th:text="#{contact.fname}">First Name</label></td>
+						<td>
+                            <input id="firstName"
+								   type="text"
+								   autocomplete="on"
+								   th:attr="disabled=(${action} eq 'delete')"
+								   required="required" pattern=".{2,25}"
+								   th:oninvalid="'this.setCustomValidity(\''+ #{invalid.name} +'\')'"
+								   oninput="setCustomValidity(''); clearError(this)" />
+					    </td>
+					</tr>
+					<tr style="display: none;">
+						<td></td>
+						<td class="error"><span id="firstNameError" class="error">First Name Error</span></td>
+					</tr>
+					<tr>
+						<td><label th:text="#{contact.lname}">Last Name</label></td>
+						<td>
+							<input id="lastName"
+							       type="text"
+							       autocomplete="on"
+							       th:attr="disabled=(${action} eq 'delete')"
+							       required="required" pattern=".{2,25}"
+							       th:oninvalid="'this.setCustomValidity(\''+ #{invalid.name} +'\')'"
+							       oninput="setCustomValidity(''); clearError(this)" />
+			            </td>
+					</tr>
+					<tr style="display: none;">
+						<td></td>
+						<td class="error"><span id="lastNameError" class="error">Last Name Error</span></td>
+					</tr>
+					<tr>
+						<td><label th:text="#{contact.birthDate}">Birth Date</label></td>
+						<td>
+							<input id="birthDate"
+								   type="text"
+								   autocomplete="on"
+								   placeholder="1990-12-31"
+							       th:placeholder="#{contact.birthDate.placeholder}"
+							       th:attr="disabled=(${action} eq 'delete')"
+							       required="required" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+							       th:oninvalid="'this.setCustomValidity(\''+ #{invalid.birthDate} +'\')'"
+							       oninput="setCustomValidity(''); clearError(this)" />
+					   </td>
+					</tr>
+					<tr style="display: none;">
+						<td></td>
+						<td class="error"><span id="birthDateError" class="error">Birth Date Error</span></td>
+					</tr>
+					<tr>
+						<td><label th:text="#{contact.married}">Is Married?</label></td>
+						<td>
+						    <input id="married" type="checkbox" th:attr="disabled=(${action} eq 'delete')"/>
+						</td>
+					</tr>
+					<tr style="display: none;">
+						<td></td>
+						<td class="error"><span id="marriedError" class="error">Married Error</span></td>
+					</tr>
+					<tr>
+						<td><label th:text="#{contact.children}">Children?</label></td>
+						<td>
+						    <input id="children"
+								   autocomplete="on"
+								   th:attr="disabled=(${action} eq 'delete')"
+								   type="number"
+								   min="0" required="required"
+								   th:oninvalid="'this.setCustomValidity(\''+ #{invalid.children(0,99)} +'\')'"
+								   oninput="setCustomValidity(''); clearError(this)" />
+					   </td>
+					</tr>
+					<tr style="display: none;">
+						<td></td>
+						<td class="error"><span class="error" id="childrenError">Children Error</span></td>
+					</tr>
+					<tr>
+						<td>
+							<button type="submit" name="Save"
+							        th:attr="value=(${action} eq 'delete' ? #{contact.btn.delete} : #{contact.btn.save})">
+							        <th:block th:text="(${action} eq 'delete' ? #{contact.btn.delete} : #{contact.btn.save})">Save</th:block>
+							</button>
+						</td>
+						<td>
+							<button type="button" id="reset" class="reset"
+							        th:attr="value=${action} eq 'add' ? #{contact.btn.reset} : #{contact.btn.cancel}">
+							        <th:block th:text="${action} eq 'add' ? #{contact.btn.reset} : #{contact.btn.cancel}">Clear</th:block>
+							</button>
+						</td>
+					</tr>
+					<tr class="message">
+						<td class="message" colspan="2"><p th:data-message="#{contact.saved}"></p></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div class="footer" th:replace="html/fragments/footer">
+			<span th:text="#{footer.year}">© 2021</span>
+			<a href="#" th:text="#{footer.copyright}">T.N.Silverman - SilverSoft LTD</a> <span th:text="#{footer.notice}">All Rights Reserved.</span>
+		</div>
+	</div>
+</body>
+</html>

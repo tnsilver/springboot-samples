@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="_csrf" th:content="${_csrf != null} ? ${_csrf.token} : ''"/>
+	<meta name="_csrf_header" th:content="${_csrf != null}? ${_csrf.headerName} : 'X-CSRF-TOKEN'"/>
+	<title th:text="#{page.error}">Error</title>
+	<link rel="stylesheet" href="../../static/themes/wheat.css" th:href="${#themes.code('stylesheet')}" type="text/css">
+	<script type="text/javascript" src="../../static/js/plugins/jquery-3.3.1.min.js" th:src="@{/resources/js/plugins/jquery-3.3.1.min.js}"></script>
+	<link th:href="@{/resources/favicon.ico}" type="image/x-icon" rel="icon">
+</head>
+<body th:style="'direction:' + #{dir}" dir="ltr" th:dir="#{dir}"
+    th:data-date-pattern="#{date.pattern}"
+	th:data-language="${#locale.language}"
+	th:data-context-path="@{/}"
+	th:data-image-path="@{/resources/images/}"
+	th:data-theme="${#themes.code('theme')}"
+	th:data-confirm="#{confirm.delete('@','@')}"
+	th:data-edit-url="@{/html/contact}"
+	th:data-delete-url="@{/api/contacts}"
+	th:data-login-page="@{/login}"
+	th:data-customers-page="@{/html/customers}"
+	th:data-current-user="${#httpServletRequest.remoteUser}">
+	<div class="wrapper">
+		<!-- START navbar -->
+		<div class="nav" th:replace="html/fragments/navbar :: navbar('html/error','error-html', '')">
+			<ul>
+			    <li><a th:if="${name == 'error-html'}" href="#" class="error" th:text="#{page.error}">Error</a></li>
+				<li><a href="home.html" th:href="@{/}" th:attrappend="class=${name eq 'home'}?'active'" th:text="#{page.home}">Home</a></li>
+				<li><a href="../jsp/hello.jsp" th:href="@{/jsp/hello}" th:attrappend="class=${name eq 'hello-jsp'}?'active'" th:text="#{page.hello.jsp}">Hello JSP</a></li>
+				<li><a href="hello.html" th:href="@{/html/hello}" th:attrappend="class=${name eq 'hello-html'}?'active'" th:text="#{page.hello.html}">Hello HTML</a></li>
+				<li><a href="../jsp/contacts.jsp" th:attrappend="class=${name eq 'error-jsp'}?'active'" th:href="@{/jsp/contacts}" th:text="#{page.contacts.jsp}">Contacts JSP</a></li>
+				<li><a href="../jsp/contact.jsp" th:attrappend="class=${name eq 'contact-jsp'}?'active'" th:href="@{/jsp/contact}" th:text="#{page.contact.jsp}">Add Contact (JSP)</a></li>
+				<li><a href="contacts.html" th:attrappend="class=${name eq 'error-html'}?'active'" th:href="@{/html/contacts}" th:text="#{page.contacts.html}">Contacts HTML</a></li>
+				<li><a href="contact.html" th:attrappend="class=${name eq 'contact-html'}?'active'" th:href="@{/html/contact}" th:text="#{page.contact.html}">Add Contact (HTML)</a></li>
+				<li class="dropdown">
+				    <a href="javascript:void(0)" class="dropbtn" th:text="#{page.language}">Language</a>
+					<div class="dropdown-content">
+						<a href="#" th:href="@{/} + ${url} + '?lang=he_IL'"><img th:alt="#{lang.iw}"
+							src="../../static/images/flags/iw.png" th:src="@{/resources/images/flags/iw.png}">&nbsp;<span
+							th:text="#{lang.iw}">Hebrew</span></a> <a href="#" th:href="@{/} + ${url} + '?lang=us_EN'"><img
+							th:alt="#{lang.en}" src="../../static/images/flags/en.png" th:src="@{/resources/images/flags/en.png}">&nbsp;<span
+							th:text="#{lang.en}">English</span></a>
+					</div></li>
+				<li class="dropdown">
+				    <a href="javascript:void(0)" class="dropbtn" th:text="#{theme.change}">Theme</a>
+					<div class="dropdown-content">
+						<a href="#" th:href="@{/} + ${url} + '?theme=spring'"><img th:alt="#{theme.spring}"
+							src="../../static/images/spring.png" th:src="@{/resources/images/spring.png}">&nbsp;<span
+							th:text="#{theme.spring}">Spring</span></a> <a href="#" th:href="@{/} + ${url} + '?theme=wheat'"><img
+							th:alt="#{theme.wheat}" src="../../static/images/wheat.png" th:src="@{/resources/images/wheat.png}">&nbsp;<span
+							th:text="#{theme.wheat}">Wheat</span></a>
+					</div>
+				</li>
+				<li><a href="#" class="error" th:text="#{page.error}">Error</a></li>
+				<li><a href="#" th:href="@{'/source/' + ${@fileNameService.getName(url)} + '.html'}" th:text="#{page.source}">Source</a></li>
+			</ul>
+		</div>
+		<!-- END navbar -->
+		<!-- START content -->
+	    <div class="content">
+	        <h1 th:text="#{support.header}">Error Page</h1>
+	        <!--  As we are using Thymeleaf, you might consider using
+	              ${#httpServletRequest.requestURL}. But that returns the path
+	              to this error page.  Hence we explicitly add the url to the
+	              Model in some of the example code. -->
+	        <p th:if="${path}"><b th:text="#{support.page} + ':'">Page:</b>
+	        	<span th:text="${path}">Page URL</span>
+	        </p>
+	        <p th:if="${timestamp}" id='created'><b th:text="#{support.occured} + ':'">Occurred:</b>
+	        	<span th:text="${timestamp}">Timestamp</span>
+	        </p>
+	        <p th:if="${status}"><b th:text="#{support.status} + ':'">Response Status:</b>
+	            <span th:text="${status}">status-code</span>
+	            <span th:if="${error}" th:text="'('+${error}+')'">error...</span>
+	        </p>
+	        <p th:if="${exception}"><b th:text="'Exception:'">Exception:</b>
+	        	<span th:text="${exception}">Exception</span>
+	        </p>
+	        <p th:if="${exception ne null and exception instanceof T(java.lang.Throwable)}"><b th:text="'Trace:'">Trace:</b></p>
+	        <ul th:if="${exception ne null and exception instanceof T(java.lang.Throwable)}">
+	            <li th:each="ste : ${exception.getStackTrace()}"><span th:text="${ste}"></span></li>
+	        </ul>
+	        <p th:text="#{support.contact}">Application has encountered an error. Please contact support on ...</p>
+	        <p th:text="#{support.notice}">Support may ask you to right click to view page source.</p>
+	        <!--
+	          // Hidden Exception Details  - this is not recommended, but here is
+	          // how you hide an exception in the page using Thymeleaf
+	          -->
+	        <div th:utext="'&lt;!--'" th:remove="tag"></div>
+	        <div th:utext="'Failed URL: ' +  ${path}" th:remove="tag">${path}</div>
+	        <div th:if="${exception ne null and exception instanceof T(java.lang.Throwable)}" th:utext="'Exception: ' + ${exception.message}" th:remove="tag">${exception.message}</div>
+	        <ul th:remove="tag">
+	            <li th:each="ste : ${trace}" th:remove="tag"><span th:utext="${ste}" th:remove="tag">${ste}</span></li>
+	        </ul>
+	        <div th:utext="'--&gt;'" th:remove="tag"></div>
+	    </div>
+	    <div class="spacer"></div>
+		<!-- END content -->
+		<!-- START footer -->
+		<div class="footer" th:replace="html/fragments/footer">
+			<span th:text="#{footer.year}">© 2021</span>
+			<a href="#" th:text="#{footer.copyright}">T.N.Silverman - SilverSoft LTD</a>
+			<span th:text="#{footer.notice}">All Rights Reserved.</span>
+		</div>
+		<!-- END footer -->
+	</div>
+</body>
+</html>

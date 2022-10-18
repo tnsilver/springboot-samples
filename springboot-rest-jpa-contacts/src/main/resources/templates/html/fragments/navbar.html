@@ -1,0 +1,59 @@
+<!--/*--><!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"><!--*/-->
+
+<th:block th:fragment="navbar (url,name,action)" th:assert="${!#strings.isEmpty(url) && !#strings.isEmpty(name)}"><span th:utext="'&lt;!-- the following block was replaced by /frgaments/navbar(\'' +  ${url} + '\',\'' + ${name} + '\',\'' + (${action}?:'null') + '\') --&gt;'" th:remove="tag"></span>
+    <div class="nav">
+        <ul>
+            <li><a th:if="${name == 'error-html'}" href="#" class="error" th:text="#{page.error}">Error</a></li>
+            <li><a href="home.html" th:href="@{/html/home}" th:attrappend="class=${name eq 'home'}?'active'" th:text="#{page.home}">Home</a></li>
+            <li><a href="../jsp/hello.jsp" th:href="@{/jsp/hello}" th:attrappend="class=${name eq 'hello-jsp'}?'active'" th:text="#{page.hello.jsp}">Hello JSP</a></li>
+            <li><a href="hello.html" th:href="@{/html/hello}" th:attrappend="class=${name eq 'hello-html'}?'active'" th:text="#{page.hello.html}">Hello HTML</a></li>
+            <li><a href="../jsp/contacts.jsp" th:attrappend="class=${name eq 'contacts-jsp'}?'active'" th:href="@{/jsp/contacts}" th:text="#{page.contacts.jsp}">Contacts JSP</a></li>
+            <th:block th:switch="${action}">
+	            <li th:case="'edit'"><a href="contact.jsp" th:attrappend="class=${name eq 'contact-jsp'}?'active'" th:href="@{/jsp/contact}" th:text="#{page.contact.edit.jsp}">Edit Contact</a></li>
+	            <li th:case="'delete'"><a href="contact.jsp" th:attrappend="class=${name eq 'contact-jsp'}?'active'" th:href="@{/jsp/contact}" th:text="#{page.contact.delete.jsp}">Delete Contact</a></li>
+	            <li th:case="*"><a href="contact.jsp" th:attrappend="class=${name eq 'contact-jsp'}?'active'" th:href="@{/jsp/contact}" th:text="#{page.contact.add.jsp}">Add Contact</a></li>
+            <th:block>
+            <li><a href="contacts.html" th:attrappend="class=${name eq 'contacts-html'}?'active'" th:href="@{/html/contacts}" th:text="#{page.contacts.html}">Contacts HTML</a></li>
+			<th:block th:switch="${action}">
+	            <li th:case="'edit'"><a href="contact.html" th:attrappend="class=${name eq 'contact-html'}?'active'" th:href="@{/html/contact}" th:text="#{page.contact.edit}">Edit Contact</a></li>
+	            <li th:case="'delete'"><a href="contact.html" th:attrappend="class=${name eq 'contact-html'}?'active'" th:href="@{/html/contact}" th:text="#{page.contact.delete}">Delete Contact</a></li>
+	            <li th:case="*"><a href="contact.html" th:attrappend="class=${name eq 'contact-html'}?'active'" th:href="@{/html/contact}" th:text="#{page.contact.add}">Add Contact</a></li>
+            <th:block>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn" th:text="#{page.language}">Language</a>
+                <div class="dropdown-content">
+                    <a href="#" th:href="@{/} + ${url} + '?lang=he_IL'">
+	                    <img th:alt="#{lang.iw}" src="../../../resources/images/flags/iw.png" th:src="@{/resources/images/flags/iw.png}">&nbsp;
+	                    <span th:text="#{lang.iw}">Hebrew</span>
+                    </a>
+                    <a href="#" th:href="@{/} + ${url} + '?lang=en_US'">
+	                    <img th:alt="#{lang.en}" src="../../../resources/images/flags/en.png" th:src="@{/resources/images/flags/en.png}">&nbsp;
+	                    <span th:text="#{lang.en}">English</span>
+                    </a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn" th:text="#{theme.change}">Theme</a>
+                <div class="dropdown-content">
+                    <a href="#" th:href="@{/} + ${url} + '?theme=spring'">
+	                    <img th:alt="#{theme.spring}" src="../../../resources/images/spring.png" th:src="@{/resources/images/spring.png}">&nbsp;
+	                    <span th:text="#{theme.spring}">Spring</span>
+                    </a>
+                    <a href="#" th:href="@{/} + ${url} + '?theme=wheat'">
+	                    <img th:alt="#{theme.wheat}" src="../../../resources/images/wheat.png" th:src="@{/resources/images/wheat.png}">&nbsp;
+	                    <span th:text="#{theme.wheat}">Wheat</span>
+                    </a>
+                </div>
+            </li>
+            <li th:if="${#httpServletRequest.remoteUser != null}">
+               <a href="#" th:text="#{page.logout} + ' ' + ${#httpServletRequest.remoteUser}" onclick="document.forms['logoutForm'].submit();">Logout</a>
+               <form id="logoutForm" th:action="@{/logout}" method="post"> </form>
+            </li>
+            <li th:unless ="${#httpServletRequest.remoteUser != null}">
+               <a href="login.html" th:href="@{/login-bootstrap}" th:text="#{page.login}">Login</a>
+            </li>
+            <li><a href="#" th:href="@{'/source/' + ${@fileNameService.getName(url)} + '.html'}" th:text="#{page.source}">Source</a></li>
+        </ul>
+    </div>
+</th:block>

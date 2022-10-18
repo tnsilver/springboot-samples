@@ -1,0 +1,54 @@
+syntax = "proto3";
+package protobuf;
+option java_package = "com.tnsilver.protobuf";
+option java_outer_classname = "TrainingProtos";
+
+import "google/protobuf/any.proto";
+import "validate/validate.proto";
+
+message Courses {
+    repeated Course courses = 1;
+}
+message Students {
+    int32 courseId = 1;
+    repeated Student students = 2;
+}
+message PhoneNumbers {
+    int32 id = 1;
+    repeated Student.PhoneNumber phone = 2;
+}
+message Course {
+    int32 id = 1;
+    string course_name = 2 [(validate.rules).string = {min_len: 5, max_len: 30}];
+    repeated Student student = 3;
+}
+message Student {
+    int32 id = 1;
+    string first_name = 2 [(validate.rules).string = {min_len: 2, max_len: 30}];
+    string last_name = 3 [(validate.rules).string = {min_len: 2, max_len: 30}];
+    string email = 4 [(validate.rules).string.email = true];
+    repeated PhoneNumber phone = 5;
+    repeated int32 course_refs = 6;
+    message PhoneNumber {
+        int32 id = 1;
+        string number = 2 [(validate.rules).string.pattern = "[+\\d]?[0-9]{6,13}"];
+        PhoneType type = 3 [(validate.rules).enum = {in: [1,2,3,4]}];
+        int32 student_ref = 4;
+    }
+	enum PhoneType {
+        NONE = 0;
+        MOBILE = 1;
+        LANDLINE = 2;
+        TOLLFREE = 3;
+        BUSINESS = 4;
+    }
+}
+message Error {
+	repeated google.protobuf.Any data = 1;
+	string error = 2;
+	repeated FieldError fieldErrors = 3;
+	message FieldError {
+	    string name = 1;
+	    string status = 2;
+	}
+}

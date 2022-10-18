@@ -1,0 +1,11 @@
+ 
+version: '3.9'
+
+services:
+  app:
+    build: .
+    image: jpa-contacts
+    container_name: jpa-contacts
+    ports:    
+      - 8080:8080
+      
