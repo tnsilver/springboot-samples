@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Cache-Control" content="max-age=3600">
+	<meta name="_csrf" th:content="${_csrf != null} ? ${_csrf.token} : ''" />
+	<meta name="_csrf_header" th:content="${_csrf != null}? ${_csrf.headerName} : 'X-CSRF-TOKEN'" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title th:text="#{title}">Contacts</title>
+	<link rel="icon" href="../static/favicon.ico" th:href="@{/resources/favicon.ico}" type="image/x-icon" />
+	<!-- DataTables styles -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.4.0/css/select.dataTables.min.css">
+    <!-- Buttons Styles -->
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"> -->
+    <!-- Editor Styles -->
+    <link rel="stylesheet" type="text/css" href="../../static/js/client/DataTable-AltEditor/css/editor.dataTables.css" th:href="@{/resources/js/client/DataTable-AltEditor/css/editor.dataTables.css}">
+	<!-- Bootstrap 3.4.1 css -->
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.css"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous"> -->
+
+	<!-- Custom css -->
+	<link rel="stylesheet" href="../../static/themes/wheat-bootstrap.css" th:href="${#themes.code('stylesheet-bootstrap')}" type="text/css">
+	<link rel="stylesheet" href="../../static/css/custom.css" th:href="@{/resources/css/custom.css}" />
+	<link rel="stylesheet" href="../../static/css/media.css" th:href="@{/resources/css/media.css}" />
+</head>
+<body th:data-contacts-url="@{/api/contacts}" data-contacts-url="#">
+	<div class="container">
+		<div class="header clearfix">
+			<div class="nav" th:replace="html/fragments/navbar-bootstrap :: navbar-bootstrap('html/contacts-bootstrap','contacts-bootstrap-html', '')">
+				<nav class="navbar navbar-inverse">
+				<div class="container-fluid">
+						<div class="navbar-header"><a class="navbar-brand" href="#">SpringBootREST</a></div>
+				        <ul class="nav navbar-nav">
+						<li><a href="#" class="error">Error</a></li>
+						<li><a href="home.html">Home</a></li>
+						<li><a href="../jsp/hello.jsp">Hello JSP</a></li>
+						<li><a href="hello.html">Hello HTML</a></li>
+						<li><a href="../jsp/contacts.jsp">Contacts JSP</a></li>
+						<li><a href="contacts.html">Contacts HTML</a></li>
+						<li><a href="../jsp/contacts-bootstrap.jsp">Contacts JSP</a></li>
+						<li class="active"><a href="contacts-bootstrap.html">Contacts HTML</a></li>
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Language<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">
+										<img src="../../../resources/images/flags/iw.png">&nbsp;
+										<span>Hebrew</span>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<img src="../../../resources/images/flags/en.png">&nbsp;
+										<span>English</span>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Theme<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">
+										<img src="../../../resources/images/spring.png">&nbsp;
+										<span>Spring</span>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<img src="../../../resources/images/wheat.png">&nbsp;
+										<span>Wheat</span>
+								</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+						   <a href="login.html">Login</a>
+						</li>
+						<li><a href="#">Source</a></li>
+					</ul>
+				</div>
+				</nav>
+			</div>
+		</div>
+
+        <div class="row marketing" th:style="'direction:' + #{dir}">
+	       	<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<div class="jumbotron">
+					<h2 th:utext="#{contacts.jumbotron.header}">About this application</h2>
+					<p th:utext="#{contacts.jumbotron.lead}" class="lead">Use the filter to search for contacts and the paging to move through pages. Use 'Refresh' to reset the filter and reload the table.</p>
+					<p><a id="refresh-btn" th:utext="#{contacts.jumbotron.button}" class="btn btn-lg btn-success" href="#" role="button">Reset data</a></p>
+				</div>
+			</div>
+        </div>
+
+		<div class="row marketing">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<h2 th:utext="#{contacts.table.header}" th:style="'direction:' + #{dir}">Contacts</h2>
+			</div>
+		</div>
+
+		<div class="row marketing">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+			    <div class="form-group">
+			        <div class="form-inline">
+						<button id="excelBtn" name="excelBtn" class="control-btn btn-md btn-secondary pull-right"
+									data-mouse-over-icon="../../static/images/themes/wheat/excel_hover.png"
+									data-mouse-out-icon="../../static/images/themes/wheat/excel.png"
+									th:data-mouse-over-icon="${#themes.code('excel.hover.icon')}"
+									th:data-mouse-out-icon="${#themes.code('excel.icon')}"
+									th:title="#{export.excel}"
+									title="Export excel"
+									th:onclick="'document.location.href=\'' + @{/excel.htm} + '\''"
+									onclick="document.location.href='#'"
+									onmouseover="swapBtnImage(this,this.getAttribute('data-mouse-over-icon'));"
+									onmouseout="swapBtnImage(this,this.getAttribute('data-mouse-out-icon'));">
+								<img align="left" src="../../static/images/themes/wheat/excel.png" th:src="${#themes.code('excel.icon')}" />
+						</button>
+						<span class="pull-right">&nbsp;</span>
+						<button id="PDF" name="PDF" class="control-btn btn-md btn-secondary pull-right"
+						            data-mouse-over-icon="../../static/images/themes/wheat/pdf_hover.png"
+									data-mouse-out-icon="../../static/images/themes/wheat/pdf.png"
+									th:data-mouse-over-icon="${#themes.code('pdf.hover.icon')}"
+									th:data-mouse-out-icon="${#themes.code('pdf.icon')}"
+									title="Export PDF"
+									th:title="#{export.pdf}"
+									th:onclick="'document.location.href=\'' + @{/pdf.htm} + '\''"
+									onclick="document.location.href='#'"
+									onmouseover="swapBtnImage(this,this.getAttribute('data-mouse-over-icon'));"
+									onmouseout="swapBtnImage(this,this.getAttribute('data-mouse-out-icon'));">
+								<img align="left" src="../../static/images/themes/wheat/pdf.png" th:src="${#themes.code('pdf.icon')}" />
+						</button>
+						<label class="control-label pull-left" th:utext="#{file.export.options}"></label>
+					</div>
+				</div>
+			</div>
+        </div>
+
+        <div class="row marketing spacer">
+			<div class="col-12">
+				<span>&nbsp;</span>
+			</div>
+		</div>
+
+
+		<div class="row marketing">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<table id="contactsTable" class="display compact responsive" style="width: 100%">
+					<thead>
+						<tr>
+						    <th></th>
+						    <th></th>
+						    <th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+	                   <tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<footer class="footer" th:replace="html/fragments/footer-bootstrap">
+			<span th:text="'&nbsp;' + ${#dates.year(#dates.createNow())} + '&nbsp;&copy;&nbsp;'">2022</span>
+			<a href="#" th:text="#{footer.copyright}">T.N.Silverman - SilverSoft LTD</a>
+			<span th:text="#{footer.notice}">All Rights Reserved.</span>
+    	</footer>
+
+	</div>
+	<!-- <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.js"></script> -->
+	<!-- jQuery first, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+	<!-- DataTables -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <!-- File Exports -->
+    <!--
+	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+	 -->
+    <!-- Alt Editor -->
+    <script type="text/javascript" src="../static/js/client/DataTable-AltEditor/dataTables.altEditor.free.js" th:src="@{/resources/js/client/DataTable-AltEditor/dataTables.altEditor.free.js}"></script>
+
+	<script type="text/javascript">
+		(function (window, undefined) {
+			const messages = {};
+			messages.map_ = new Map();
+			messages.map_.set('table.all.results','<!--/*/[[#{table.all.results}]]/*/--><!--/*-->All<!--*/-->');
+			messages.map_.set('ssn.hover.message','<!--/*/[[#{ssn.hover.message}]]/*/--><!--/*-->Expecting xxx-xx-xxxx social security number pattern<!--*/-->');
+			messages.map_.set('name.hover.message','<!--/*/[[#{name.hover.message}]]/*/--><!--/*-->Expecting {0} to {1} characters for a name field<!--*/-->');
+			messages.map_.set('children.hover.message','<!--/*/[[#{children.hover.message}]]/*/--><!--/*-->Expecting number between {0} and {1}<!--*/-->');
+			messages.map_.set('date.hover.message','<!--/*/[[#{date.hover.message}]]/*/--><!--/*-->Expecting date in yyyy-MM-dd format<!--*/-->');
+			messages.map_.set('contact.id','<!--/*/[[#{contact.id}]]/*/--><!--/*-->ID<!--*/-->');
+			messages.map_.set('contact.ssn','<!--/*/[[#{contact.ssn}]]/*/--><!--/*-->SSN<!--*/-->');
+			messages.map_.set('contact.fname','<!--/*/[[#{contact.fname}]]/*/--><!--/*-->First Name<!--*/-->');
+			messages.map_.set('contact.lname','<!--/*/[[#{contact.lname}]]/*/--><!--/*-->Last Name<!--*/-->');
+			messages.map_.set('contact.birthDate','<!--/*/[[#{contact.birthDate}]]/*/--><!--/*-->Birth Date<!--*/-->');
+			messages.map_.set('contact.is.married','<!--/*/[[#{contact.is.married}]]/*/--><!--/*-->Married?<!--*/-->');
+			messages.map_.set('contact.children','<!--/*/[[#{contact.children}]]/*/--><!--/*-->#Kids<!--*/-->');
+			messages.map_.set('contact.edit','<!--/*/[[#{contact.edit}]]/*/--><!--/*-->Edit<!--*/-->');
+			messages.map_.set('contact.add','<!--/*/[[#{contact.add}]]/*/--><!--/*-->Add<!--*/-->');
+			messages.map_.set('contact.delete','<!--/*/[[#{contact.delete}]]/*/--><!--/*-->Add<!--*/-->');
+			messages.map_.set('images.editor.create','<!--/*/[[@{/resources/images/controls/add.png}]]/*/--><!--/*-->../static/images/controls/add.png<!--*/-->');
+			messages.map_.set('images.editor.edit','<!--/*/[[@{/resources/images/controls/edit.png}]]/*/--><!--/*-->../static/images/controls/edit.png<!--*/-->');
+			messages.map_.set('images.editor.delete','<!--/*/[[@{/resources/images/controls/delete.png}]]/*/--><!--/*-->../static/images/controls/delete.png<!--*/-->');
+			messages.map_.set('bad.request.error.msg','<!--/*/[[#{bad.request.error.msg}]]/*/--><!--/*-->Bad request error (status {0}). Something is wrong!<!--*/-->');
+			messages.map_.set('not.found.error.msg','<!--/*/[[#{not.found.error.msg}]]/*/--><!--/*-->The resource was not found (status {0}). Deleted already?<!--*/-->');
+			messages.map_.set('unauthorized.error.msg','<!--/*/[[#{unauthorized.error.msg}]]/*/--><!--/*-->(status {0}): You have to login to perform this operation!<!--*/-->');
+
+			messages.getMessage = function(key, args) {
+		      		let msg = messages.map_.get(key);
+		      		if (msg && args)
+		      			args.forEach((arg,index) => msg=msg.replace('{' + index + '}',arg));
+		       	return msg ? msg : '?' + key + '?';
+			}
+
+			window.messages = messages;
+		})(window);
+    </script>
+
+    <!-- This page script -->
+    <script type="text/javascript" src="../static/js/client/contacts-bootstrap.js" th:src="@{/resources/js/client/contacts-bootstrap.js}"></script>
+
+</body>
+</html>

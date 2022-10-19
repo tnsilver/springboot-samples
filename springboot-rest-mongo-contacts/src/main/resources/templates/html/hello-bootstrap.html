@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Cache-Control" content="max-age=3600">
+	<meta name="_csrf" th:content="${_csrf != null} ? ${_csrf.token} : ''" />
+	<meta name="_csrf_header" th:content="${_csrf != null}? ${_csrf.headerName} : 'X-CSRF-TOKEN'" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title th:text="#{title}">Contacts</title>
+	<link rel="icon" href="../static/favicon.ico" th:href="@{/resources/favicon.ico}" type="image/x-icon" />
+	<!-- Bootstrap 3.4.1 css -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.css">
+	<!-- Custom css -->
+	<link rel="stylesheet" href="../../static/themes/wheat-bootstrap.css" th:href="${#themes.code('stylesheet-bootstrap')}" type="text/css">
+	<link rel="stylesheet" href="../../static/css/custom.css" th:href="@{/resources/css/custom.css}" />
+	<link rel="stylesheet" href="../../static/css/media.css" th:href="@{/resources/css/media.css}" />
+</head>
+<body th:style="'direction:' + #{dir}" dir="ltr" th:dir="#{dir}" th:data-date-pattern="#{date.pattern}" th:data-language="${#locale.language}" th:data-context-path="@{/}">
+	<div class="container">
+		<div class="header clearfix">
+			<div class="nav" th:replace="html/fragments/navbar-bootstrap :: navbar-bootstrap('html/hello-bootstrap','hello-bootstrap-html', '')">
+				<nav class="navbar navbar-inverse">
+				<div class="container-fluid">
+						<div class="navbar-header"><a class="navbar-brand" href="#">SpringBootREST</a></div>
+				        <ul class="nav navbar-nav">
+						<li><a href="#" class="error">Error</a></li>
+						<li><a href="home.html">Home</a></li>
+						<li><a href="../jsp/hello.jsp">Hello JSP</a></li>
+						<li class="active"><a href="hello.html">Hello HTML</a></li>
+						<li><a href="../jsp/contacts.jsp">Contacts JSP</a></li>
+						<li><a href="contacts.html">Contacts HTML</a></li>
+						<li><a href="../jsp/contacts-bootstrap.jsp">Contacts JSP</a></li>
+						<li><a href="contacts-bootstrap.html">Contacts HTML</a></li>
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Language<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">
+										<img src="../../../resources/images/flags/iw.png">&nbsp;
+										<span>Hebrew</span>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<img src="../../../resources/images/flags/en.png">&nbsp;
+										<span>English</span>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Theme<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">
+										<img src="../../../resources/images/spring.png">&nbsp;
+										<span>Spring</span>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<img src="../../../resources/images/wheat.png">&nbsp;
+										<span>Wheat</span>
+								</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+						   <a href="login.html">Login</a>
+						</li>
+						<li><a href="#">Source</a></li>
+					</ul>
+				</div>
+				</nav>
+			</div>
+		</div>
+
+		<div class="row marketing">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+		        <h2 th:text="#{hello.html.title}">Hello REST</h2>
+		        <p id="greeting" th:data-url="@{/api/hello}" th:data-firstName="${firstName}" th:data-lastName="${lastName}">Welcome stranger</p>
+		        <h2 th:text="#{page.hello.form.header}">Names to greet</h2>
+			</div>
+		</div>
+
+		<div class="row marketing">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<form id="helloForm" action="#" th:action="@{/api/hello}" class="form-horizontal">
+					<div class="form-group">
+						<label for="firstName" class="col-sm-2 control-label" th:text="#{page.hello.form.firstName}">First Name</label>
+						<div class="col-sm-4">
+						    <input type="text" id="firstName" class="form-control" name="firstName"  autocomplete="on" placeholder="John"
+							       th:placeholder="#{page.hello.form.firstName.placeholder}" pattern=".{2,25}"
+							       th:oninvalid="'this.setCustomValidity(\''+ #{invalid.name} +'\')'" oninput="setCustomValidity(''); clearError(this)"/>
+							<span id="fnameError" class="error"></span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="lastName" class="col-sm-2 control-label" th:text="#{page.hello.form.lastName}">Last Name</label>
+						<div class="col-sm-4">
+						    <input type="text" id="lastName" class="form-control" name="lastName"  autocomplete="on" placeholder="Doe"
+							       th:placeholder="#{page.hello.form.lastName.placeholder}" pattern=".{2,25}"
+							       th:oninvalid="'this.setCustomValidity(\''+ #{invalid.name} +'\')'" oninput="setCustomValidity(''); clearError(this)"/>
+							<span id="lnameError" class="error"></span>
+						</div>
+					</div>
+					<div class="form-group">
+					    <div class="col-sm-offset-2 col-sm-4">
+							<button class="btn btn-default" type="submit" name="Send" th:value="#{hello.btn.save}">Greet</button>
+							<button class="btn btn-default reset" type="button" id="reset" th:value="#{hello.btn.reset}">Clear</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+		<div class="row marketing">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<p th:text="#{hello.locale} + '&nbsp;' + ${#locale}">Current locale:&nbsp;en_US</p>
+			</div>
+		</div>
+
+		<footer class="footer" th:replace="html/fragments/footer-bootstrap">
+			<span th:text="'&nbsp;' + ${#dates.year(#dates.createNow())} + '&nbsp;&copy;&nbsp;'">2022</span>
+			<a href="#" th:text="#{footer.copyright}">T.N.Silverman - SilverSoft LTD</a>
+			<span th:text="#{footer.notice}">All Rights Reserved.</span>
+    	</footer>
+	</div>
+	<!-- jQuery first, then Bootstrap JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.js"></script>
+	<!-- Custom JavaScript -->
+    <script type="text/javascript" src="../../static/js/client/common.js" th:src="@{/resources/js/client/common.js}"></script>
+    <script type="text/javascript" src="../../static/js/client/hello.js" th:src="@{/resources/js/client/hello.js}"></script>
+</body>
+</html>

@@ -1,8 +1,10 @@
 ## Spring Boot Web Apps with Redis, MongoDB and JPA
 
-1.  **Docker ready project** JPA with MySql or embedded H2: [springboot-rest-jpa-contacts](springboot-rest-jpa-contacts "JPA Web Application") **SpringBoot 2.7.1 using JDK 18**
+**New** Responsive bootstrap HTML5 templates. Now works on mobile devices, tablets... etc.
 
-2.  **MongoDB** live or `de.flapdoodle` embedded: [springboot-rest-mongo-contacts](springboot-rest-mongo-contacts "MongoDB Web Application") **SpringBoot 2.7.1 using JDK 18**
+1.  **Docker ready project** Responsive JPA with MySql or embedded H2: [springboot-rest-jpa-contacts](springboot-rest-jpa-contacts "JPA Web Application") **SpringBoot 2.7.2 using JDK 19**
+
+2.  **MongoDB** Responsive - live or `de.flapdoodle` embedded: [springboot-rest-mongo-contacts](springboot-rest-mongo-contacts "MongoDB Web Application") **SpringBoot 2.7.2 using JDK 19**
 
 3.  **Docker ready project** Redis as an RDBMS with Redis server 6.2 or `it.ozimov` embedded: [springboot-rest-redis-contacts](springboot-rest-redis-contacts "Redis Web Application") **SpringBoot 2.7.1 using JDK 18**
 
@@ -12,9 +14,9 @@
 
 6. **NO LONGER MAINTAINED** Scala JPA with MySql or embedded H2: [springboot-rest-scala-jpa-contacts](springboot-rest-scala-jpa-contacts "Scala JPA Web Application") **SpringBoot 2.5.3 using JDK 16**
 
-7.  Separate the layers into microservices, run them in a service
+7. **TODO** Separate the layers into microservices, run them in a service
 registry and manage it all through Kubernetes, then have it ready to deploy on IBM Cloud,
-Cloud Foundry, and Amazon.
+Cloud Foundry, Amazon... etc.
 
 
 ## Table of contents
@@ -428,9 +430,9 @@ You'll have to create a user for database authentication.  This is done by loggi
 the mongo shell, and creating the `contacts` database plus the administration user that
 the application uses.
 
-* start the mongo shell (from command line):
+* start the mongo shell from command line (with newer versions of MongoDB, this is now called `mongosh`):
 
->     mongo
+>     `mongo`
 
 * Execute the following commands:
 

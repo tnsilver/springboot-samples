@@ -97,3 +97,13 @@ function clearError(input) {
 	$('#' + target).closest('tr').css("display", "none");
 	$('#' + target).text('');
 }
+
+/*
+ * Default ajax send pre event handler to add headers
+ * the jqXHR object.
+ */
+$(document).ajaxSend(function( event, jqXHR, settings ) {
+	if (!isEmpty($('meta[name="_csrf"]').attr('content')))
+		jqXHR.setRequestHeader($('meta[name="_csrf_header"]').attr('content'), $('meta[name="_csrf"]').attr('content'));
+});
+
