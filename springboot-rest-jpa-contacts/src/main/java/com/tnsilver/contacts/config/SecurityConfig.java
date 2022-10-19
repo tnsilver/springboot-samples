@@ -39,7 +39,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,7 +47,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 import lombok.extern.slf4j.Slf4j;
-
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
@@ -61,17 +59,19 @@ public class SecurityConfig {
 	@Value("#{'${spring.profiles.active}'.split(',')}") private List<String> profiles;
 	// @formatter:on
 
-	@Bean
-	protected WebSecurityCustomizer webSecurityCustomizer() {
-		final String[] IGNORED_PATTERNS = {"/resources/favicon.ico","/h2-console/**", "/resources/**", "/themes/**", "/error**", "/html/error**"};
-		return (web) -> web.ignoring().antMatchers(IGNORED_PATTERNS);
-	}
+	/*
+	 * @Bean protected WebSecurityCustomizer webSecurityCustomizer() { final
+	 * String[] IGNORED_PATTERNS = {"/resources/favicon.ico","/h2-console/**",
+	 * "/resources/**", "/themes/**", "/error**", "/html/error**"}; return (web) ->
+	 * web.ignoring().antMatchers(IGNORED_PATTERNS); }
+	 */
 
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		// @formatter:off
+		final String[] PERMITTED_PATTERNS = { "/resources/favicon.ico", "/h2-console/**", "/resources/**", "/themes/**", "/error**", "/html/error**" };
 		final String DEFAULT_URL = "/html/contacts-bootstrap", LOGIN_URL = "/login-bootstrap";
 		boolean test = profiles.contains("test"), dev = profiles.contains("dev");
-		// @formatter:off
         if (test || dev) {
             String profile = dev ? "dev" : (test ? "test" : profiles.toString());
             log.debug("disabling csrf for profile: {}", profile);
@@ -87,6 +87,7 @@ public class SecurityConfig {
         }
         http.cors().disable()
             .authorizeRequests()
+                .antMatchers(PERMITTED_PATTERNS).permitAll()
                 .antMatchers("/html/contact/**", "/jsp/contact/**").hasAnyRole("USER")
                 .antMatchers(HttpMethod.PATCH, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
                 .antMatchers(HttpMethod.POST, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
