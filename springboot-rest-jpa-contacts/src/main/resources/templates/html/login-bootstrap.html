@@ -20,61 +20,71 @@
 <body th:style="'direction:' + #{dir}" dir="ltr" th:dir="#{dir}" th:data-date-pattern="#{date.pattern}" th:data-language="${#locale.language}" th:data-context-path="@{/}">
 	<div class="container">
 		<div class="header clearfix">
-			<div class="nav" th:replace="html/fragments/navbar-bootstrap :: navbar-bootstrap('html/login-bootstrap','login-bootstrap', '')">
-				<nav class="navbar navbar-inverse">
+			<nav class="navbar navbar-inverse" th:replace="html/fragments/navbar-bootstrap :: navbar-bootstrap('html/login-bootstrap','login-bootstrap', '')">
 				<div class="container-fluid">
-						<div class="navbar-header"><a class="navbar-brand" href="#">SpringBootREST</a></div>
+						<div class="navbar-header">
+							<a class="navbar-brand" href="https://github.com/tnsilver/springboot-samples">SpringBootREST</a>
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						      <span class="sr-only">Toggle navigation</span>
+						      <span class="icon-bar"></span>
+						      <span class="icon-bar"></span>
+						      <span class="icon-bar"></span>
+					    	</button>
+						</div>
+				        <div id="navbar" class="navbar-collapse collapse">
 				        <ul class="nav navbar-nav">
-						<li><a href="#" class="error">Error</a></li>
-						<li><a href="home.html">Home</a></li>
-						<li><a href="../jsp/hello.jsp">Hello JSP</a></li>
-						<li class="active"><a href="hello.html">Hello HTML</a></li>
-						<li><a href="../jsp/contacts.jsp">Contacts JSP</a></li>
-						<li><a href="contacts.html">Contacts HTML</a></li>
-						<li><a href="../jsp/contacts-bootstrap.jsp">Contacts JSP</a></li>
+						<li><a class="error" href="#">Error</a></li>
+						<li><a href="home-bootstrap.html">Home</a></li>
+						<li><a href="#">Hello JSP</a></li>
+						<li><a href="hello-bootstrap.html">Hello HTML</a></li>
+						<li><a href="#">Contacts JSP</a></li>
 						<li><a href="contacts-bootstrap.html">Contacts HTML</a></li>
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Language<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li>
 									<a href="#">
-										<img src="../../../resources/images/flags/iw.png">&nbsp;
+										<img alt="he" src="../../../resources/static/images/flags/iw.png">&nbsp;
 										<span>Hebrew</span>
 									</a>
 								</li>
 								<li>
 									<a href="#">
-										<img src="../../../resources/images/flags/en.png">&nbsp;
+										<img alt="en" src="../../../resources/static/images/flags/en.png">&nbsp;
 										<span>English</span>
 									</a>
 								</li>
 							</ul>
 						</li>
+
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Theme<span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li>
 									<a href="#">
-										<img src="../../../resources/images/spring.png">&nbsp;
+										<img alt="spring.png" src="../../../resources/static/images/spring.png">&nbsp;
 										<span>Spring</span>
 									</a>
 								</li>
 								<li>
-									<a href="#"><img src="../../../resources/images/wheat.png">&nbsp;<span>Wheat</span>
-								</a>
+									<a href="#">
+										<img alt="wheat" src="../../../resources/static/images/wheat.png">&nbsp;
+										<span>Wheat</span>
+									</a>
 								</li>
 							</ul>
 						</li>
 					</ul>
+
 					<ul class="nav navbar-nav navbar-right">
-						<li>
-						   <a href="login.html">Login</a>
+						<li class='active'>
+						   <a href="#">Login</a>
 						</li>
 						<li><a href="#">Source</a></li>
 					</ul>
-				</div>
-				</nav>
-			</div>
+					</div> <!--/.nav-collapse -->
+				</div> <!--/.container-fluid -->
+			</nav>
 		</div>
 
         <div class="row marketing">

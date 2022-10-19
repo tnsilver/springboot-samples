@@ -1,5 +1,7 @@
 # Contacts: Spring Boot RESTful CRUD Web-App Demo with MongoDB
 
+![Contacts Application](../images/phone.jpg?raw=true "Responsive Contacts Application")
+
 ##### Basic commands to run and test the application
 
 * `cd` into the project's root directory from a command line shell

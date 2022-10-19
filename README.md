@@ -2,6 +2,8 @@
 
 **New** Responsive bootstrap HTML5 templates. Now works on mobile devices, tablets... etc.
 
+![Contacts Application](images/phone.jpg?raw=true "Responsive Contacts Application")
+
 1.  **Docker ready project** Responsive JPA with MySql or embedded H2: [springboot-rest-jpa-contacts](springboot-rest-jpa-contacts "JPA Web Application") **SpringBoot 2.7.2 using JDK 19**
 
 2.  **MongoDB** Responsive - live or `de.flapdoodle` embedded: [springboot-rest-mongo-contacts](springboot-rest-mongo-contacts "MongoDB Web Application") **SpringBoot 2.7.2 using JDK 19**

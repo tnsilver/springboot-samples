@@ -10,7 +10,14 @@
 	<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="https://github.com/tnsilver/springboot-samples"><spring:message code='website.name' text="SpringBootREST"/></a>
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			      <span class="sr-only">Toggle navigation</span>
+			      <span class="icon-bar"></span>
+			      <span class="icon-bar"></span>
+			      <span class="icon-bar"></span>
+		    	</button>
 			</div>
+			<div id="navbar" class="navbar-collapse collapse">
 	        <ul class="nav navbar-nav">
 				<li><a href='<c:url value="/html/home-bootstrap"/>'><spring:message code='page.home' text="Home"/></a></li>
 				<li <c:if test="${view eq 'hello-bootstrap-jsp'}">class="active"</c:if>><a href='<c:url value="/jsp/hello-bootstrap"/>'><spring:message code='page.hello.jsp' text="Hello JSP"/></a></li>
@@ -48,5 +55,6 @@
 	            </c:if>
 				<li><a href='<%= application.getContextPath() + "/source/" + FilenameUtils.getBaseName(request.getParameter("url")) %>'><spring:message code='page.source' text="Source"/></a></li>
 			</ul>
+			</div>
 	</div>
 	</nav>
