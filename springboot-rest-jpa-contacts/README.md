@@ -2,7 +2,7 @@
 
 **New** Responsive bootstrap HTML5 templates. Now works on mobile devices, tablets... etc.
 
-![Contacts Application](../images/phone.jpg?raw=true "Responsive Contacts Application")
+![Contacts Application](../images/jpa-phone.jpg?raw=true "Responsive Contacts Application")
 
 ### A Docker Ready Spring Boot Demo with MySQL and H2
 
