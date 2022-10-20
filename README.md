@@ -2,13 +2,13 @@
 
 **New** Responsive bootstrap HTML5 templates. Now works on mobile devices, tablets... etc.
 
-![Contacts Application](images/phone.jpg?raw=true "Responsive Contacts Application")
+![Contacts Application](images/redis-phone.jpg?raw=true "Responsive Contacts Application")
 
 1.  **Docker ready project** Responsive JPA with MySql or embedded H2: [springboot-rest-jpa-contacts](springboot-rest-jpa-contacts "JPA Web Application") **SpringBoot 2.7.2 using JDK 19**
 
 2.  **MongoDB** Responsive - live or `de.flapdoodle` embedded: [springboot-rest-mongo-contacts](springboot-rest-mongo-contacts "MongoDB Web Application") **SpringBoot 2.7.2 using JDK 19**
 
-3.  **Docker ready project** Redis as an RDBMS with Redis server 6.2 or `it.ozimov` embedded: [springboot-rest-redis-contacts](springboot-rest-redis-contacts "Redis Web Application") **SpringBoot 2.7.1 using JDK 18**
+3.  **Docker ready project** Responsive - Redis as an RDBMS with Redis server 6.2 or `it.ozimov` embedded: [springboot-rest-redis-contacts](springboot-rest-redis-contacts "Redis Web Application") **SpringBoot 2.7.1 using JDK 18**
 
 4. [springboot-js-protobuf-example](springboot-js-protobuf-example) is a SpringBoot server / JavaScript client (no node.js) protobuf messages consuming and producing example project
 
