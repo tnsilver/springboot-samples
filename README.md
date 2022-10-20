@@ -4,20 +4,20 @@
 
 ![Contacts Application](images/redis-phone.jpg?raw=true "Responsive Contacts Application")
 
-1.  **Docker ready project** Responsive JPA with MySql or embedded H2: [springboot-rest-jpa-contacts](springboot-rest-jpa-contacts "JPA Web Application") **SpringBoot 2.7.2 using JDK 19**
+1.  **SpringBoot and JPA** [springboot-rest-jpa-contacts](springboot-rest-jpa-contacts "JPA Web Application") - Responsive JPA with MySql or embedded H2. A `docker` ready project with SpringBoot 2.7.2 and JDK 19.
 
-2.  **MongoDB** Responsive - live or `de.flapdoodle` embedded: [springboot-rest-mongo-contacts](springboot-rest-mongo-contacts "MongoDB Web Application") **SpringBoot 2.7.2 using JDK 19**
+2.  **SpringBoot and MongoDB** [springboot-rest-mongo-contacts](springboot-rest-mongo-contacts "MongoDB Web Application") - Responsive - live running `MongoDB` server or embedded `de.flapdoodle`. A `docker` ready project with SpringBoot 2.7.2 and JDK 19.
 
-3.  **Docker ready project** Responsive - Redis as an RDBMS with Redis server 6.2 or `it.ozimov` embedded: [springboot-rest-redis-contacts](springboot-rest-redis-contacts "Redis Web Application") **SpringBoot 2.7.1 using JDK 18**
+3.  **SpringBoot and Redis as an RDBMS** [springboot-rest-redis-contacts](springboot-rest-redis-contacts "Redis Web Application") - Responsive - Redis as an RDBMS with Redis server 6.2 or `it.ozimov` embedded. A `docker` ready project with SpringBoot 2.7.2 and JDK 19.
 
-4. [springboot-js-protobuf-example](springboot-js-protobuf-example) is a SpringBoot server / JavaScript client (no node.js) protobuf messages consuming and producing example project
+4.  **SpringBoot send and recieve Google Protobuf messages** [springboot-js-protobuf-example](springboot-js-protobuf-example) is a SpringBoot server / JavaScript client (no node.js) protobuf messages consuming and producing example project. **no node.js** This project uses vanilla `java script and jquery`.
 
-5. [template-web-project](template-web-project) is a Spring Boot template web project.
+5. **SpringBoot Maven Web Project Template** [template-web-project](template-web-project) is a Spring Boot template starter web project used by all projects in this repository.
 
-6. **NO LONGER MAINTAINED** Scala JPA with MySql or embedded H2: [springboot-rest-scala-jpa-contacts](springboot-rest-scala-jpa-contacts "Scala JPA Web Application") **SpringBoot 2.5.3 using JDK 16**
+6. **NO LONGER MAINTAINED** [springboot-rest-scala-jpa-contacts](springboot-rest-scala-jpa-contacts "Scala JPA Web Application") - Scala JPA with MySql or embedded H2. SpringBoot 2.5.3 and JDK 16.
 
 7. **TODO** Separate the layers into microservices, run them in a service
-registry and manage it all through Kubernetes, then have it ready to deploy on IBM Cloud,
+registry and manage it all through `Kubernetes`, then have it ready to deploy on IBM Cloud,
 Cloud Foundry, Amazon... etc.
 
 
