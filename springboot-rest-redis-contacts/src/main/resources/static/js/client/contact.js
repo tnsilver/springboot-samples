@@ -47,8 +47,7 @@ function createJsonObj() {
  */
 function populateForm(data) { // TODO: replace this with $.(each)
 	var action = $('#contactForm').attr("data-action");
-	if (!isEmpty(action))
-		console.debug("contact.js:populateForm() -> action: ", action);
+	// if (!isEmpty(action)) console.debug("contact.js:populateForm() -> action: ", action);
 	$('#contactForm').attr("data-self", data._links.self.href);
 	$('#id').val(data.id);
 	$('#ssn').val(isEmpty(data.ssn) ? '' : data.ssn.ssn);
@@ -66,11 +65,11 @@ function populateForm(data) { // TODO: replace this with $.(each)
  */
 function loadContact(self) {
 	if (!isEmpty(self)) {
-		//console.debug("contact.js:loadContact() -> self: ", self);
+		// console.debug("contact.js:loadContact() -> self: ", self);
 		ajax(self, "", 'GET');
 		return;
 	}
-	console.debug("contact.js:loadContact() -> NO self: ");
+	// console.debug("contact.js:loadContact() -> NO self: ");
 }
 
 /**
@@ -90,7 +89,7 @@ function saveContact() {
 	if (action !== "delete") {
 		data = JSON.stringify(dataObj);
 		success = function(contact, status, jqXHR) {
-			//console.debug("contact.js:saveContact() -> successful saved data: ", contact);
+			// console.debug("contact.js:saveContact() -> successful saved data: ", contact);
 			$('#id').val(contact.id);
 			var message = $('tr.message p:first-child').attr("data-message");
 			message = message.replace("{0}", contact.firstName);
@@ -102,7 +101,7 @@ function saveContact() {
 			}
 		};
 	}
-	console.debug("contact.js:saveContact() -> ajax: (", method, ") url -> ", url, " with data -> ", data);
+	// console.debug("contact.js:saveContact() -> ajax: (", method, ") url -> ", url, " with data -> ", data);
 	ajax(url, data, method, success);
 }
 
@@ -111,7 +110,7 @@ function saveContact() {
  * @param errors the error response json object
  */
 function displayValidationErrors(errors) {
-	console.debug("contact.js:showErrors() -> showing errors: ", errors);
+	// console.debug("contact.js:showErrors() -> showing errors: ", errors);
 	$.each(errors, function(i, error) {
 		$.each(error, function(j, data) {
 			var target = data.property + "Error";
@@ -129,7 +128,7 @@ function displayValidationErrors(errors) {
  * @param success - a function for execution on ajax success (function(data, status, jqXHR))
  */
 function ajax(url, data, type, success) {
-	console.debug("contact.js:ajax() ->", type, url);
+	// console.debug("contact.js:ajax() ->", type, url);
 	var def = function(data, status, jqXHR) { };
 	$.ajax({
 		type: type,
@@ -146,7 +145,7 @@ function ajax(url, data, type, success) {
 function gotoContactsPage(filter) {
 	var ssn = $('#ssn').val();
 	var href = $('body').attr('data-next-page') + (filter ? ("?ssn=" + ssn) : '');
-	console.debug("contact.js:cancel() Navigating to:", href);
+	// console.debug("contact.js:cancel() Navigating to:", href);
 	window.location.href = href;
 }
 
@@ -164,8 +163,8 @@ $(document).ready(function() {
 		async: true,
 		cache: false,
 		beforeSend: function(jqXHR, settings) {
-			//var type = settings.type;
-			//console.debug("contact.js:ajaxSetup() beforeSend -> method: ", type);
+			// var type = settings.type;
+			// console.debug("contact.js:ajaxSetup() beforeSend -> method: ", type);
 			$('#loader').toggleClass('active');
 			jqXHR.setRequestHeader("Content-Type", "application/json");
 			if (!isEmpty($('meta[name="_csrf"]').attr('content'))) {
@@ -179,7 +178,7 @@ $(document).ready(function() {
 			200: function(contact, status, jqXHR) { // OK (GET/PATCH)
 				populateForm(contact);
 				var method = $(this)[0].type;
-				console.debug("contact.js:ajaxSetup() (200)", method, "contact:", contact);
+				// console.debug("contact.js:ajaxSetup() (200)", method, "contact:", contact);
 				if (method === 'PATCH') {
 					setTimeout(function() {
 						window.location.href = $('body').attr('data-next-page') + "?ssn=" + contact.ssn.ssn;
@@ -188,7 +187,7 @@ $(document).ready(function() {
 			},
 			201: function(contact, status, jqXHR) { // OK (POST)
 				var method = $(this)[0].type;
-				console.debug("contact.js:ajaxSetup() (201)", method, " contact:", contact);
+				// console.debug("contact.js:ajaxSetup() (201)", method, " contact:", contact);
 				if (method === 'POST') {
 					setTimeout(function() {
 						window.location.href = $('body').attr('data-next-page') + "?ssn=" + contact.ssn.ssn;
@@ -197,16 +196,16 @@ $(document).ready(function() {
 			},
 			204: function(contact, status, jqXHR) { // DELETE SUCCESS
 				var method = $(this)[0].type;
-				console.debug("contact.js:ajaxSetup() (204)", method, "success");
+				// console.debug("contact.js:ajaxSetup() (204)", method, "success");
 				gotoContactsPage(false); // show all contacts after delete
 			},
 			400: function(jqXHR, status, error) { // BAD REQUEST (validation errors)
 				var json = $.parseJSON(jqXHR.responseText);
-				console.debug("contact.js:ajaxSetup() (400) -> validation errors:", json);
+				// console.debug("contact.js:ajaxSetup() (400) -> validation errors:", json);
 				displayValidationErrors(json);
 			},
 			404: function(jqXHR, status, error) { // NOT FOUND
-				console.debug("contact.js:ajaxSetup() (404) -> not found:", $(this)[0].url);
+				// console.debug("contact.js:ajaxSetup() (404) -> not found:", $(this)[0].url);
 				window.location.href = $('body').attr('data-404-page');
 			}
 		}
@@ -218,7 +217,7 @@ $(document).ready(function() {
 	 */
 	var self = $("#contactForm").attr("data-self");
 	if (!isEmpty(self)) {
-		//console.debug("contact.js:onload() -> self: ", self);
+		// console.debug("contact.js:onload() -> self: ", self);
 		loadContact(self);
 	}
 
@@ -237,7 +236,7 @@ $(document).ready(function() {
 	$(".reset").click(function() {
 		var action = $('#contactForm').attr("data-action");
 		if (isEmpty(action) || action === 'add') { //  reset form
-			console.debug("contact.js:resetOnClick() reseting form for:", action);
+			// console.debug("contact.js:resetOnClick() reseting form for:", action);
 			$("tr.message").fadeOut("fast");
 			$(this).closest('form').find("input[type=text], input[type=hidden], input[type=number]").val("");
 			$(this).closest('form').find("input[type=text], input[type=hidden], input[type=number]")[0].setCustomValidity("");

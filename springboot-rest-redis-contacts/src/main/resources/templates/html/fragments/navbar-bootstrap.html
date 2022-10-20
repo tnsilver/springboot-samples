@@ -1,0 +1,73 @@
+<!--/*--><!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"><!--*/-->
+<th:block th:fragment="navbar-bootstrap (url,name,action)" th:assert="${!#strings.isEmpty(url) && !#strings.isEmpty(name)}"><span th:utext="'&lt;!-- the following block was replaced by /frgaments/navbar(\'' +  ${url} + '\',\'' + ${name} + '\',\'' + (${action}?:'null') + '\') --&gt;'" th:remove="tag"></span>
+<nav class="navbar navbar-inverse">
+<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="https://github.com/tnsilver/springboot-samples" th:utext="#{website.name}">SpringBootREST</a>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+		      <span class="sr-only">Toggle navigation</span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+		      <span class="icon-bar"></span>
+	    	</button>
+		</div>
+        <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+		<li><a th:if="${name == 'error-bootstrap-html'}" class="error" href="#" th:text="#{page.error}">Error</a></li>
+		<li th:attrappend="class=${name eq 'home-bootstrap'}?'active'"><a href="home-bootstrap.html" th:href="@{/html/home-bootstrap}" th:text="#{page.home}">Home</a></li>
+		<li th:attrappend="class=${name eq 'hello-bootstrap-jsp'}?'active'"><a href="../jsp/hello-bootstrap.jsp" th:href="@{/jsp/hello-bootstrap}" th:text="#{page.hello.jsp}">Hello JSP</a></li>
+		<li th:attrappend="class=${name eq 'hello-bootstrap-html'}?'active'"><a href="hello-bootstrap.html" th:href="@{/html/hello-bootstrap}" th:text="#{page.hello.html}">Hello HTML</a></li>
+		<li th:attrappend="class=${name eq 'contacts-bootstrap-jsp'}?'active'"><a href="../jsp/contacts-bootstrap.jsp" th:href="@{/jsp/contacts-bootstrap}" th:text="#{page.contacts.jsp}">Contacts JSP</a></li>
+		<li th:attrappend="class=${name eq 'contacts-bootstrap-html'}?'active'"><a href="contacts-bootstrap.html" th:href="@{/html/contacts-bootstrap}" th:text="#{page.contacts.bootstrap.html}">Contacts HTML</a></li>
+		<li class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><th:block th:text="#{page.language}"></th:block><span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li>
+					<a href="#" th:href="@{/} + ${url} + '?lang=he_IL'">
+						<img th:alt="#{lang.iw}" src="../../../resources/images/flags/iw.png" th:src="@{/resources/images/flags/iw.png}">&nbsp;
+						<span th:text="#{lang.iw}">Hebrew</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" th:href="@{/} + ${url} + '?lang=en_US'">
+						<img th:alt="#{lang.en}" src="../../../resources/images/flags/en.png" th:src="@{/resources/images/flags/en.png}">&nbsp;
+						<span th:text="#{lang.en}">English</span>
+					</a>
+				</li>
+			</ul>
+		</li>
+
+		<li class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><th:block th:text="#{theme.change}"></th:block><span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li>
+					<a href="#" th:href="@{/} + ${url} + '?theme=spring'">
+						<img th:alt="#{theme.spring}" src="../../../resources/images/spring.png" th:src="@{/resources/images/spring.png}">&nbsp;
+						<span th:text="#{theme.spring}">Spring</span>
+					</a>
+				</li>
+				<li>
+					<a href="#" th:href="@{/} + ${url} + '?theme=wheat'">
+						<img th:alt="#{theme.wheat}" src="../../../resources/images/wheat.png" th:src="@{/resources/images/wheat.png}">&nbsp;
+						<span th:text="#{theme.wheat}">Wheat</span>
+					</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+	<ul class="nav navbar-nav navbar-right">
+		<li th:if="${#httpServletRequest.remoteUser != null}">
+		   <a href="#" th:text="#{page.logout} + ' ' + ${#httpServletRequest.remoteUser}" onclick="document.forms['logoutForm'].submit();">Logout</a>
+		   <form id="logoutForm" th:action="@{/logout}" method="post"> </form>
+		</li>
+		<li th:unless ="${#httpServletRequest.remoteUser != null}" th:attrappend="class=${name eq 'login-bootstrap'}?'active'">
+		   <a href="login-bootstrap.html" th:href="@{/login-bootstrap}" th:text="#{page.login}">Login</a>
+		</li>
+		<li><a href="#" th:href="@{'/source/' + ${@fileNameService.getName(url)} + '.html'}" th:text="#{page.source}">Source</a></li>
+	</ul>
+	</div> <!--/.nav-collapse -->
+</div> <!--/.container-fluid -->
+</nav>
+</th:block>

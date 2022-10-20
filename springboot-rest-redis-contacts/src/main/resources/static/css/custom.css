@@ -1,0 +1,33 @@
+/* Main marketing message and sign up button */
+.jumbotron {
+	border-bottom: 1px solid #e5e5e5;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+/*.jumbotron h1, .jumbotron .h1 {
+	font-size: 44px !important;
+}*/
+
+.jumbotron .btn {
+	padding: 14px 24px;
+	border-radius: 6px;
+}
+
+/* Align for labels left */
+.form-horizontal .control-label {
+    text-align: left !important;
+}
+
+table {
+	background-color: #f2f2f2;
+}
+
+.dataTables_wrapper select, .dataTables_wrapper input {
+	background: #f2f2f2 !important;
+}
+
+table.dataTable.compact thead th {
+	padding: 2px 0px 4px 4px !important;
+}
+

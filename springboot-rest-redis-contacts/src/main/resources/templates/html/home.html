@@ -46,7 +46,7 @@
     <div class="content">
         <h2 th:utext="#{index.header}">Navigation</h2>
         <div>
-            <p th:utext="'(running in profile&nbsp;' + '<i>' + #{spring.profiles.active} + '</i>)'" ></p>
+            <p th:utext="'(running in profile&nbsp;' + '<i>' + ${@environment.getActiveProfiles()[0]} + '</i>)'" ></p>
             <p style="max-width: 40%; display: block;" th:utext="#{index.intro}"></p>
         </div>
     </div>

@@ -17,7 +17,8 @@
 	            <c:when test="${action == 'delete'}"><li><a href='<c:url value="/html/contact"/>' <c:if test="${view eq 'contact-jsp'}">class="active"</c:if>><spring:message code="page.contact.delete.jsp" text="Delete"/></a></li>"></c:when>
 	            <c:otherwise><li><a href='<c:url value="/jsp/contact"/>' <c:if test="${view eq 'contact-jsp'}">class="active"</c:if>><spring:message code="page.contact.add.jsp" text="Add"/></a></li>"></c:otherwise>
             </c:choose>
-            <li><a href='<c:url value="/html/contacts"/>' <c:if test="${view eq 'contacts-html'}">class="active"</c:if>><spring:message code='page.contacts.html' text="Contacts HTML"/></a></li>
+            <li><a href='<c:url value="/html/contacts"/>'           <c:if test="${view eq 'contacts-html'}">class="active"</c:if>><spring:message code='page.contacts.html' text="Contacts HTML"/></a></li>
+            <li><a href='<c:url value="/html/contacts-bootstrap"/>' <c:if test="${view eq 'contacts-bootstrap-html'}">class="active"</c:if>><spring:message code='page.contacts.bootstrap.html' text="Contacts (bootstrap)"/></a></li>
             <c:choose>
 	            <c:when test="${action == 'edit'}"><li><a href='<c:url value="/html/contact"/>' <c:if test="${view eq 'contact-html'}">class="active"</c:if>><spring:message code="page.contact.edit" text="Edit"/></a></li>"></c:when>
 	            <c:when test="${action == 'delete'}"><li><a href='<c:url value="/html/contact"/>' <c:if test="${view eq 'contact-html'}">class="active"</c:if>><spring:message code="page.contact.delete" text="Delete"/></a></li>"></c:when>

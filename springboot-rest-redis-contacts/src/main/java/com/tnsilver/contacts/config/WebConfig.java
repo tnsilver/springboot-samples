@@ -71,18 +71,26 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(themeChangeInterceptor());
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("html/login");
-        registry.addRedirectViewController("/", "/html/home");
-        registry.addViewController("/html/hello").setViewName("html/hello");
-        registry.addViewController("/jsp/hello").setViewName("jsp/hello");
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		// @formatter:off
+        registry.addViewController("/login-bootstrap").setViewName("html/login-bootstrap");
+        registry.addRedirectViewController("/", "html/home-bootstrap");
         registry.addViewController("/html/home").setViewName("html/home");
+        registry.addViewController("/html/home-bootstrap").setViewName("html/home-bootstrap.html");
+        registry.addViewController("/html/hello").setViewName("html/hello");
+        registry.addViewController("/html/hello-bootstrap").setViewName("html/hello-bootstrap.html");
+        registry.addViewController("/jsp/hello").setViewName("jsp/hello");
+        registry.addViewController("/jsp/hello-bootstrap").setViewName("jsp/hello-bootstrap");
         registry.addViewController("/html/contact").setViewName("html/contact.html");
         registry.addViewController("/html/contacts").setViewName("html/contacts.html");
+        registry.addViewController("/html/contacts-bootstrap").setViewName("html/contacts-bootstrap.html");
         registry.addViewController("/jsp/contact").setViewName("jsp/contact");
         registry.addViewController("/jsp/contacts").setViewName("jsp/contacts");
-    }
+        registry.addViewController("/jsp/contacts-bootstrap").setViewName("jsp/contacts-bootstrap");
+        registry.addViewController("/h2-console").setViewName("h2-console");
+        // @formatter:on
+	}
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
@@ -131,7 +139,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver localeResolver = new SessionLocaleResolver();
-        localeResolver.setDefaultLocale(new Locale("en"));
+        localeResolver.setDefaultLocale(Locale.forLanguageTag("en"));
         return localeResolver;
     }
 

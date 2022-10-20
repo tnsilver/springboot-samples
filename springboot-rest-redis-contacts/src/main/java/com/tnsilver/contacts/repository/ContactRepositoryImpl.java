@@ -74,15 +74,16 @@ import com.tnsilver.contacts.util.RedisUtils;
 public class ContactRepositoryImpl implements PagingAndSortingRepository<Contact, Long>, ContactRepositoryCustom {
 
     private static final Logger logger = LoggerFactory.getLogger(ContactRepositoryImpl.class);
-    @Autowired
-    private RedisKeyValueTemplate keyValueTemplate;
-    @Autowired
-    private IdAssigningService idAssigner;
-    @Autowired
-    private Repositories repositories;
+    // @formatter:off
+    @Autowired private RedisKeyValueTemplate keyValueTemplate;
+    @Autowired private IdAssigningService idAssigner;
+    @Autowired private Repositories repositories;
+    @Autowired private RedisMappingContext mappingContext;
+    // @formatter:on
+
     private QueryByExampleRedisExecutor<Contact> executor;
-    @Autowired
-    private RedisMappingContext mappingContext;
+
+
 
     @PostConstruct
     public void init() {

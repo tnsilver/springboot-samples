@@ -26,7 +26,8 @@ canvas,
 video {
   display: inline-block;
   *display: inline;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 audio:not([controls]) {
@@ -190,7 +191,8 @@ textarea {
 }
 
 .clearfix {
-  *zoom: 1;
+	transform:scale(1);
+	transform-origin: 0 0;
 }
 
 .clearfix:before,
@@ -263,8 +265,9 @@ a:hover {
 }
 
 .row {
-  margin-left: -20px;
-  *zoom: 1;
+  	margin-left: -20px;
+	transform:scale(1);
+	transform-origin: 0 0;
 }
 
 .row:before,
@@ -389,7 +392,8 @@ a:hover {
 
 .row-fluid {
   width: 100%;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .row-fluid:before,
@@ -616,7 +620,8 @@ a:hover {
 .container {
   margin-right: auto;
   margin-left: auto;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .container:before,
@@ -633,7 +638,8 @@ a:hover {
 .container-fluid {
   padding-right: 20px;
   padding-left: 20px;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .container-fluid:before,
@@ -845,7 +851,8 @@ dd {
 }
 
 .dl-horizontal {
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .dl-horizontal:before,
@@ -1393,7 +1400,8 @@ textarea.span1,
 }
 
 .controls-row {
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .controls-row:before,
@@ -1612,7 +1620,8 @@ select:focus:invalid:focus {
   margin-bottom: 20px;
   background-color: #f5f5f5;
   border-top: 1px solid #e5e5e5;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .form-actions:before,
@@ -1641,7 +1650,8 @@ select:focus:invalid:focus {
   *display: inline;
   padding-left: 5px;
   vertical-align: middle;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .input-append,
@@ -1869,7 +1879,8 @@ input.search-query {
   *display: inline;
   margin-bottom: 0;
   vertical-align: middle;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .form-search .hide,
@@ -1921,7 +1932,8 @@ legend + .control-group {
 
 .form-horizontal .control-group {
   margin-bottom: 20px;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .form-horizontal .control-group:before,
@@ -3177,7 +3189,8 @@ button.close {
           border-radius: 4px;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
      -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
           box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -3571,7 +3584,8 @@ input[type="submit"].btn.btn-mini {
   font-size: 0;
   white-space: nowrap;
   vertical-align: middle;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .btn-group:first-child {
@@ -3775,7 +3789,8 @@ input[type="submit"].btn.btn-mini {
   *display: inline;
   /* IE7 inline-block hack */
 
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .btn-group-vertical > .btn {
@@ -3968,7 +3983,8 @@ input[type="submit"].btn.btn-mini {
 
 .nav-tabs,
 .nav-pills {
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .nav-tabs:before,
@@ -4160,7 +4176,8 @@ input[type="submit"].btn.btn-mini {
 }
 
 .tabbable {
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .tabbable:before,
@@ -4310,7 +4327,8 @@ input[type="submit"].btn.btn-mini {
      -moz-border-radius: 4px;
           border-radius: 4px;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
   -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
      -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
           box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
@@ -4385,7 +4403,8 @@ input[type="submit"].btn.btn-mini {
 
 .navbar-form {
   margin-bottom: 0;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .navbar-form:before,
@@ -4874,7 +4893,8 @@ input[type="submit"].btn.btn-mini {
   display: inline-block;
   *display: inline;
   text-shadow: 0 1px 0 #ffffff;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .breadcrumb > li > .divider {
@@ -4898,7 +4918,8 @@ input[type="submit"].btn.btn-mini {
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
           border-radius: 4px;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
      -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
           box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -5034,7 +5055,8 @@ input[type="submit"].btn.btn-mini {
   margin: 20px 0;
   text-align: center;
   list-style: none;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .pager:before,
@@ -5175,7 +5197,8 @@ input[type="submit"].btn.btn-mini {
   -webkit-border-radius: 0 0 6px 6px;
      -moz-border-radius: 0 0 6px 6px;
           border-radius: 0 0 6px 6px;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
   -webkit-box-shadow: inset 0 1px 0 #ffffff;
      -moz-box-shadow: inset 0 1px 0 #ffffff;
           box-shadow: inset 0 1px 0 #ffffff;
@@ -5432,7 +5455,8 @@ input[type="submit"].btn.btn-mini {
 .thumbnails {
   margin-left: -20px;
   list-style: none;
-  *zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .thumbnails:before,
@@ -5496,7 +5520,8 @@ a.thumbnail:hover {
 .media-body {
   overflow: hidden;
   *overflow: visible;
-  zoom: 1;
+  transform:scale(1);
+  transform-origin: 0 0;
 }
 
 .media,

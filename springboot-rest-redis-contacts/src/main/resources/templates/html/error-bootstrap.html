@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Cache-Control" content="max-age=3600">
+	<meta name="_csrf" th:content="${_csrf != null} ? ${_csrf.token} : ''" />
+	<meta name="_csrf_header" th:content="${_csrf != null}? ${_csrf.headerName} : 'X-CSRF-TOKEN'" />
+	<title th:text="#{page.error}">Error</title>
+	<link rel="icon" href="../static/favicon.ico" th:href="@{/resources/favicon.ico}" type="image/x-icon" />
+	<!-- Bootstrap 3.4.1 css -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.css">
+	<!-- Custom css -->
+	<link rel="stylesheet" href="../../static/themes/wheat-bootstrap.css" th:href="${#themes.code('stylesheet-bootstrap')}" type="text/css">
+	<link rel="stylesheet" href="../../static/css/custom.css" th:href="@{/resources/css/custom.css}" />
+	<link rel="stylesheet" href="../../static/css/media.css" th:href="@{/resources/css/media.css}" />
+</head>
+<body th:style="'direction:' + #{dir}" dir="ltr" th:dir="#{dir}" th:data-contacts-url="@{/api/contacts}" data-contacts-url="#">
+	<div class="container">
+		<div class="header clearfix">
+			<nav class="navbar navbar-inverse" th:replace="html/fragments/navbar-bootstrap :: navbar-bootstrap('html/error-bootstrap','error-bootstrap-html', '')">
+				<div class="container-fluid">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="https://github.com/tnsilver/springboot-samples">SpringBootREST</a>
+							<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						      <span class="sr-only">Toggle navigation</span>
+						      <span class="icon-bar"></span>
+						      <span class="icon-bar"></span>
+						      <span class="icon-bar"></span>
+					    	</button>
+						</div>
+				        <div id="navbar" class="navbar-collapse collapse">
+				        <ul class="nav navbar-nav">
+						<li><a class="error active" href="#">Error</a></li>
+						<li><a href="home-bootstrap.html">Home</a></li>
+						<li><a href="#">Hello JSP</a></li>
+						<li><a href="hello-bootstrap.html">Hello HTML</a></li>
+						<li><a href="#">Contacts JSP</a></li>
+						<li><a href="contacts-bootstrap.html">Contacts HTML</a></li>
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Language<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">
+										<img alt="he" src="../../../resources/static/images/flags/iw.png">&nbsp;
+										<span>Hebrew</span>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<img alt="en" src="../../../resources/static/images/flags/en.png">&nbsp;
+										<span>English</span>
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">Theme<span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">
+										<img alt="spring.png" src="../../../resources/static/images/spring.png">&nbsp;
+										<span>Spring</span>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<img alt="wheat" src="../../../resources/static/images/wheat.png">&nbsp;
+										<span>Wheat</span>
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+						   <a href="login-bootstrap.html">Login</a>
+						</li>
+						<li><a href="#">Source</a></li>
+					</ul>
+					</div> <!--/.nav-collapse -->
+				</div> <!--/.container-fluid -->
+			</nav>
+		</div>
+
+        <div class="row marketing">
+	       	<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<div class="jumbotron">
+					<h2 th:text="#{support.header}">Error Page</h2>
+			        <p th:if="${path}"><b th:text="#{support.page} + ':'">Page:</b>
+			        	<span th:text="${path}">Page URL</span>
+			        </p>
+			        <p th:if="${timestamp}" id='created'><b th:text="#{support.occured} + ':'">Occurred:</b>
+			        	<span th:text="${timestamp}">Timestamp</span>
+			        </p>
+			        <p th:if="${status}"><b th:text="#{support.status} + ':'">Response Status:</b>
+			            <span th:text="${status}">status-code</span>
+			            <span th:if="${error}" th:text="'('+${error}+')'">error...</span>
+			        </p>
+				</div>
+			</div>
+        </div>
+
+        <div class="row marketing">
+	       	<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+		        <p th:if="${exception}"><b th:text="'Exception:'">Exception:</b>
+		        	<span th:text="${exception}">Exception</span>
+		        </p>
+		        <p th:if="${exception ne null and exception instanceof T(java.lang.Throwable)}"><b th:text="'Trace:'">Trace:</b></p>
+		        <!--  As we are using Thymeleaf, you might consider using
+		              ${#httpServletRequest.requestURL}. But that returns the path
+		              to this error page.  Hence we explicitly add the url to the
+		              Model in some of the example code. -->
+		        <ul th:if="${exception ne null and exception instanceof T(java.lang.Throwable)}">
+		            <li th:each="ste : ${exception.getStackTrace()}"><span th:text="${ste}"></span></li>
+		        </ul>
+		        <p th:text="#{support.contact}">Application has encountered an error. Please contact support on ...</p>
+		        <p th:text="#{support.notice}">Support may ask you to right click to view page source.</p>
+		        <!--
+		          // Hidden Exception Details  - this is not recommended, but here is
+		          // how you hide an exception in the page using Thymeleaf
+		          -->
+		        <div th:utext="'&lt;!--'" th:remove="tag"></div>
+		        <div th:utext="'Failed URL: ' +  ${path}" th:remove="tag">${path}</div>
+		        <div th:if="${exception ne null and exception instanceof T(java.lang.Throwable)}" th:utext="'Exception: ' + ${exception.message}" th:remove="tag">${exception.message}</div>
+		        <ul th:remove="tag">
+		            <li th:each="ste : ${trace}" th:remove="tag"><span th:utext="${ste}" th:remove="tag">${ste}</span></li>
+		        </ul>
+		        <div th:utext="'--&gt;'" th:remove="tag"></div>
+			</div>
+        </div>
+
+
+		<footer class="footer" th:replace="html/fragments/footer-bootstrap">
+			<span th:text="'&nbsp;' + ${#dates.year(#dates.createNow())} + '&nbsp;&copy;&nbsp;'">2022</span>
+			<a href="#" th:text="#{footer.copyright}">T.N.Silverman - SilverSoft LTD</a>
+			<span th:text="#{footer.notice}">All Rights Reserved.</span>
+    	</footer>
+
+	</div>
+
+	<!-- jQuery first, then Bootstrap JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.js"></script>
+
+</body>
+</html>

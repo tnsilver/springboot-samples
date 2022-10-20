@@ -15,7 +15,7 @@
 	            <li th:case="*"><a href="contact.jsp" th:attrappend="class=${name eq 'contact-jsp'}?'active'" th:href="@{/jsp/contact}" th:text="#{page.contact.add.jsp}">Add Contact</a></li>
             <th:block>
             <li><a href="contacts.html" th:attrappend="class=${name eq 'contacts-html'}?'active'" th:href="@{/html/contacts}" th:text="#{page.contacts.html}">Contacts HTML</a></li>
-            <th:block th:switch="${action}">
+			<th:block th:switch="${action}">
 	            <li th:case="'edit'"><a href="contact.html" th:attrappend="class=${name eq 'contact-html'}?'active'" th:href="@{/html/contact}" th:text="#{page.contact.edit}">Edit Contact</a></li>
 	            <li th:case="'delete'"><a href="contact.html" th:attrappend="class=${name eq 'contact-html'}?'active'" th:href="@{/html/contact}" th:text="#{page.contact.delete}">Delete Contact</a></li>
 	            <li th:case="*"><a href="contact.html" th:attrappend="class=${name eq 'contact-html'}?'active'" th:href="@{/html/contact}" th:text="#{page.contact.add}">Add Contact</a></li>
@@ -47,11 +47,11 @@
                 </div>
             </li>
             <li th:if="${#httpServletRequest.remoteUser != null}">
-               <a href="#" th:text="#{page.logout} + ' ' + ${#httpServletRequest.remoteUser}" onclick="document.forms['logoutForm'].submit(); return false;">Logout</a>
+               <a href="#" th:text="#{page.logout} + ' ' + ${#httpServletRequest.remoteUser}" onclick="document.forms['logoutForm'].submit();">Logout</a>
                <form id="logoutForm" th:action="@{/logout}" method="post"> </form>
             </li>
             <li th:unless ="${#httpServletRequest.remoteUser != null}">
-               <a href="login.html" th:href="@{/login}" th:text="#{page.login}">Login</a>
+               <a href="login.html" th:href="@{/login-bootstrap}" th:text="#{page.login}">Login</a>
             </li>
             <li><a href="#" th:href="@{'/source/' + ${@fileNameService.getName(url)} + '.html'}" th:text="#{page.source}">Source</a></li>
         </ul>

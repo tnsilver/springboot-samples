@@ -64,6 +64,7 @@ $(document).ready(function() {
 
 	$("#helloForm").submit(function(event) {
 		event.preventDefault();
+		// console.debug("#helloForm submit: event:", event);
 		greet();
 	});
 
@@ -73,5 +74,6 @@ $(document).ready(function() {
 		$(this).closest('form').find("input[type=checkbox]").prop('checked', false);
 		$(this).closest('form').find("span.error").text("");
 		$(this).closest('form').find("tr.error").css("display", "none");
+		hello();
 	});
 });

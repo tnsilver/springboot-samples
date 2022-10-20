@@ -49,12 +49,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SecurityConfig {
 
-	@Value("${spring.security.user.name}")
-	String username;
-	@Value("${spring.security.user.password}")
-	String password;
-	@Value("#{'${spring.profiles.active}'.split(',')}")
-	private List<String> profiles;
+	// @formatter:off
+	@Value("${spring.security.user.name}") String username;
+	@Value("${spring.security.user.password}") String password;
+	@Value("#{'${spring.profiles.active}'.split(',')}") private List<String> profiles;
+	// @formatter:on
 
 	/*
 	 * @Bean protected WebSecurityCustomizer webSecurityCustomizer() { return (web)

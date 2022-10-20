@@ -38,7 +38,7 @@ function getSort() {
 	$('span[class^=sort_]').not('span[class=sort_both]').each(function() {
 		var property = $(this).attr("data-sort-property");
 		var direction = $(this).attr("data-sort-direction");
-		//console.debug("contacts.js:getSort() -> property: ", property, " direction: ", direction);
+		// console.debug("contacts.js:getSort() -> property: ", property, " direction: ", direction);
 		if (!isEmpty(direction)) {
 			sort = property + "," + direction;
 		}
@@ -72,7 +72,7 @@ function toggleSort(span) {
 		default:
 			break;
 	}
-	//console.debug("contacts.js:toggleSort() -> property ",$(span).attr("data-sort-property"), " direction: ", $(span).attr("data-sort-direction"));
+	// console.debug("contacts.js:toggleSort() -> property ",$(span).attr("data-sort-property"), " direction: ", $(span).attr("data-sort-direction"));
 	$('.error').css("display", "none");
 	getFilteredContacts();
 }
@@ -92,12 +92,12 @@ function buildFilterQueryString() {
 			var name = $(this).is(':radio') ? $(this).attr('name') : $(this).attr('id');
 			var val = $(this).val();
 			if ((name === 'birthDate' && isEmpty(val)) || isEmpty(name)) return true;
-			//console.debug("contacts.js:buildFilterQueryString() -> name: ",name, ", value: ", val, ", checked: ", $(this).prop('checked'));
+			// console.debug("contacts.js:buildFilterQueryString() -> name: ",name, ", value: ", val, ", checked: ", $(this).prop('checked'));
 			query = query + name + "=" + decodeURIComponent(val) + "&";
 		});
 	}
 	query = query.substr(0, query.length - 1); // remove last '&'
-	//console.debug("contacts.js:buildFilterQueryString() -> query:", query);
+	// console.debug("contacts.js:buildFilterQueryString() -> query:", query);
 	return query;
 }
 
@@ -107,7 +107,7 @@ function buildFilterQueryString() {
  */
 function editContact(href) {
 	var url = $('body').attr("data-edit-url");
-	console.debug("contacts.js:editContact() -> href: ", href);
+	// console.debug("contacts.js:editContact() -> href: ", href);
 	window.location.href = url + "?self=" + href + "&action=edit";
 }
 
@@ -117,7 +117,7 @@ function editContact(href) {
  */
 function deleteContact(href) {
 	var url = $('body').attr("data-edit-url");
-	console.debug("contacts.js:editContact() -> href: ", href);
+	// console.debug("contacts.js:editContact() -> href: ", href);
 	window.location.href = url + "?self=" + href + "&action=delete";
 }
 
@@ -131,7 +131,7 @@ function deleteContact(href) {
  */
 function buildContactForm(index, contact) {
 	var href = contact._links.self.href;
-	//console.debug("contacts.js:buildContactForm() -> href: ", href);
+	// console.debug("contacts.js:buildContactForm() -> href: ", href);
 	var clazz = index % 2 == 0 ? 'tr' : "tr odd";
 	var checked = contact.married ? 'checked=\'checked\' ' : '';
 	var theme = $("body").attr("data-theme");
@@ -175,7 +175,7 @@ function buildContactForm(index, contact) {
 function buildContactsTable(data) {
 	var totalElements = data.page.totalElements;
 	if (!isEmpty(totalElements) && totalElements === 0) {
-		console.warn("contacts.js:buildContactsTable() -> no data found!");
+		// console.warn("contacts.js:buildContactsTable() -> no data found!");
 		$('.error').css("display", "");
 		return;
 	}
@@ -299,7 +299,7 @@ function buildPageLinks(data) {
 			url += "&page=" + i;
 			url += "&size=" + data.page.size;
 			url += "&sort=" + getSort();
-			//console.debug("contacts.js:buildPageLinks() url: ", url);
+			// console.debug("contacts.js:buildPageLinks() url: ", url);
 			tr += "<a id='page" + i + "Link' href='#' data-href='" + url + "' onclick='gotoPageLink(this);'><span class='paginationPagesCharacter'>" + (i + 1) + "</span></a>";
 		} else {
 			tr += "<span class='paginationActivePageCharacter'>" + (i + 1) + "</span>";
@@ -344,7 +344,7 @@ function buildPagingTable(data) {
  * @param type - the HTTP method type (GET,POST,etc...)
  */
 function ajax(url, data, type) {
-	console.debug("contacts.js:ajax() ->", type, url);
+	// console.debug("contacts.js:ajax() ->", type, url);
 	$.ajax({
 		type: type,
 		url: url,
@@ -366,7 +366,7 @@ function clear() {
  */
 function gotoPageLink(a) {
 	var link = $(a).attr("data-href");
-	console.debug("contacts.js:gotoPageLink() -> link: ", link);
+	// console.debug("contacts.js:gotoPageLink() -> link: ", link);
 	ajax(link, {}, "GET");
 }
 /**
@@ -391,7 +391,7 @@ function getFilteredContacts() {
 	var _ssn = $("#_ssn").val();
 	if (!isEmpty(_ssn)) $("#ssn").val(_ssn); // populate filter ssn if edited or saved
 	var url = buildPagingUrl($("#filterForm").attr('action'));
-	//console.debug("contacts.js:getFilteredContacts() -> ajax: (GET) url -> ", url);
+	// console.debug("contacts.js:getFilteredContacts() -> ajax: (GET) url -> ", url);
 	clear();
 	ajax(url, "", "GET");
 }
@@ -417,39 +417,39 @@ $(document).ready(function() {
 		},
 		statusCode: {
 			200: function(data, status, jqXHR) { // OK (GET)
-				console.debug("contacts.js:ajaxSetup() (200) -> data:", data, ", jqXHR:", jqXHR);
+				// console.debug("contacts.js:ajaxSetup() (200) -> data:", data, ", jqXHR:", jqXHR);
 				$('#loader').toggleClass('active');
 				clear();
 				buildContactsTable(data);
 				buildPagingTable(data);
 			},
 			201: function(data, status, jqXHR) { // PUT / PATCH (success)
-				console.debug("contacts.js:ajaxSetup() (201) -> succcess");
+				// console.debug("contacts.js:ajaxSetup() (201) -> succcess");
 				$("#filterForm").submit(); // reload data
 				$('#loader').toggleClass('active');
 			},
 			204: function(data, status, jqXHR) { // DELETE (success)
-				console.debug("contacts.js:ajaxSetup() (204) -> no content. DELETE succcess");
+				// console.debug("contacts.js:ajaxSetup() (204) -> no content. DELETE succcess");
 				$("#filterForm").submit(); // reload data
 				$('#loader').toggleClass('active');
 			},
 			302: function(data, status, jqXHR) { // Redirect (follows Loactaion header)
 				var type = $(this)[0].type;
 				var url = $(this)[0].url;
-				console.debug("contacts.js:ajaxSetup() (302) -> url:", url, ", method:", type, ",jqXHR:",jqHXR);
+				// console.debug("contacts.js:ajaxSetup() (302) -> url:", url, ", method:", type, ",jqXHR:",jqHXR);
 			},
 			401: function(jqXHR, status, error) { // Unauthorized
 				var type = $(this)[0].type;
 				var url = $(this)[0].url;
 				var href = $('body').attr('data-login-page');
-				console.debug("contacts.js:ajaxSetup() -> (401)", type, "unauthorized", url, "navigating to", href);
-				//window.location.href = href;
+				// console.debug("contacts.js:ajaxSetup() -> (401)", type, "unauthorized", url, "navigating to", href);
+				// window.location.href = href;
 			},
 			405: function(jqXHR, status, error) { // 405 Method Not Allowed
 				var type = $(this)[0].type;
 				var url = $(this)[0].url;
 				var href = $('body').attr('data-login-page');
-				console.debug("contacts.js:ajaxSetup() -> (405)", type, "method not allowd", url, "navigating to", href);
+				// console.debug("contacts.js:ajaxSetup() -> (405)", type, "method not allowd", url, "navigating to", href);
 				window.location.href = href;
 			}
 		}
