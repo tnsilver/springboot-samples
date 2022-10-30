@@ -60,15 +60,11 @@ public class JpaConfig {
 
     // @formatter:off
     @Autowired Environment env;
+    @Value("${spring.jpa.show-sql}") private String showSql;
+    @Value("${spring.jpa.hibernate.ddl-auto}") private String ddlAuto;
+    @Value("${spring.flyway.locations}") private String locations;
+    @Value("${spring.jpa.properties.hibernate.dialect}") private String hibernateDialect;
     // @formatter:on
-    @Value("${spring.jpa.show-sql}")
-    private String showSql;
-    @Value("${spring.jpa.hibernate.ddl-auto}")
-    private String ddlAuto;
-    @Value("${spring.flyway.locations}")
-    private String locations;
-    @Value("${spring.jpa.properties.hibernate.dialect}")
-    private String hibernateDialect;
 
     /**
      * Entity manager factory. (must wait for flyway to finish migration)
