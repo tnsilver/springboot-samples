@@ -1,7 +1,10 @@
 # Contacts (v1.1.0): Spring Boot 3.0.2 / JDK 19 - A RESTful CRUD Web-App with JPA
 
-**New** Moved to SpringBoot v**3.0.2**
-**New** Responsive bootstrap HTML5 templates. Now works on mobile devices, tablets... etc.
+
+
+*   **New** Moved to SpringBoot v**3.0.2**
+*   **New** Responsive bootstrap HTML5 templates. Now works on mobile devices, tablets... etc.
+
 
 ![Contacts Application](../images/jpa-phone.jpg?raw=true "Responsive Contacts Application")
 

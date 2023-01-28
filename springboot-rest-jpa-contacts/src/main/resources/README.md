@@ -1,7 +1,10 @@
 # Contacts (v@project.version@): Spring Boot @project.parent.version@ / JDK @java.version@ - A RESTful CRUD Web-App with JPA
 
-**New** Moved to SpringBoot v**3.0.2**
-**New** Responsive bootstrap HTML5 templates. Now works on mobile devices, tablets... etc.
+
+
+*   **New** Moved to SpringBoot v**3.0.2**
+*   **New** Responsive bootstrap HTML5 templates. Now works on mobile devices, tablets... etc.
+
 
 ![Contacts Application](../images/jpa-phone.jpg?raw=true "Responsive Contacts Application")
 

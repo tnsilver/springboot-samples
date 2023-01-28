@@ -19,6 +19,7 @@
 # Eclipse Files
 *target*
 *.class
+*/.factorypath
 # eclipse specific git ignore
 *.pydevproject
 *.project
@@ -43,3 +44,6 @@ hs_err_pid*
 # Manifest #
 */manifest.yml
 /.metadata/
+# IDEA Files
+*/.idea
+
