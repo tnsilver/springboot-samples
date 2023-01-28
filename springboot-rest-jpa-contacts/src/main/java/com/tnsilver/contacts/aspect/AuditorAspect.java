@@ -21,7 +21,7 @@
  */
 package com.tnsilver.contacts.aspect;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;

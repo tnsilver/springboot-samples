@@ -34,8 +34,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -49,6 +47,8 @@ import com.tnsilver.contacts.base.BaseJpaTest;
 import com.tnsilver.contacts.model.Contact;
 import com.tnsilver.contacts.model.SocialSecurityNumber;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * The test JpaContactRepositoryIT tests the {@link ContactRepository} functionality
  *
@@ -57,12 +57,10 @@ import com.tnsilver.contacts.model.SocialSecurityNumber;
  */
 @SpringBootTest
 @Transactional
+@Slf4j
 public class ContactRepositoryIT extends BaseJpaTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(ContactRepositoryIT.class);
-    // @formatter:off
     @Autowired private ContactRepository contactRepository;
-    // @formatter:on
     private static final Pageable PAGEABLE = PageRequest.of(0, 10, Sort.by(Direction.ASC, "id"));
 
     @BeforeAll
@@ -223,8 +221,8 @@ public class ContactRepositoryIT extends BaseJpaTest {
                                                              filter.getChildren(), pageable);
         assertFalse(actual.getContent().isEmpty());
         System.out.println();
-        logger.debug("{} results:", actual.getContent().size());
-        actual.getContent().forEach(c -> logger.debug("{}", c));
+        log.debug("{} results:", actual.getContent().size());
+        actual.getContent().forEach(c -> log.debug("{}", c));
         System.out.println();
     }
 
@@ -237,8 +235,8 @@ public class ContactRepositoryIT extends BaseJpaTest {
         assertFalse(actual.getContent().isEmpty());
         assertEquals(1, actual.getContent().size());
         System.out.println();
-        logger.debug("{} results:", actual.getContent().size());
-        actual.getContent().forEach(c -> logger.debug("{}", c));
+        log.debug("{} results:", actual.getContent().size());
+        actual.getContent().forEach(c -> log.debug("{}", c));
         System.out.println();
     }
 
@@ -251,8 +249,8 @@ public class ContactRepositoryIT extends BaseJpaTest {
         assertFalse(actual.getContent().isEmpty());
         assertEquals(1, actual.getContent().size());
         System.out.println();
-        logger.debug("{} results:", actual.getContent().size());
-        actual.getContent().forEach(c -> logger.debug("{}", c));
+        log.debug("{} results:", actual.getContent().size());
+        actual.getContent().forEach(c -> log.debug("{}", c));
         System.out.println();
     }
 
@@ -266,8 +264,8 @@ public class ContactRepositoryIT extends BaseJpaTest {
         assertFalse(actual.getContent().isEmpty());
         assertEquals(1, actual.getContent().size());
         System.out.println();
-        logger.debug("{} results:", actual.getContent().size());
-        actual.getContent().forEach(c -> logger.debug("{}", c));
+        log.debug("{} results:", actual.getContent().size());
+        actual.getContent().forEach(c -> log.debug("{}", c));
         System.out.println();
     }
 
@@ -282,8 +280,8 @@ public class ContactRepositoryIT extends BaseJpaTest {
         assertFalse(actual.getContent().isEmpty());
         assertEquals(1, actual.getContent().size());
         System.out.println();
-        logger.debug("{} results:", actual.getContent().size());
-        actual.getContent().forEach(c -> logger.debug("{}", c));
+        log.debug("{} results:", actual.getContent().size());
+        actual.getContent().forEach(c -> log.debug("{}", c));
         System.out.println();
     }
 
@@ -299,8 +297,8 @@ public class ContactRepositoryIT extends BaseJpaTest {
         assertFalse(actual.getContent().isEmpty());
         assertEquals(1, actual.getContent().size());
         System.out.println();
-        logger.debug("{} results:", actual.getContent().size());
-        actual.getContent().forEach(c -> logger.debug("{}", c));
+        log.debug("{} results:", actual.getContent().size());
+        actual.getContent().forEach(c -> log.debug("{}", c));
         System.out.println();
     }
 
@@ -318,8 +316,8 @@ public class ContactRepositoryIT extends BaseJpaTest {
         assertFalse(actual.getContent().isEmpty());
         assertEquals(1, actual.getContent().size());
         System.out.println();
-        logger.debug("{} results:", actual.getContent().size());
-        actual.getContent().forEach(c -> logger.debug("{}", c));
+        log.debug("{} results:", actual.getContent().size());
+        actual.getContent().forEach(c -> log.debug("{}", c));
         System.out.println();
     }
 
@@ -332,8 +330,8 @@ public class ContactRepositoryIT extends BaseJpaTest {
         assertFalse(actual.getContent().isEmpty());
         assertEquals(1, actual.getContent().size());
         System.out.println();
-        logger.debug("{} results:", actual.getContent().size());
-        actual.getContent().forEach(c -> logger.debug("{}", c));
+        log.debug("{} results:", actual.getContent().size());
+        actual.getContent().forEach(c -> log.debug("{}", c));
         System.out.println();
     }
 }

@@ -27,6 +27,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -36,7 +37,7 @@ import com.tnsilver.contacts.aspect.AuditableMethod;
 import com.tnsilver.contacts.model.Contact;
 
 @RepositoryRestResource(collectionResourceRel = "contacts", itemResourceRel = "contact")
-public interface ContactRepository extends PagingAndSortingRepository<Contact, Long> {
+public interface ContactRepository extends CrudRepository<Contact, Long>, PagingAndSortingRepository<Contact, Long> {
 
     @Override
     public Page<Contact> findAll(Pageable pageable);

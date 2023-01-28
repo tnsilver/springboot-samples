@@ -29,24 +29,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-import javax.annotation.Resource;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.env.Environment;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.tnsilver.contacts.base.BaseJpaTest;
-import com.tnsilver.contacts.model.Contact;
 
 /**
  * The test HelloRestControllerTest tests the {@link HelloRestController} rest controller
@@ -54,19 +48,15 @@ import com.tnsilver.contacts.model.Contact;
  * @author T.N.Silverman
  *
  */
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 // @Transactional
 public class HelloRestControllerTest extends BaseJpaTest {
 
     private static final String restApiEndPoint = "/api/";
     private String contentType = "application/json;charset=UTF-8";
-    @Resource
-    private Environment env;
-    @Resource
-    private WebApplicationContext webApplicationContext;
-    @Resource
-    private HttpMessageConverter<Contact> mappingJackson2HttpMessageConverter;
+
+    @Autowired private WebApplicationContext webApplicationContext;
+
     private MockMvc mockMvc;
 
     @BeforeEach

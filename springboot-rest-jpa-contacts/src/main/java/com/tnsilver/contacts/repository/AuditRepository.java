@@ -22,10 +22,8 @@
 package com.tnsilver.contacts.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
 import com.tnsilver.contacts.model.Audit;
 
-@Repository
 public interface AuditRepository extends CrudRepository<Audit, Long> {
 }

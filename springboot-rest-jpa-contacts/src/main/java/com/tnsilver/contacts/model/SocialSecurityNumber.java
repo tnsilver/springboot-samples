@@ -23,16 +23,14 @@ package com.tnsilver.contacts.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Class SocialSecurityNumber represents a social security number
@@ -41,10 +39,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 // JPA
 @Embeddable
+@Slf4j
 public class SocialSecurityNumber implements Serializable {
 
     public static final String REGEX = "^\\d{3}-?\\d{2}-?\\d{4}$";
-    private static final Logger logger = LoggerFactory.getLogger(SocialSecurityNumber.class);
     private static final long serialVersionUID = 6239698134349222445L;
     @Transient
     private Integer area;
@@ -52,7 +50,7 @@ public class SocialSecurityNumber implements Serializable {
     private Integer group;
     @Transient
     private Integer serial;
-    @NotBlank
+    @NotNull
     @Pattern(regexp = "^\\d{3}-?\\d{2}-?\\d{4}$")
     @Column(name = "contact_ssn")
     private String ssn;
@@ -69,7 +67,7 @@ public class SocialSecurityNumber implements Serializable {
             serial = Integer.parseInt(ssn.substring(7, 11));
             this.ssn = getAsString();
         } catch (Exception ignore) {
-            logger.warn("cannot set ssn {}", ssn);
+            log.warn("cannot set ssn {}", ssn);
             this.area = null;
             this.group = null;
             this.serial = null;
@@ -101,7 +99,7 @@ public class SocialSecurityNumber implements Serializable {
             serial = Integer.parseInt(ssn.substring(7, 11));
             this.ssn = getAsString();
         } catch (Exception ignore) {
-            logger.warn("cannot set ssn {} becuase {} -> {}", ssn, ignore.getClass().getTypeName(), ignore.getMessage());
+            log.warn("cannot set ssn {} because {} -> {}", ssn, ignore.getClass().getTypeName(), ignore.getMessage());
             this.area = null;
             this.group = null;
             this.serial = null;

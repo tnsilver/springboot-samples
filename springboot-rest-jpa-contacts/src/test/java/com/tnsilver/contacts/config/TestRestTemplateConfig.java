@@ -24,8 +24,8 @@ package com.tnsilver.contacts.config;
 import java.time.Duration;
 import java.util.List;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.hc.client5.http.classic.HttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -57,7 +57,7 @@ public class TestRestTemplateConfig {
     String password;
 
     @Bean
-    public TestRestTemplate testRestTemplate(RestTemplateBuilder restTemplateBuilder) {
+    TestRestTemplate testRestTemplate(RestTemplateBuilder restTemplateBuilder) {
         // @formatter:off
         restTemplateBuilder.additionalMessageConverters(List.of(
             new ByteArrayHttpMessageConverter(),

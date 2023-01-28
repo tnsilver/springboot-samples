@@ -4,7 +4,7 @@
 
 ![Contacts Application](images/redis-phone.jpg?raw=true "Responsive Contacts Application")
 
-1.  **SpringBoot and JPA** [springboot-rest-jpa-contacts](springboot-rest-jpa-contacts "JPA Web Application") - Responsive JPA with MySql or embedded H2. A `docker` ready project with SpringBoot 2.7.5 and JDK 19.
+1.  **SpringBoot and JPA** [springboot-rest-jpa-contacts](springboot-rest-jpa-contacts "JPA Web Application") - Responsive JPA with MySql or embedded H2. A `docker` ready project with SpringBoot **3.0.2** and JDK 19.
 
 2.  **SpringBoot and MongoDB** [springboot-rest-mongo-contacts](springboot-rest-mongo-contacts "MongoDB Web Application") - Responsive - live running `MongoDB` server or embedded `de.flapdoodle`. A `docker` ready project with SpringBoot 2.7.5 and JDK 19.
 

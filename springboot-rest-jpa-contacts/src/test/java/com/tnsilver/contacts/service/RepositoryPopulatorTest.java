@@ -30,22 +30,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.tnsilver.contacts.base.BaseJpaTest;
 import com.tnsilver.contacts.model.Contact;
 import com.tnsilver.contacts.repository.ContactRepository;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
-// @Transactional
 class RepositoryPopulatorTest extends BaseJpaTest {
 
-    @Autowired
-    private ContactRepository contactRepository;
+    @Autowired private ContactRepository contactRepository;
 
     @BeforeAll
     public static void beforeAll(TestInfo info) throws Exception {

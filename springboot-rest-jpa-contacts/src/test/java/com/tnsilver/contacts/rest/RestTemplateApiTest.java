@@ -38,8 +38,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Resources;
-import javax.transaction.Transactional;
+import jakarta.annotation.Resources;
+import jakarta.transaction.Transactional;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -79,12 +79,9 @@ import com.tnsilver.contacts.model.SocialSecurityNumber;
 public class RestTemplateApiTest extends BaseJpaTest {
 
     private static final Logger logger = LoggerFactory.getLogger(RestTemplateApiTest.class);
-    @LocalServerPort
-    int port;
-    @Autowired
-    ObjectMapper mapper;
-    @Autowired
-    private TestRestTemplate restTemplate;
+    @LocalServerPort int port;
+    @Autowired ObjectMapper mapper;
+    @Autowired private TestRestTemplate restTemplate;
     // configured fields
     private String restApiEndPoint;
     private Contact homer;

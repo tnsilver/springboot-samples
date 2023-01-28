@@ -38,9 +38,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 import java.io.IOException;
 import java.time.LocalDate;
 
-import javax.annotation.Resource;
-import javax.transaction.Transactional;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -48,8 +45,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.mock.http.MockHttpOutputMessage;
@@ -61,6 +58,8 @@ import com.jayway.jsonpath.JsonPath;
 import com.tnsilver.contacts.base.BaseJpaTest;
 import com.tnsilver.contacts.model.Contact;
 import com.tnsilver.contacts.model.SocialSecurityNumber;
+
+import jakarta.transaction.Transactional;
 
 /**
  * The test RestAPIMockIT tests the REST api of this application using a mock mvc object
@@ -75,12 +74,9 @@ public class MockMvcApiTest extends BaseJpaTest {
     private static final Logger logger = LoggerFactory.getLogger(MockMvcApiTest.class);
     private static final String restApiEndPoint = "/api/contacts";
     private String contentType = "application/hal+json";
-    @Resource
-    private Environment env;
-    @Resource
-    private WebApplicationContext webApplicationContext;
-    @Resource
-    private HttpMessageConverter<Contact> mappingJackson2HttpMessageConverter;
+
+    @Autowired private WebApplicationContext webApplicationContext;
+    @Autowired private HttpMessageConverter<Contact> mappingJackson2HttpMessageConverter;
     private MockMvc mockMvc;
 
     @BeforeAll

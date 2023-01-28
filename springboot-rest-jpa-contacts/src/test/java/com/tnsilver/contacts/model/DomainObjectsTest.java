@@ -31,17 +31,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import javax.annotation.Resource;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.env.Environment;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.tnsilver.contacts.base.BaseJpaTest;
 
@@ -52,12 +47,8 @@ import com.tnsilver.contacts.base.BaseJpaTest;
  * @author T.N.Silverman
  *
  */
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class DomainObjectsTest extends BaseJpaTest {
-
-    @Resource
-    private Environment env;
 
     @ParameterizedTest
     @DisplayName("test contact getters")

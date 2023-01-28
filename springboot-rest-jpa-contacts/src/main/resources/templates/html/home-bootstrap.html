@@ -22,7 +22,7 @@
 <div class="container">
 
 		<div class="header clearfix">
-			<nav class="navbar navbar-inverse" th:replace="html/fragments/navbar-bootstrap :: navbar-bootstrap('html/home-bootstrap','home-bootstrap', '')">
+			<nav class="navbar navbar-inverse" th:replace="~{html/fragments/navbar-bootstrap :: navbar-bootstrap('html/home-bootstrap','home-bootstrap', '')}">
 				<div class="container-fluid">
 						<div class="navbar-header">
 							<a class="navbar-brand" href="https://github.com/tnsilver/springboot-samples">SpringBootREST</a>
@@ -99,7 +99,7 @@
 			</div>
         </div>
 
-		<footer class="footer" th:replace="html/fragments/footer-bootstrap">
+		<footer class="footer" th:replace="~{html/fragments/footer-bootstrap}">
 			<span th:text="'&nbsp;' + ${#dates.year(#dates.createNow())} + '&nbsp;&copy;&nbsp;'">2022</span>
 			<a href="#" th:text="#{footer.copyright}">T.N.Silverman - SilverSoft LTD</a>
 			<span th:text="#{footer.notice}">All Rights Reserved.</span>

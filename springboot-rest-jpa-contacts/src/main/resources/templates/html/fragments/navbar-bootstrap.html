@@ -58,11 +58,11 @@
 	</ul>
 
 	<ul class="nav navbar-nav navbar-right">
-		<li th:if="${#httpServletRequest.remoteUser != null}">
+		<li th:if="${#httpServletRequest != null && #httpServletRequest.remoteUser != null}">
 		   <a href="#" th:text="#{page.logout} + ' ' + ${#httpServletRequest.remoteUser}" onclick="document.forms['logoutForm'].submit();">Logout</a>
 		   <form id="logoutForm" th:action="@{/logout}" method="post"> </form>
 		</li>
-		<li th:unless ="${#httpServletRequest.remoteUser != null}" th:attrappend="class=${name eq 'login-bootstrap'}?'active'">
+		<li th:unless ="${#httpServletRequest != null && #httpServletRequest.remoteUser != null}" th:attrappend="class=${name eq 'login-bootstrap'}?'active'">
 		   <a href="login-bootstrap.html" th:href="@{/login-bootstrap}" th:text="#{page.login}">Login</a>
 		</li>
 		<li><a href="#" th:href="@{'/source/' + ${@fileNameService.getName(url)} + '.html'}" th:text="#{page.source}">Source</a></li>

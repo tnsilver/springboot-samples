@@ -28,22 +28,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 
-import javax.annotation.Resource;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.validation.BindException;
 
 import com.tnsilver.contacts.base.BaseJpaTest;
 import com.tnsilver.contacts.model.Contact;
 import com.tnsilver.contacts.model.SocialSecurityNumber;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * The test ContactValidatorTest tests the {@link ContactValidator} functionality
@@ -52,11 +51,10 @@ import com.tnsilver.contacts.model.SocialSecurityNumber;
  *
  */
 @SpringBootTest
+@Slf4j
 public class ContactValidatorTest extends BaseJpaTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(ContactValidatorTest.class);
-    @Resource
-    private ContactValidator contactValidator;
+    @Autowired private ContactValidator contactValidator;
 
     @BeforeEach
     public void beforeEach(TestInfo info) throws Exception {
@@ -115,7 +113,7 @@ public class ContactValidatorTest extends BaseJpaTest {
         Contact contact = new Contact(ssn, firstName, lastName, null, married, children);
         BindException errors = new BindException(contact, "contact");
         contactValidator.validate(contact, errors);
-        errors.getFieldErrors().forEach(error -> logger.debug("Error for field {} -> {}", error.getField(), error.getDefaultMessage()));
+        errors.getFieldErrors().forEach(error -> log.debug("Error for field {} -> {}", error.getField(), error.getDefaultMessage()));
         // @formatter:off
         assertAll(() -> assertTrue(contactValidator.supports(Contact.class)),
                 () -> assertFalse(errors.getAllErrors().isEmpty()),

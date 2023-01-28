@@ -27,14 +27,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-import javax.annotation.Resource;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -51,14 +50,11 @@ import com.tnsilver.contacts.base.BaseJpaTest;
  *
  */
 @DirtiesContext
-//@ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class NoneTemplateViewControllerTest extends BaseJpaTest {
 
-    @LocalServerPort
-    int port;
-    @Resource
-    private WebApplicationContext webApplicationContext;
+    @LocalServerPort int port;
+    @Autowired private WebApplicationContext webApplicationContext;
     private MockMvc mockMvc;
 
     @BeforeEach

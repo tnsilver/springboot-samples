@@ -23,16 +23,13 @@ package com.tnsilver.contacts.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import javax.annotation.Resource;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.tnsilver.contacts.base.BaseJpaTest;
 
@@ -42,12 +39,10 @@ import com.tnsilver.contacts.base.BaseJpaTest;
  * @author T.N.Silverman
  *
  */
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class SortClassHelperTest extends BaseJpaTest{
 
-    @Resource
-    private SortClassHelper sortClassHelper;
+	@Autowired private SortClassHelper sortClassHelper;
 
     @BeforeEach
     public void beforeEach(TestInfo info) throws Exception {

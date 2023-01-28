@@ -21,22 +21,16 @@
  */
 package com.tnsilver.contacts.config;
 
-/*import static org.springframework.http.HttpStatus.FORBIDDEN;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
-*/
-import static org.apache.http.HttpStatus.SC_FORBIDDEN;
-import static org.apache.http.HttpStatus.SC_NO_CONTENT;
-import static org.apache.http.HttpStatus.SC_UNAUTHORIZED;
+import static org.apache.hc.core5.http.HttpStatus.SC_FORBIDDEN;
+import static org.apache.hc.core5.http.HttpStatus.SC_NO_CONTENT;
+import static org.apache.hc.core5.http.HttpStatus.SC_UNAUTHORIZED;
 
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -46,18 +40,17 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
+@EnableMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 @Slf4j
 public class SecurityConfig {
 
-	// @formatter:off
 	@Value("${spring.security.user.name}") String username;
 	@Value("${spring.security.user.password}") String password;
 	@Value("#{'${spring.profiles.active}'.split(',')}") private List<String> profiles;
-	// @formatter:on
 
 	/*
 	 * @Bean protected WebSecurityCustomizer webSecurityCustomizer() { final
@@ -77,23 +70,25 @@ public class SecurityConfig {
             log.debug("disabling csrf for profile: {}", profile);
             http
                 .csrf().disable()
-                    .authorizeRequests()
-                        .antMatchers("/**").permitAll()
+                    .authorizeHttpRequests()
+                    	.requestMatchers("/**")
+                    		.permitAll()
                     .and()
                         .headers()
-                            .frameOptions().disable()
-                    .and()
-                        .httpBasic(); // basic auth for curl tests
+                            .frameOptions()
+                            	.disable();
+                    //.and().httpBasic();
+
         }
         http.cors().disable()
-            .authorizeRequests()
-                .antMatchers(PERMITTED_PATTERNS).permitAll()
-                .antMatchers("/html/contact/**", "/jsp/contact/**").hasAnyRole("USER")
-                .antMatchers(HttpMethod.PATCH, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.PUT, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/login*").permitAll()
+        	.authorizeHttpRequests()
+                .requestMatchers(PERMITTED_PATTERNS).permitAll()
+                .requestMatchers("/html/contact/**", "/jsp/contact/**").hasAnyRole("USER")
+                .requestMatchers(HttpMethod.PATCH, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.POST, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/login*").permitAll()
             .and()
                 .formLogin() // for ajax sends 204-NO_CONTENT when login is OK and 401-UNAUTHORIZED when login fails, else redirect to success url
                 	.successHandler((req, res, auth) -> { if (isAjax(req)) res.setStatus(SC_NO_CONTENT); else res.sendRedirect(DEFAULT_URL); })

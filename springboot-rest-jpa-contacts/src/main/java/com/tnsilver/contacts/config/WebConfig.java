@@ -51,6 +51,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 // do not use @EnableWebMvc !!!
+@SuppressWarnings("deprecation")
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
@@ -100,7 +101,7 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public InternalResourceViewResolver jspViewResolver() {
+	InternalResourceViewResolver jspViewResolver() {
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setViewClass(JstlView.class);
 		resolver.setPrefix("/WEB-INF/views/");
@@ -112,7 +113,7 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public ResourceBundleThemeSource themeSource() {
+	ResourceBundleThemeSource themeSource() {
 		ResourceBundleThemeSource themeSource = new ResourceBundleThemeSource();
 		themeSource.setDefaultEncoding("UTF-8");
 		themeSource.setBasenamePrefix("themes.");
@@ -120,7 +121,7 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public CookieThemeResolver themeResolver() {
+	CookieThemeResolver themeResolver() {
 		CookieThemeResolver resolver = new CookieThemeResolver();
 		resolver.setDefaultThemeName("wheat");
 		resolver.setCookieName("mvc-theme-cookie");
@@ -129,32 +130,31 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public ThemeChangeInterceptor themeChangeInterceptor() {
+	ThemeChangeInterceptor themeChangeInterceptor() {
 		ThemeChangeInterceptor interceptor = new ThemeChangeInterceptor();
 		interceptor.setParamName("theme");
 		return interceptor;
 	}
 
 	@Bean
-	public LocaleResolver localeResolver() {
+	LocaleResolver localeResolver() {
 		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
 		localeResolver.setDefaultLocale(Locale.forLanguageTag("en"));
 		return localeResolver;
 	}
 
 	@Bean
-	public LocaleChangeInterceptor localeChangeInterceptor() {
+	LocaleChangeInterceptor localeChangeInterceptor() {
 		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
 		localeChangeInterceptor.setParamName("lang");
 		return localeChangeInterceptor;
 	}
 
 	@Bean
-	public ErrorViewResolver errorViewResolver() {
+	ErrorViewResolver errorViewResolver() {
 		return (request, status, model) -> {
 			Map<String, Object> modelMap = new HashMap<>(model);
-			Optional.ofNullable(request.getAttribute(DispatcherServlet.EXCEPTION_ATTRIBUTE))
-					.ifPresent(ex -> modelMap.put("exception", ex));
+			Optional.ofNullable(request.getAttribute(DispatcherServlet.EXCEPTION_ATTRIBUTE)).ifPresent(ex -> modelMap.put("exception", ex));
 			return new ModelAndView("html/error-bootstrap", modelMap);
 		};
 	}

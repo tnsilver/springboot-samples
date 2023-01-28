@@ -24,16 +24,12 @@ package com.tnsilver.contacts.converter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import javax.annotation.Resource;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.env.Environment;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.tnsilver.contacts.base.BaseJpaTest;
 import com.tnsilver.contacts.model.SocialSecurityNumber;
@@ -44,14 +40,10 @@ import com.tnsilver.contacts.model.SocialSecurityNumber;
  * @author T.N.Silverman
  *
  */
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class SocialSecurityNumberConverterTest extends BaseJpaTest {
 
-    @Resource
-    private Environment env;
-    @Resource
-    private SocialSecurityNumberConverter ssnConverter;
+	@Autowired private SocialSecurityNumberConverter ssnConverter;
 
     @ParameterizedTest
     @DisplayName("test good SSN conversion")

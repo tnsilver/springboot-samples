@@ -40,9 +40,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public abstract class BaseJpaTest extends BaseTest {
 
-    @Autowired
-    private Environment env;
-    protected Logger logger;
+    @Autowired private Environment env;
+    protected Logger log;
 
     @BeforeAll
     public static void beforeAll() throws Exception {
@@ -54,8 +53,8 @@ public abstract class BaseJpaTest extends BaseTest {
 
     @BeforeEach
     public void beforeEach(TestInfo info) throws Exception {
-        logger = LoggerFactory.getLogger(getClass());
+        log = LoggerFactory.getLogger(getClass());
         String profile = Stream.of(env.getActiveProfiles()).collect(Collectors.joining(","));
-        logger.debug("\n\nPROFILE: '{}', ENTERING '{}':\n", profile, info.getDisplayName());
+        log.debug("\n\nPROFILE: '{}', ENTERING '{}':\n", profile, info.getDisplayName());
     }
 }

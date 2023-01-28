@@ -26,14 +26,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.io.File;
 
-import javax.annotation.Resource;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.tnsilver.contacts.base.BaseJpaTest;
@@ -47,8 +46,7 @@ import com.tnsilver.contacts.base.BaseJpaTest;
 @SpringBootTest
 public class FileNameServiceTest extends BaseJpaTest {
 
-    @Resource
-    private FileNameService fileNameService;
+	@Autowired private FileNameService fileNameService;
 
     @BeforeEach
     public void beforeEach(TestInfo info) throws Exception {

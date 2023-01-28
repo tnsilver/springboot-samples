@@ -50,12 +50,9 @@ import com.tnsilver.contacts.base.BaseJpaTest;
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 public class ApplicationIT extends BaseJpaTest {
 
-    @LocalServerPort
-    int port;
-    @Value("${application.it.test.timeout}")
-    int timeout;
-    @Value("${application.it.test.timeunit}")
-    TimeUnit unit;
+    @LocalServerPort int port;
+    @Value("${application.it.test.timeout}") int timeout;
+    @Value("${application.it.test.timeunit}") TimeUnit unit;
 
     @BeforeAll
     public static void beforeAll() throws Exception {
@@ -76,7 +73,7 @@ public class ApplicationIT extends BaseJpaTest {
     @DisplayName("application integration test")
     public void testApplication() throws Exception {
         // @formatter:off
-        logger.debug("running application on port {} for {} {}", port, timeout, unit);
+        log.debug("running application on port {} for {} {}", port, timeout, unit);
         ExecutorService pool = Executors.newCachedThreadPool();
         Future<Boolean> future = null;
         CountDownLatch latch = new CountDownLatch(1);
@@ -84,10 +81,10 @@ public class ApplicationIT extends BaseJpaTest {
             future = pool.submit(() -> Boolean.TRUE);
             latch.await(timeout, unit);
             assertTrue(future.get());
-            logger.debug("exiting application after {} {}", timeout, unit);
+            log.debug("exiting application after {} {}", timeout, unit);
         } catch (InterruptedException interrupt) {
             Thread.currentThread().interrupt();
-            logger.warn("exiting application after because {}", interrupt.initCause(interrupt).getMessage());
+            log.warn("exiting application after because {}", interrupt.initCause(interrupt).getMessage());
         }
        // @formatter:on
     }
