@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.2</version>
+		<version>3.0.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tnsilver</groupId>
 	<artifactId>springboot-js-protobuf-example</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.1.1</version>
 	<name>springboot-js-protobuf-example</name>
 	<description>SpringBoot JavaScript Protobuf Example Project</description>
 
@@ -60,7 +60,7 @@
 
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency>
 
 		<dependency>
@@ -159,7 +159,25 @@
 	</dependencies>
 
 	<build>
-		<!-- https://mvnrepository.com/artifact/kr.motd.maven/os-maven-plugin -->
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>README.md</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<targetPath>${project.basedir}</targetPath>
+				<filtering>true</filtering>
+				<includes>
+					<include>README.md</include>
+				</includes>
+			</resource>
+		</resources>
+
 		<extensions>
 			<extension>
 				<groupId>kr.motd.maven</groupId>

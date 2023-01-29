@@ -2,11 +2,13 @@ package com.tnsilver.config;
 
 import java.util.Arrays;
 
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.http.converter.protobuf.ProtobufHttpMessageConverter;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -17,7 +19,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(prePostEnabled = true)
+@Order(SecurityProperties.BASIC_AUTH_ORDER)
 public class AppConfig implements WebMvcConfigurer {
 
 	/**
@@ -87,7 +90,7 @@ public class AppConfig implements WebMvcConfigurer {
 		    //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 		    //.and()
 		    	.authorizeHttpRequests()
-		    		.antMatchers("/resources/**", "/themes/**", "/error/**").permitAll()
+		    		.requestMatchers("/**").permitAll()
 		    /**
 		     * allow firefox web developer to display responsive layouts
 		     * by disabling header X-Frame-Options and configuring header

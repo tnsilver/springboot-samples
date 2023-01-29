@@ -1,4 +1,4 @@
-Protobuf Examples (v1.1.1), SpringBoot (v3.0.2) / JDK 19, JQuery (v3.6.0) / Bootstrap (v3.4.1) - Consume and Produce Protobuf (No node.js)
+Protobuf Examples (v@project.version@), SpringBoot (v@project.parent.version@) / JDK @java.version@, JQuery (v3.6.0) / Bootstrap (v3.4.1) - Consume and Produce Protobuf (No node.js)
 ================================================================================
 
 This project demonstrates using protobuf with a `SpringBoot` server and a `JQuery` JavaScript client.

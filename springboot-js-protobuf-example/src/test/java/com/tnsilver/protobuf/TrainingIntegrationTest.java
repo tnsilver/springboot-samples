@@ -5,7 +5,8 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,8 +14,6 @@ import java.net.URI;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.annotation.concurrent.NotThreadSafe;
 
 import org.apache.commons.text.CaseUtils;
 import org.apache.http.HttpResponse;
@@ -382,7 +381,7 @@ class TrainingIntegrationTest {
 		assertThat(json, containsString("type"));
 	}
 
-	@NotThreadSafe
+	@javax.annotation.concurrent.NotThreadSafe
 	class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
 	    public static final String METHOD_NAME = "DELETE";
 

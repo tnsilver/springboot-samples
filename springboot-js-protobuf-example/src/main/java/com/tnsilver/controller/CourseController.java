@@ -2,7 +2,7 @@ package com.tnsilver.controller;
 
 import java.util.Base64;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.commons.text.CaseUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,8 +89,7 @@ public class CourseController {
 				: new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
-	@RequestMapping(value = "/courses", produces = "application/x-protobuf", consumes = "application/x-protobuf", method = {
-			RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH })
+	@RequestMapping(value = "/courses", produces = "application/x-protobuf", consumes = "application/x-protobuf", method = {RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH })
 	public ResponseEntity<? extends Message> saveCourse(@RequestBody byte[] payload) {
 		Course course = null;
 		// @formatter:off
@@ -118,8 +117,7 @@ public class CourseController {
 		// @formatter:on
 	}
 
-	@RequestMapping(value = "/students", produces = "application/x-protobuf", consumes = "application/x-protobuf", method = {
-			RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH })
+	@RequestMapping(value = "/students", produces = "application/x-protobuf", consumes = "application/x-protobuf", method = {RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH })
 	public ResponseEntity<? extends Message> saveStudent(@RequestBody byte[] payload) {
 		Student student = null;
 		// @formatter:off
@@ -147,8 +145,7 @@ public class CourseController {
 		// @formatter:on
 	}
 
-	@RequestMapping(value = "/phones", produces = "application/x-protobuf", consumes = "application/x-protobuf", method = {
-			RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH })
+	@RequestMapping(value = "/phones", produces = "application/x-protobuf", consumes = "application/x-protobuf", method = { RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH })
 	public ResponseEntity<? extends Message> savePhoneNumber(@RequestBody byte[] payload) {
 		PhoneNumber phoneNumber = null;
 		// @formatter:off
