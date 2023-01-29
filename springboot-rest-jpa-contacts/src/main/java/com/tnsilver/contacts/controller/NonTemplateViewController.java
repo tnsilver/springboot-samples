@@ -27,7 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tnsilver.contacts.model.Contact;
@@ -37,17 +37,16 @@ import com.tnsilver.contacts.repository.ContactRepository;
 public class NonTemplateViewController {
 
     private static final Logger logger = LoggerFactory.getLogger(NonTemplateViewController.class);
-    @Autowired
-    private ContactRepository contactRepository;
+    @Autowired private ContactRepository contactRepository;
 
-    @RequestMapping("excel.htm")
+    @GetMapping("excel.htm")
     protected ModelAndView contactSpreadsheet() {
         List<Contact> contacts = contactRepository.findAll();
         logger.debug("returning model and view '{}' with {} contacts", "excelView", contacts.size());
         return new ModelAndView("excelView", "contacts", contacts);
     }
 
-    @RequestMapping("pdf.htm")
+    @GetMapping("pdf.htm")
     protected ModelAndView contactPDF() {
         List<Contact> contacts = contactRepository.findAll();
         logger.debug("returning model and view '{}' with {} contacts", "pdfView", contacts.size());

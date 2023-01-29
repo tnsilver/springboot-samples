@@ -109,12 +109,12 @@
 		        <p th:if="${exception}"><b th:text="'Exception:'">Exception:</b>
 		        	<span th:text="${exception}">Exception</span>
 		        </p>
-		        <p th:if="${exception.class.name == 'java.lang.Throwable'}"><b th:text="'Trace:'">Trace:</b></p>
+		        <p th:if="${exception != null && exception.class.name == 'java.lang.Throwable'}"><b th:text="'Trace:'">Trace:</b></p>
 		        <!--  As we are using Thymeleaf, you might consider using
 		              ${#httpServletRequest.requestURL}. But that returns the path
 		              to this error page.  Hence we explicitly add the url to the
 		              Model in some of the example code. -->
-		        <ul th:if="${exception.class.name == 'java.lang.Throwable'}">
+		        <ul th:if="${exception != null && exception.class.name == 'java.lang.Throwable'}">
 		            <li th:each="ste : ${exception.getStackTrace()}"><span th:text="${ste}"></span></li>
 		        </ul>
 		        <p th:text="#{support.contact}">Application has encountered an error. Please contact support on ...</p>
@@ -125,7 +125,7 @@
 		          -->
 		        <div th:utext="'&lt;!--'" th:remove="tag"></div>
 		        <div th:utext="'Failed URL: ' +  ${path}" th:remove="tag">${path}</div>
-		        <div th:if="${exception.class.name == 'java.lang.Throwable'}" th:utext="'Exception: ' + ${exception.message}" th:remove="tag">${exception.message}</div>
+		        <div th:if="${exception != null && exception.class.name == 'java.lang.Throwable'}" th:utext="'Exception: ' + ${exception.message}" th:remove="tag">${exception.message}</div>
 		        <ul th:remove="tag">
 		            <li th:each="ste : ${trace}" th:remove="tag"><span th:utext="${ste}" th:remove="tag">${ste}</span></li>
 		        </ul>

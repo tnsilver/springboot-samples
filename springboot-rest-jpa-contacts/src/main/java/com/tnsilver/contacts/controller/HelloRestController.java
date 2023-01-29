@@ -21,17 +21,11 @@
  */
 package com.tnsilver.contacts.controller;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Locale;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -39,6 +33,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -47,6 +42,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.tnsilver.contacts.exception.PaymentRequiredException;
 import com.tnsilver.contacts.exception.TeapotException;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Class HelloRestController.
@@ -59,10 +57,7 @@ public class HelloRestController {
 
     private static final String JsonType = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8";
     private static final Gson gson = new Gson();
-    @Resource
-    private ApplicationContext ctx;
-    @Resource
-    private HttpServletRequest request;
+    @Autowired private ApplicationContext ctx;
     private String greeting;
     private String stranger;
 
@@ -83,7 +78,7 @@ public class HelloRestController {
      * able to return a properly-encoded JSON string if that's what you want to do. If that's what you want, the best
      * way to handle it is via a JSON formatter such as Json or Google Gson
      */
-    @RequestMapping(value = "/hello", produces = { JsonType }, method = GET)
+    @GetMapping(value = "/hello", produces = { JsonType })
     public ResponseEntity<String> greetStranger() {
         String firstName = stranger;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -93,12 +88,12 @@ public class HelloRestController {
         return new ResponseEntity<String>(gson.toJson(new Message(greeting + " " + firstName)), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/hello/{firstName}", produces = { JsonType }, method = GET)
+    @GetMapping(value = "/hello/{firstName}", produces = { JsonType })
     public ResponseEntity<String> greetFirstName(@PathVariable(name = "firstName") String firstName) {
         return new ResponseEntity<String>(gson.toJson(new Message(greeting + " " + firstName)), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/hello/{firstName}/{lastName}", produces = { JsonType }, method = GET)
+    @GetMapping(value = "/hello/{firstName}/{lastName}", produces = { JsonType })
     public ResponseEntity<String> greetFullName(@PathVariable(name = "firstName") String firstName,
         @PathVariable(name = "lastName") String lastName) {
         return new ResponseEntity<String>(gson.toJson(new Message(greeting + " " + firstName + " " + lastName)), HttpStatus.OK);
@@ -113,19 +108,19 @@ public class HelloRestController {
      * Some commonly-used ones are Status, Content-Type and Cache-Control. If you don't need that, using @ResponseBody
      * will be a tiny bit more concise.
      */
-    @RequestMapping(value = "/greet", produces = { JsonType }, method = GET)
+    @GetMapping(value = "/greet", produces = { JsonType })
     @ResponseBody
     public String greet() {
         return gson.toJson(new Message(greeting + " " + stranger));
     }
 
-    @RequestMapping(path = { "/paynow" })
+    @GetMapping(path = { "/paynow" })
     public void paymentRequiredError(HttpServletResponse response) throws Exception {
         throw new PaymentRequiredException("You owe money!",
             new TeapotException("Darn! I'm a teapot!", new UnsupportedOperationException("You betcha it ain't supported!")));
     }
 
-    @RequestMapping(path = { "/teapot" })
+    @GetMapping(path = { "/teapot" })
     public void teapotError(HttpServletResponse response) throws Exception {
         throw new TeapotException("Darn! I'm a teapot!", new UnsupportedOperationException("You betcha it ain't supported!"));
     }

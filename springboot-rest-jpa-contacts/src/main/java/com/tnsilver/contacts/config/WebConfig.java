@@ -55,14 +55,8 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-	/**
-	 * addResourceHandler("/css/**") = how you write URL's in your app
-	 * addResourceLocations("/resources/css/") = where the resources really are
-	 * (relative to the root context)
-	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/").addResourceLocations("html/home");
 		registry.addResourceHandler("/resources/**").addResourceLocations("classpath:static/");
 	}
 
@@ -75,8 +69,8 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		// @formatter:off
+		registry.addRedirectViewController("/", "html/home-bootstrap");
         registry.addViewController("/login-bootstrap").setViewName("html/login-bootstrap");
-        registry.addRedirectViewController("/", "html/home-bootstrap");
         registry.addViewController("/html/home").setViewName("html/home");
         registry.addViewController("/html/home-bootstrap").setViewName("html/home-bootstrap.html");
         registry.addViewController("/html/hello").setViewName("html/hello");

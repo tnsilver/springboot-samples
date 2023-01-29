@@ -53,10 +53,8 @@ public class PageSourceController {
     public static final String JSP_VIEWS_DIR = "WEB-INF/views/jsp/";
 
     private static final Logger logger = LoggerFactory.getLogger(PageSourceController.class);
-    @Autowired
-    private ServletContext servletContext;
-    @Autowired
-    ResourceLoader resourceLoader;
+    @Autowired private ServletContext servletContext;
+    @Autowired ResourceLoader resourceLoader;
 
     @GetMapping("/source/{resource:.+}")
     @ResponseBody
