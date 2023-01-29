@@ -1,3 +1,6 @@
+
+# No Longer Maintained
+
 # Scala Contacts: Spring Boot RESTful CRUD Web-App Demo with JPA
 
 ##### Basic commands to run and test the application
