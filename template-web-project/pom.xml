@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.2</version>
+		<version>3.0.2</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.acme</groupId>
 	<artifactId>template-web-project</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.1.1</version>
 	<name>template-web-project</name>
 	<description>Spring Boot Template Web Project</description>
 	<packaging>war</packaging>
@@ -17,7 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>18</java.version>
+		<java.version>19</java.version>
 		<webjars-locator.version>0.45</webjars-locator.version>
 		<bootstrap.version>5.2.0</bootstrap.version>
 		<maven.surefire.plugin.version>3.0.0-M7</maven.surefire.plugin.version>
@@ -48,7 +48,7 @@
 
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency>
 
 		<dependency>
@@ -118,6 +118,24 @@
 	<build>
 
         <finalName>${project.artifactId}</finalName>
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>README.md</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<targetPath>${project.basedir}</targetPath>
+				<filtering>true</filtering>
+				<includes>
+					<include>README.md</include>
+				</includes>
+			</resource>
+		</resources>
 
 		<pluginManagement>
 			<plugins>

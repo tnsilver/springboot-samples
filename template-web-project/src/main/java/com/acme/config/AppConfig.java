@@ -1,8 +1,10 @@
 package com.acme.config;
 
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -14,7 +16,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(prePostEnabled = true)
+@Order(SecurityProperties.BASIC_AUTH_ORDER)
 public class AppConfig implements WebMvcConfigurer {
 
 	/**
@@ -72,7 +75,7 @@ public class AppConfig implements WebMvcConfigurer {
 		    	.sessionCreationPolicy(SessionCreationPolicy.STATELESS) //no session
 		    .and()
 		    	.authorizeHttpRequests()
-		    		.antMatchers("/resources/**", "/themes/**", "/error/**").permitAll()
+		    		.requestMatchers("/*").permitAll()
 		    /**
 		     * allow firefox web developer to display responsive layouts
 		     * by disabling header X-Frame-Options and configuring header
