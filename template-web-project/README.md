@@ -1,4 +1,4 @@
-Template (v1.1.1) Web Project, SpringBoot (v3.0.2) / JDK 19
+Template Web Project (v1.1.1), SpringBoot (v3.0.2) / JDK 19
 =======================================================================
 
 ## Executive: running the app (embedded Tomcat)

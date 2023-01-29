@@ -1,4 +1,4 @@
-Template (v@project.version@) Web Project, SpringBoot (v@project.parent.version@) / JDK @java.version@
+Template Web Project (v@project.version@), SpringBoot (v@project.parent.version@) / JDK @java.version@
 =======================================================================
 
 ## Executive: running the app (embedded Tomcat)
