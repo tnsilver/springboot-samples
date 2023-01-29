@@ -24,15 +24,20 @@ package com.tnsilver.contacts.config;
 import static org.apache.hc.core5.http.HttpStatus.SC_FORBIDDEN;
 import static org.apache.hc.core5.http.HttpStatus.SC_NO_CONTENT;
 import static org.apache.hc.core5.http.HttpStatus.SC_UNAUTHORIZED;
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,8 +48,10 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
+@Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
+@EnableMethodSecurity(prePostEnabled = true, jsr250Enabled = true, securedEnabled = true)
+@Order(SecurityProperties.BASIC_AUTH_ORDER)
 @Slf4j
 public class SecurityConfig {
 
@@ -52,65 +59,62 @@ public class SecurityConfig {
 	@Value("${spring.security.user.password}") String password;
 	@Value("#{'${spring.profiles.active}'.split(',')}") private List<String> profiles;
 
-	/*
-	 * @Bean protected WebSecurityCustomizer webSecurityCustomizer() { final
-	 * String[] IGNORED_PATTERNS = {"/resources/favicon.ico","/h2-console/**",
-	 * "/resources/**", "/themes/**", "/error**", "/html/error**"}; return (web) ->
-	 * web.ignoring().antMatchers(IGNORED_PATTERNS); }
-	 */
+	public static String[] UNSECURED_RESOURCES = { "/login", "/webjars/**", "/resources/**", "/favicon.ico", "/h2-console", "/h2-console/**", "/themes/**"};
 
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		// @formatter:off
-		final String[] PERMITTED_PATTERNS = { "/resources/favicon.ico", "/h2-console/**", "/resources/**", "/themes/**", "/error**", "/html/error**" };
-		final String DEFAULT_URL = "/html/contacts-bootstrap", LOGIN_URL = "/login-bootstrap";
 		boolean test = profiles.contains("test"), dev = profiles.contains("dev");
-        if (test || dev) {
-            String profile = dev ? "dev" : (test ? "test" : profiles.toString());
-            log.debug("disabling csrf for profile: {}", profile);
-            http
-                .csrf().disable()
-                    .authorizeHttpRequests()
-                    	.requestMatchers("/**")
-                    		.permitAll()
-                    .and()
-                        .headers()
-                            .frameOptions()
-                            	.disable();
-                    //.and().httpBasic();
-
-        }
-        http.cors().disable()
-        	.authorizeHttpRequests()
-                .requestMatchers(PERMITTED_PATTERNS).permitAll()
-                .requestMatchers("/html/contact/**", "/jsp/contact/**").hasAnyRole("USER")
-                .requestMatchers(HttpMethod.PATCH, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.POST, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
-                .requestMatchers("/login*").permitAll()
-            .and()
-                .formLogin() // for ajax sends 204-NO_CONTENT when login is OK and 401-UNAUTHORIZED when login fails, else redirect to success url
-                	.successHandler((req, res, auth) -> { if (isAjax(req)) res.setStatus(SC_NO_CONTENT); else res.sendRedirect(DEFAULT_URL); })
-                	.failureHandler((req, res, ex) -> { if (isAjax(req)) res.setStatus(SC_NO_CONTENT); else res.sendError(SC_FORBIDDEN); })
-                .loginPage("/login-bootstrap").permitAll()
-                .loginProcessingUrl("/signin")
-            .and()
-                .exceptionHandling() // for ajax 401-UNAUTHORIZED when anonymous user attempts to access protected URLs, else redirect to login
-                	.authenticationEntryPoint((req, res, ex) -> { if (isAjax(req)) res.setStatus(SC_UNAUTHORIZED); else res.sendRedirect(LOGIN_URL); })
-            .and()
-                .logout() // standard logout that sends 204-NO_CONTENT when logout is OK
-	                .logoutSuccessHandler((req, res, auth) -> { if (isAjax(req)) res.setStatus(SC_NO_CONTENT); else res.sendRedirect(DEFAULT_URL); })
-                .logoutSuccessUrl("/html/contacts-bootstrap")
-                .logoutUrl("/logout")
-                .clearAuthentication(true)
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll()
-             .and()
-                .requestCache()
-                .requestCache(new HttpSessionRequestCache());
-        // @formatter:off
+		if (test || dev) {
+            http.csrf()
+            		.ignoringRequestMatchers(toH2Console())
+            	.and()
+            		.authorizeHttpRequests().requestMatchers(toH2Console()).permitAll()
+            	.and()
+            		.headers()
+            			.frameOptions()
+            				.sameOrigin();
+		}
+        http.headers()
+        			.cacheControl().disable()
+          		.and()
+          			.authorizeHttpRequests().requestMatchers(UNSECURED_RESOURCES).permitAll()
+          		.and()
+          			.requestCache().requestCache(new HttpSessionRequestCache())
+          		.and()
+          			.authorizeHttpRequests()
+          				.requestMatchers("/html/contact/**", "/jsp/contact/**").hasAnyRole("USER")
+                        .requestMatchers(HttpMethod.PATCH, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/contacts*", "/api/contacts/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/**").permitAll()
+                .and()
+                	.formLogin()
+                		.successHandler((req, res, auth) -> { if (isAjax(req)) res.setStatus(SC_NO_CONTENT); else res.sendRedirect("/html/contacts-bootstrap"); })
+                		.failureHandler((req, res, ex) -> { if (isAjax(req)) res.setStatus(SC_NO_CONTENT); else res.sendError(SC_FORBIDDEN); })
+                	.loginPage("/login-bootstrap").permitAll()
+                	.loginProcessingUrl("/signin")
+                .and()
+                	.exceptionHandling()
+                		.authenticationEntryPoint((req, res, ex) -> {
+                					log.error("ERROR: {}",ex.getMessage());
+                					if (isAjax(req))
+                						res.setStatus(SC_UNAUTHORIZED);
+                					else
+                						res.sendRedirect("/login-bootstrap"); })
+                .and()
+                	.logout()
+                		.logoutSuccessHandler((req, res, auth) -> { if (isAjax(req)) res.setStatus(SC_NO_CONTENT); else res.sendRedirect("/html/contacts-bootstrap"); })
+                		.logoutSuccessUrl("/html/contacts-bootstrap")
+                		.logoutUrl("/logout")
+                		.clearAuthentication(true)
+                		.invalidateHttpSession(true)
+                		.deleteCookies("JSESSIONID")
+                		.permitAll()
+                .and()
+                	.sessionManagement().invalidSessionUrl("/").maximumSessions(1).expiredUrl("/")
+                .and()
+                	.sessionFixation().migrateSession().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
         return http.build();
     }
 
